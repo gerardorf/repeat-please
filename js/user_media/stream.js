@@ -27,6 +27,7 @@ function Stream(source)
 
 	function process_microphone_buffer(event) 
 	{
-      show_some_data(event.inputBuffer.getChannelData(0), 5, "from getChannelData");
+		var spectogram = new Spectogram();
+		spectogram.draw(event.inputBuffer.getChannelData(0));
   	}
 }

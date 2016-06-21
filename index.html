@@ -1,29 +1,31 @@
 <!doctype html>
 <html class="no-js" lang="">
     <head>
+        <title>Repeat Please</title>
+
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <title>Repeat Please</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <link rel="stylesheet" href="css/normalize.min.css">
         <link rel="stylesheet" href="css/main.css">
-
+        
         <script src="js/vendor/modernizr-2.8.3.min.js"></script>
+        
+        <script src="js/user_media/analyser.js"></script>
+        <script src="js/user_media/fft.js"></script>
+        <script src="js/user_media/gain.js"></script>
+        <script src="js/user_media/main.js"></script>
+        <script src="js/user_media/microphone.js"></script>
+        <script src="js/user_media/spectogram.js"></script>
+        <script src="js/user_media/stream.js"></script>
     </head>
     <body>
         <button type="button" onclick="start_recording()">
             Start recording.
         </button>
 
-        <p id="consola"></p>
-
-        <script type="text/javascript" src="./js/record.js"></script>
-        <script type="text/javascript" src="./js/micro.js"></script>
-        <script type="text/javascript" src="./js/gain_node.js"></script>
-        <script type="text/javascript" src="./js/gain_node.js"></script>
-        <script type="text/javascript" src="./js/stream.js"></script>
-        <script src="js/main.js"></script>
+        <p id="spectogram"></p>
     </body>
 </html>
