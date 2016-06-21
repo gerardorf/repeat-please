@@ -13,6 +13,7 @@
         
         <script src="js/vendor/modernizr-2.8.3.min.js"></script>
         
+        <script src="js/vendor/phaser.js"></script>
         <script src="js/user_media/analyser.js"></script>
         <script src="js/user_media/fft.js"></script>
         <script src="js/user_media/gain.js"></script>
@@ -20,12 +21,9 @@
         <script src="js/user_media/microphone.js"></script>
         <script src="js/user_media/spectogram.js"></script>
         <script src="js/user_media/stream.js"></script>
+        <script src="js/audio/audio_sprite_json.js"></script>
     </head>
-    <body>
-        <button type="button" onclick="start_recording()">
-            Start recording.
-        </button>
-
+     <body onload="preload()">
         <p id="spectogram"></p>
     </body>
 </html>

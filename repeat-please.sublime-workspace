@@ -4,6 +4,10 @@
 		"selected_items":
 		[
 			[
+				"g",
+				"gif"
+			],
+			[
 				"gain",
 				"gain_node"
 			],
@@ -27,14 +31,6 @@
 	},
 	"buffers":
 	[
-		{
-			"file": "js/analyser.js",
-			"settings":
-			{
-				"buffer_size": 404,
-				"line_ending": "Windows"
-			}
-		}
 	],
 	"build_system": "",
 	"build_system_choices":
@@ -82,18 +78,30 @@
 	"expanded_folders":
 	[
 		"/C/wamp64/www/repeat-please",
-		"/C/wamp64/www/repeat-please/js"
+		"/C/wamp64/www/repeat-please/assets",
+		"/C/wamp64/www/repeat-please/assets/audio",
+		"/C/wamp64/www/repeat-please/assets/pics",
+		"/C/wamp64/www/repeat-please/css",
+		"/C/wamp64/www/repeat-please/js",
+		"/C/wamp64/www/repeat-please/js/audio",
+		"/C/wamp64/www/repeat-please/js/user_media",
+		"/C/wamp64/www/repeat-please/js/vendor"
 	],
 	"file_history":
 	[
-		"/C/wamp64/www/repeat-please/js/stream.js",
+		"/C/wamp64/www/repeat-please/js/vendor/phaser.js",
+		"/C/wamp64/www/repeat-please/js/user_media/microphone.js",
+		"/C/wamp64/www/repeat-please/index.html",
+		"/C/wamp64/www/repeat-please/js/audio/audio_sprite_json.js",
 		"/C/wamp64/www/repeat-please/js/main.js",
+		"/C/wamp64/www/repeat-please/js/user_media/main.js",
+		"/C/Windows/System32/drivers/etc/hosts",
+		"/C/wamp64/www/repeat-please/js/stream.js",
 		"/C/wamp64/www/repeat-please/js/microphone.js",
 		"/C/wamp64/www/repeat-please/js/spectogram.js",
 		"/C/wamp64/www/repeat-please/js/analyser.js",
 		"/C/wamp64/www/repeat-please/js/fft.js",
 		"/C/wamp64/www/repeat-please/js/gain.js",
-		"/C/wamp64/www/repeat-please/index.html",
 		"/C/wamp64/www/repeat-please/js/record.js",
 		"/C/wamp64/www/repeat-please/js/micro.js",
 		"/C/wamp64/www/repeat-please/js/gain_node.js",
@@ -101,7 +109,6 @@
 		"/C/wamp64/www/repeat-please/js/analyser_node.js",
 		"/C/wamp64/www/repeat-please/js/audio_context.js",
 		"/C/wamp64/www/repeat-please/js/Stream.js",
-		"/C/wamp64/www/repeat-please/js/vendor/phaser.js",
 		"/C/wamp64/www/repeat-please/indexOLD.html",
 		"/D/Codigo/TestCova/index.html",
 		"/D/Codigo/TestCova/test/test.js",
@@ -127,6 +134,12 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"gif:",
+			"add.gif",
+			"add:",
+			"gif:",
+			"button:",
+			"play:",
 			"draw",
 			"}\n",
 			"return"
@@ -147,38 +160,8 @@
 	"groups":
 	[
 		{
-			"selected": 0,
 			"sheets":
 			[
-				{
-					"buffer": 0,
-					"file": "js/analyser.js",
-					"semi_transient": true,
-					"settings":
-					{
-						"buffer_size": 404,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								87,
-								87
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 0,
-					"type": "text"
-				}
 			]
 		}
 	],
@@ -259,7 +242,7 @@
 	"show_open_files": false,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 150.0,
+	"side_bar_width": 219.0,
 	"status_bar_visible": true,
 	"template_settings":
 	{

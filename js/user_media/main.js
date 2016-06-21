@@ -34,6 +34,6 @@ function get_user_media()
 
 function start_microphone(stream)
 {
-  var microphone = new Microphone(new AudioContext(), stream);
-  microphone.config(stream);
+	var microphone = new Microphone(new AudioContext(), stream);
+	microphone.config(stream);
 }
