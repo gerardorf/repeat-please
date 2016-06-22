@@ -33,7 +33,7 @@ function Fft(par)
     	if (stream.playbackState() == stream.playing()) 
 		{
 			var spectogram = new Spectogram();
-			spectogram.draw(array);
+			spectogram.draw(array, "fft");
 		}
     }
 }

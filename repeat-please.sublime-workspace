@@ -31,6 +31,25 @@
 	},
 	"buffers":
 	[
+		{
+			"contents": "<!doctype html>\n<html class=\"no-js\" lang=\"\">\n    <head>\n        <title>Repeat Please</title>\n\n        <meta charset=\"utf-8\">\n        <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge,chrome=1\">\n        <meta name=\"description\" content=\"\">\n        <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n\n        <link rel=\"stylesheet\" href=\"css/normalize.min.css\">\n        <link rel=\"stylesheet\" href=\"css/main.css\">\n        \n        <script src=\"js/vendor/modernizr-2.8.3.min.js\"></script>\n        <script src=\"js/vendor/phaser.js\"></script>\n\n        <script src=\"js/listen/listen.js\"></script>\n\n        <script src=\"js/listen/listen.js\"></script>\n\n        <script src=\"js/record/analyser.js\"></script>\n        <script src=\"js/record/fft.js\"></script>\n        <script src=\"js/record/gain.js\"></script>\n        <script src=\"js/record/main.js\"></script>\n        <script src=\"js/record/microphone.js\"></script>\n        <script src=\"js/record/spectogram.js\"></script>\n        <script src=\"js/record/stream.js\"></script>\n    </head>\n     <body onload=\"preload()\">\n        <p id=\"spectogram\"></p>\n    </body>\n</html>\n",
+			"file": "index.html",
+			"file_size": 1104,
+			"file_write_time": 131110615767670874,
+			"settings":
+			{
+				"buffer_size": 1127,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "js/listen/listen.js",
+			"settings":
+			{
+				"buffer_size": 1902,
+				"line_ending": "Windows"
+			}
+		}
 	],
 	"build_system": "",
 	"build_system_choices":
@@ -78,22 +97,19 @@
 	"expanded_folders":
 	[
 		"/C/wamp64/www/repeat-please",
-		"/C/wamp64/www/repeat-please/assets",
-		"/C/wamp64/www/repeat-please/assets/audio",
-		"/C/wamp64/www/repeat-please/assets/pics",
-		"/C/wamp64/www/repeat-please/css",
 		"/C/wamp64/www/repeat-please/js",
-		"/C/wamp64/www/repeat-please/js/audio",
-		"/C/wamp64/www/repeat-please/js/user_media",
-		"/C/wamp64/www/repeat-please/js/vendor"
+		"/C/wamp64/www/repeat-please/js/listen",
+		"/C/wamp64/www/repeat-please/js/record",
+		"/C/wamp64/www/repeat-please/js/UI"
 	],
 	"file_history":
 	[
+		"/C/wamp64/www/repeat-please/js/UI/ui.js",
+		"/C/wamp64/www/repeat-please/js/main.js",
 		"/C/wamp64/www/repeat-please/js/vendor/phaser.js",
 		"/C/wamp64/www/repeat-please/js/user_media/microphone.js",
 		"/C/wamp64/www/repeat-please/index.html",
 		"/C/wamp64/www/repeat-please/js/audio/audio_sprite_json.js",
-		"/C/wamp64/www/repeat-please/js/main.js",
 		"/C/wamp64/www/repeat-please/js/user_media/main.js",
 		"/C/Windows/System32/drivers/etc/hosts",
 		"/C/wamp64/www/repeat-please/js/stream.js",
@@ -160,8 +176,69 @@
 	"groups":
 	[
 		{
+			"selected": 0,
 			"sheets":
 			[
+				{
+					"buffer": 0,
+					"file": "index.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1127,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								639,
+								639
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "js/listen/listen.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1902,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				}
 			]
 		}
 	],

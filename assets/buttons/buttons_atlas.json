@@ -1,0 +1,28 @@
+{"frames": [
+
+{
+	"filename": "play",
+	"frame": {"x":1,"y":1,"w":20,"h":20},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":20,"h":20},
+	"sourceSize": {"w":20,"h":20}
+},
+{
+	"filename": "record",
+	"frame": {"x":23,"y":1,"w":20,"h":20},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":20,"h":20},
+	"sourceSize": {"w":20,"h":20}
+}],
+"meta": {
+	"app": "http://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "buttons.png",
+	"format": "RGBA8888",
+	"size": {"w":44,"h":22},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:f79364c8dd899ef8dbd059d7044c02fc:bc97d02bb6f7347ac61ea1ae17e08350:b34c8670b11bb20cb1751a70d3683e22$"
+}
+}

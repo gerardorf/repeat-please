@@ -28,6 +28,6 @@ function Stream(source)
 	function process_microphone_buffer(event) 
 	{
 		var spectogram = new Spectogram();
-		spectogram.draw(event.inputBuffer.getChannelData(0));
+		spectogram.draw(event.inputBuffer.getChannelData(0), "first_channel");
   	}
 }
