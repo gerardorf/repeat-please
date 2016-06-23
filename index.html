@@ -13,23 +13,24 @@
         
         <script src="js/vendor/modernizr-2.8.3.min.js"></script>
         <script src="js/vendor/phaser.js"></script>
-
-        <script src="js/listen/ui.js"></script>
-        <script src="js/listen/audiolibrary.js"></script>
-
-        <script src="js/record/analyser.js"></script>
-        <script src="js/record/fft.js"></script>
-        <script src="js/record/gain.js"></script>
-        <script src="js/record/main.js"></script>
-        <script src="js/record/microphone.js"></script>
-        <script src="js/record/ui.js"></script>
-        <script src="js/record/spectogram.js"></script>
-        <script src="js/record/stream.js"></script>
-
-        <script src="js/ui/ui.js"></script>
-        <script src="js/ui/constants.js"></script>
-    </head>
-     <body onload="preload()">
         
+        <script src="js/main.js"></script>
+        
+        <script src="js/game/state.js"></script>
+        
+        <script src="js/game/Stage0/main.js"></script>
+
+        <script src="js/game/Stage1/main.js"></script>
+        <script src="js/game/Stage1/play/audio.js"></script>
+        <script src="js/game/Stage1/play/audio_json.js"></script>
+        <script src="js/game/Stage1/record/recorder.js"></script>
+        <script src="js/game/Stage1/record/analyser.js"></script>
+        <script src="js/game/Stage1/record/fft.js"></script>
+        <script src="js/game/Stage1/record/gain.js"></script>
+        <script src="js/game/Stage1/record/microphone.js"></script>
+        <script src="js/game/Stage1/record/spectogram.js"></script>
+        <script src="js/game/Stage1/record/stream.js"></script>
+    </head>
+     <body onload="main()">
     </body>
 </html>

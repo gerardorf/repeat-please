@@ -4,6 +4,10 @@
 		"selected_items":
 		[
 			[
+				"Au",
+				"audiolibrary"
+			],
+			[
 				"g",
 				"gif"
 			],
@@ -31,25 +35,6 @@
 	},
 	"buffers":
 	[
-		{
-			"contents": "<!doctype html>\n<html class=\"no-js\" lang=\"\">\n    <head>\n        <title>Repeat Please</title>\n\n        <meta charset=\"utf-8\">\n        <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge,chrome=1\">\n        <meta name=\"description\" content=\"\">\n        <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n\n        <link rel=\"stylesheet\" href=\"css/normalize.min.css\">\n        <link rel=\"stylesheet\" href=\"css/main.css\">\n        \n        <script src=\"js/vendor/modernizr-2.8.3.min.js\"></script>\n        <script src=\"js/vendor/phaser.js\"></script>\n\n        <script src=\"js/listen/listen.js\"></script>\n\n        <script src=\"js/listen/listen.js\"></script>\n\n        <script src=\"js/record/analyser.js\"></script>\n        <script src=\"js/record/fft.js\"></script>\n        <script src=\"js/record/gain.js\"></script>\n        <script src=\"js/record/main.js\"></script>\n        <script src=\"js/record/microphone.js\"></script>\n        <script src=\"js/record/spectogram.js\"></script>\n        <script src=\"js/record/stream.js\"></script>\n    </head>\n     <body onload=\"preload()\">\n        <p id=\"spectogram\"></p>\n    </body>\n</html>\n",
-			"file": "index.html",
-			"file_size": 1104,
-			"file_write_time": 131110615767670874,
-			"settings":
-			{
-				"buffer_size": 1127,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "js/listen/listen.js",
-			"settings":
-			{
-				"buffer_size": 1902,
-				"line_ending": "Windows"
-			}
-		}
 	],
 	"build_system": "",
 	"build_system_choices":
@@ -98,17 +83,75 @@
 	[
 		"/C/wamp64/www/repeat-please",
 		"/C/wamp64/www/repeat-please/js",
-		"/C/wamp64/www/repeat-please/js/listen",
-		"/C/wamp64/www/repeat-please/js/record",
-		"/C/wamp64/www/repeat-please/js/UI"
+		"/C/wamp64/www/repeat-please/js/game",
+		"/C/wamp64/www/repeat-please/js/game/Stage0",
+		"/C/wamp64/www/repeat-please/js/game/Stage0/assets",
+		"/C/wamp64/www/repeat-please/js/game/Stage1",
+		"/C/wamp64/www/repeat-please/js/game/Stage1/assets"
 	],
 	"file_history":
 	[
-		"/C/wamp64/www/repeat-please/js/UI/ui.js",
-		"/C/wamp64/www/repeat-please/js/main.js",
-		"/C/wamp64/www/repeat-please/js/vendor/phaser.js",
-		"/C/wamp64/www/repeat-please/js/user_media/microphone.js",
 		"/C/wamp64/www/repeat-please/index.html",
+		"/C/wamp64/www/repeat-please/js/game/Stage1/record/recorder.js",
+		"/C/wamp64/www/repeat-please/js/game/Stage1/play/audio_json.js",
+		"/C/wamp64/www/repeat-please/js/game/Stage1/play/audio.js",
+		"/C/wamp64/www/repeat-please/js/game/Stage1/record/spectogram.js",
+		"/C/wamp64/www/repeat-please/js/game/Stage1/main.js",
+		"/C/wamp64/www/repeat-please/OLD/index.html",
+		"/C/wamp64/www/repeat-please/js/game/Stage1/record/stream.js",
+		"/C/wamp64/www/repeat-please/js/game/Stage1/record/fft.js",
+		"/C/wamp64/www/repeat-please/js/game/Stage1/record/main.js",
+		"/C/wamp64/www/repeat-please/js/game/Stage1/record/microphone.js",
+		"/C/wamp64/www/repeat-please/js/game/Stage1/record/record.js",
+		"/C/wamp64/www/repeat-please/js/game/Stage1/listen/audio_json.js",
+		"/C/wamp64/www/repeat-please/js/game/Stage1/listen/audio.js",
+		"/C/wamp64/www/repeat-please/js/game/Stage1/listen/speaker.js",
+		"/C/wamp64/www/repeat-please/js/game/Stage1/listen/listen.js",
+		"/C/wamp64/www/repeat-please/js/game/Stage1/listen/audiolibrary.js",
+		"/C/wamp64/www/repeat-please/js/game/Stage1/listen/ui.js",
+		"/C/wamp64/www/repeat-please/OLD/listen/ui.js",
+		"/C/wamp64/www/repeat-please/OLD/listen/audiolibrary.js",
+		"/C/wamp64/www/repeat-please/js/game/Stage0/main.js",
+		"/C/wamp64/www/repeat-please/js/main.js",
+		"/C/wamp64/www/repeat-please/js/game/stage_template.js",
+		"/C/wamp64/www/repeat-please/js/game/state.js",
+		"/C/wamp64/www/repeat-please/js/game/Stage0/stage0.js",
+		"/C/wamp64/www/repeat-please/game/Stage0/stage0.js",
+		"/C/wamp64/www/repeat-please/js/ui/main.js",
+		"/C/wamp64/www/repeat-please/js/ui/MAIN.js",
+		"/C/wamp64/www/repeat-please/js/ui/constants.js",
+		"/C/wamp64/www/repeat-please/game/stage1/stage1.js",
+		"/C/wamp64/www/repeat-please/js/ui/ui.js",
+		"/C/wamp64/www/repeat-please/js/listen/ui.js",
+		"/C/wamp64/www/repeat-please/js/listen/audiolibrary.js",
+		"/C/wamp64/www/repeat-please/assets/stage1/buttons/green_hover.png",
+		"/C/wamp64/www/repeat-please/assets/stage1/buttons/buttons.json",
+		"/C/wamp64/www/repeat-please/js/vendor/phaser.js",
+		"/C/wamp64/www/repeat-please/js/record/analyser.js",
+		"/C/wamp64/www/repeat-please/js/record/fft.js",
+		"/C/wamp64/www/repeat-please/js/record/gain.js",
+		"/C/wamp64/www/repeat-please/js/record/main.js",
+		"/C/wamp64/www/repeat-please/js/record/microphone.js",
+		"/C/wamp64/www/repeat-please/js/record/spectogram.js",
+		"/C/wamp64/www/repeat-please/js/record/ui.js",
+		"/C/wamp64/www/repeat-please/js/record/record_ui.js",
+		"/C/wamp64/www/repeat-please/js/listen/listen_ui.js",
+		"/C/wamp64/www/repeat-please/js/record/stream.js",
+		"/C/wamp64/www/repeat-please/assets/buttons/buttons_atlas.json",
+		"/C/wamp64/www/repeat-please/css/main.css",
+		"/C/wamp64/www/repeat-please/js/listen/listen.js",
+		"/C/wamp64/www/repeat-please/assets/buttons/buttons.png",
+		"/C/wamp64/www/repeat-please/assets/buttons/buttons_atlas.png",
+		"/C/wamp64/www/repeat-please/js/listen/AudioLibrary.js",
+		"/C/wamp64/www/repeat-please/js/listen/sprites.js",
+		"/C/wamp64/www/repeat-please/assets/pics/background.png",
+		"/C/wamp64/www/repeat-please/assets/buttons/listen.png",
+		"/C/wamp64/www/repeat-please/js/audio/main.js",
+		"/C/wamp64/www/repeat-please/js/listen/record_ui.js",
+		"/C/wamp64/www/repeat-please/js/listen/main.js",
+		"/C/wamp64/www/repeat-please/js/listen/record.js",
+		"/C/wamp64/www/repeat-please/js/UI/ui.js",
+		"/C/wamp64/www/repeat-please/js/user_media/microphone.js",
 		"/C/wamp64/www/repeat-please/js/audio/audio_sprite_json.js",
 		"/C/wamp64/www/repeat-please/js/user_media/main.js",
 		"/C/Windows/System32/drivers/etc/hosts",
@@ -140,9 +183,11 @@
 	},
 	"find_in_files":
 	{
-		"height": 0.0,
+		"height": 90.0,
 		"where_history":
 		[
+			"C:\\wamp64\\www\\repeat-please",
+			"C:\\wamp64\\www\\repeat-please\\js"
 		]
 	},
 	"find_state":
@@ -150,6 +195,17 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"STATE_OVER",
+			"hover",
+			"Spectogram",
+			"button:",
+			"SpriteSheet",
+			"spriteSheet",
+			"framewidth",
+			"mozHidden",
+			"mozVisibilityState",
+			"sfx-audioatlas",
+			"preload",
 			"gif:",
 			"add.gif",
 			"add:",
@@ -176,69 +232,8 @@
 	"groups":
 	[
 		{
-			"selected": 0,
 			"sheets":
 			[
-				{
-					"buffer": 0,
-					"file": "index.html",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1127,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								639,
-								639
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/HTML/HTML.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 0,
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "js/listen/listen.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1902,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 1,
-					"type": "text"
-				}
 			]
 		}
 	],
