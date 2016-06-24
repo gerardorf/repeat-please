@@ -48,7 +48,7 @@ function Stage1()
 	function create()
 	{
 		teacher_voice.set_fx(game.add.audioSprite('sentences'));
-		teacher_voice.set_current_sprite('live_long');
+		teacher_voice.set_current_sprite('things');
 
 		sound_effects.set_fx(game.add.audioSprite('sound_effects'));
 		sound_effects.set_current_sprite('charm');
