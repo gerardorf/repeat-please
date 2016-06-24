@@ -1,14 +1,25 @@
 function Recorder() 
 {
-	this.record_event = function()
+	var countdown_start;
+	var shared = false;
+	var microphone;
+
+	this.record = function(start)
 	{
-	   start_recording();
+		countdown_start = start;
+	   	get_micro();
 	}
 
-	function start_recording()
+	this.recording = function()
+	{
+		return recording;
+	}
+
+	function get_micro()
 	{
 		if (supported())
 		{
+			microphone = new Microphone(new AudioContext());
 			get_user_media();
 		}
 		else
@@ -32,16 +43,18 @@ function Recorder()
 
 	function get_user_media()
 	{
-		navigator.getUserMedia(
-			  {audio:true}, 
-			  function(stream) { start_microphone(stream); },
-			  function(e) { alert('Error capturing audio.'); }
-			);
+		if(shared == false)
+		{
+			navigator.getUserMedia({audio:true}, 
+				  					function(stream) { refresh_stream(stream); },
+				  					function(e) { alert('Error capturing audio.'); });
+		}
 	}
 
-	function start_microphone(stream)
+	function refresh_stream(stream)
 	{
-		var microphone = new Microphone(new AudioContext(), stream);;
+		document.dispatchEvent(countdown_start);
+		shared = true;
 		microphone.config(stream);
 	}
 }

@@ -1,6 +1,6 @@
 function AudioLibrary()  //TODO REFACTOR
 {
-    var sentences_sprites = 'assets/audio/audio_sprites.ogg';
+    var sentences_sprites = 'assets/audio/audio_sprites.mp3';
 
     var sentences = {
         spritemap: {
@@ -12,15 +12,9 @@ function AudioLibrary()  //TODO REFACTOR
             },
             'live_long': {
                 start: 2.5,
-                end: 4.1,
+                end: 4.5,
                 loop: false,
                 text: "Live long and prosper."
-            },
-            'well_done': {
-                start: 4.1,
-                end: 5.5,
-                loop: false,
-                text: "Well done."
             }
         }
     };
@@ -41,18 +35,13 @@ function AudioLibrary()  //TODO REFACTOR
     }
 
 
-    var effects_sprites = 'assets/audio/sound_effects.mp3';
+    var effects_sprites = 'assets/audio/splitted/charm.mp3';
 
     var sound_effects = {
         spritemap: {
             'charm': {
                 start: 0,
                 end: 2.5,
-                loop: false
-            },
-            'clock': {
-                start: 4,
-                end: 14,
                 loop: false
             }
         }

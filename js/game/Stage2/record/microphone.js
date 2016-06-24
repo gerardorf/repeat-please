@@ -10,10 +10,8 @@ function Microphone(audioContext)
 	
     this.config = function(streamPar)
     {
-        stream = streamPar;
-
     	create_gain_node();
-    	create_stream();
+    	create_stream(streamPar);
 		create_fft();
 		create_analyser();
 		
@@ -22,15 +20,21 @@ function Microphone(audioContext)
 		analyser.connect(fft.node());
     }
 
+    this.stop = function()
+    {
+        fft.stop();
+        stream.stop();
+    }
+
     function create_gain_node()
     {
     	gain = new Gain(audioContext.createGain());
 		gain.connect(audioContext.destination);
     }
 
-    function create_stream()
+    function create_stream(streamPar)
     {
-    	stream = new Stream(audioContext.createMediaStreamSource(stream));
+    	stream = new Stream(audioContext.createMediaStreamSource(streamPar));
 		stream.connect(gain.node()); 
 		stream.configProcessor(audioContext.createScriptProcessor(16384, 1, 1));
     }

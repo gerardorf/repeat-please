@@ -26,7 +26,12 @@ function Stream(source)
 	{
 		return stream.PLAYING_STATE;
 	}
-	
+
+	this.stop = function()
+    {
+    	state = 'stopped';
+    }
+
 	function process_microphone_buffer(event) 
 	{
 		if(state == 'running')

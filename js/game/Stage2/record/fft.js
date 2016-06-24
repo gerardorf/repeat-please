@@ -25,6 +25,11 @@ function Fft(par)
 		};
     }
 
+    this.stop = function()
+    {
+    	state = 'stopped';
+    }
+
     function get_frequency_average(analyser, array)
     {
 		analyser.getByteFrequencyData(array);
