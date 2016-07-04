@@ -31,8 +31,12 @@ function Stream(source)
 	{
 		if(state == 'running')
     	{
-			var spectogram = new Spectogram();
-			//spectogram.draw(event.inputBuffer.getChannelData(0));
+			send_to_server(event.inputBuffer.getChannelData(0));
 		}
+  	}
+
+  	function send_to_server(buffer)
+  	{
+  		
   	}
 }

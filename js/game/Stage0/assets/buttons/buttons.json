@@ -1,7 +1,7 @@
 {"frames": [
 
 {
-	"filename": "green_hover.png",
+	"filename": "hover.png",
 	"frame": {"x":1,"y":1,"w":224,"h":50},
 	"rotated": false,
 	"trimmed": false,
@@ -9,7 +9,7 @@
 	"sourceSize": {"w":224,"h":50}
 },
 {
-	"filename": "green_normal.png",
+	"filename": "normal.png",
 	"frame": {"x":227,"y":1,"w":3,"h":3},
 	"rotated": false,
 	"trimmed": true,

@@ -10,10 +10,8 @@ function Microphone(audioContext)
 	
     this.config = function(streamPar)
     {
-        stream = streamPar;
-
     	create_gain_node();
-    	create_stream();
+    	create_stream(streamPar);
 		create_fft();
 		create_analyser();
 		
@@ -28,9 +26,9 @@ function Microphone(audioContext)
 		gain.connect(audioContext.destination);
     }
 
-    function create_stream()
+    function create_stream(streamPar)
     {
-    	stream = new Stream(audioContext.createMediaStreamSource(stream));
+    	stream = new Stream(audioContext.createMediaStreamSource(streamPar));
 		stream.connect(gain.node()); 
 		stream.configProcessor(audioContext.createScriptProcessor(16384, 1, 1));
     }

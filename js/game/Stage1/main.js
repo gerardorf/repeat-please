@@ -23,7 +23,6 @@ function Stage1()
 
 	function preload()
 	{
-
 		game.load.atlas('teacher', 'js/game/Stage1/assets/characters/charset.png', 'js/game/Stage1/assets/characters/charset.json');
 		game.load.atlas('dialogs', 'js/game/Stage1/assets/dialog/dialogs.png', 'js/game/Stage1/assets/dialog/dialogs.json');
 
@@ -186,7 +185,7 @@ function Stage1()
 	{
 		game.destroy();
 		
-		CURRENT_STATE = new Stage2();
+		CURRENT_STATE = new Stage1();
 		CURRENT_STATE.run();
 	}
 	////WELL DONE
