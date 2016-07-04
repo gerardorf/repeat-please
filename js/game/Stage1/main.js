@@ -185,8 +185,8 @@ function Stage1()
 	{
 		game.destroy();
 		
-		CURRENT_STATE = new Stage1();
-		CURRENT_STATE.run();
+		CURRENT_STAGE = new Stage1();
+		CURRENT_STAGE.run();
 	}
 	////WELL DONE
 }

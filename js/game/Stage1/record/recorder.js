@@ -55,6 +55,7 @@ function Recorder()
 	{
 		document.dispatchEvent(countdown_start);
 		shared = true;
-		microphone.config(stream);
+		microphone.conf
+		g(stream);
 	}
 }

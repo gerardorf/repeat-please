@@ -1,88 +1,119 @@
 function Stage0()
 {
 	var game = null;
-	var teacher = null;
-	var background = null;
-	var fade_back = null;
-	var dialog = null;
-	var welcome_text = null;
-	var button = null;
-	var button_text = null;
 
 	this.run = function()
 	{
-		game = new Phaser.Game(1200, 600, Phaser.CANVAS, 'phaser-example', { preload: preload, create: create });
+		game = new Phaser.Game(SCREEN_WIDTH, SCREEN_HEIGHT, Phaser.CANVAS, 'stage 0', { preload: preload, create: create });
 	}
 
 	function preload()
 	{
-		game.load.image('title', 'js/game/Stage0/assets/background/classroom.png');
-		game.load.image('fade_background', 'js/game/Stage0/assets/background/transparent_layer.png');
-		game.load.image('dialog_bubble', 'js/game/Stage0/assets/dialog/dialog_bubble.png');
-		game.load.image('hello_ellen', 'js/game/Stage0/assets/characters/hello.png');
-		game.load.spritesheet('buttons', 'js/game/Stage0/assets/buttons/buttons.png', 224, 50, 2, 1, 1);
-		game.load.bitmapFont('nokia_black', 'assets/fonts/nokia16black.png', 'assets/fonts/nokia16black.xml');
+		game.load.image(BACKGROUND_NAME, BACKGROUND_PATH);
+		game.load.image(FADER_NAME, FADER_PATH);
+		game.load.image(DIALOG_NAME, DIALOG_PATH);
+		game.load.image(TEACHER_NAME, TEACHER_PATH);
+		game.load.spritesheet(START_BUTTON_SPRITESHEET, START_BUTTON_ATLAS, START_BUTTON_WIDTH, START_BUTTON_HEIGHT, START_BUTTON_NORMAL, START_BUTTON_HOVER, START_BUTTON_CLICK);
+		game.load.bitmapFont(NOKIA_BLACK_NAME, NOKIA_BLACK_PATH, NOKIA_BLACK_ATLAS);
 	}
+
+	var background = null;
+	var fader = null;
+
+	var dialog_bubble = null;
+	var start_button = null;
+
+	var teacher = null;
 
 	function create()
 	{
 		load_assets();
-		animate();
+		run_animation();
 	}
 
 	function load_assets()
 	{
-		background = game.add.image(0, 0, 'title');
-		fade_back = game.add.image(0, -600, 'fade_background');
-		dialog = game.add.image(0, 0, 'dialog_bubble');
-		dialog.alpha = 0;
+		load_background();
+		load_dialog();
+		load_teacher();
+	}
 
-		welcome_text = game.add.bitmapText(350, 60, 'nokia_black', 
-			"Lorem ipsum dolor sit amet, \nconsectetur adipiscing elit. " +
-			"\n\nPraesent efficitur ante sit amet \nmattis auctor. Fusce vehicula eu \ndolor ac posuere. Etiam dapibus \nsapien nibh, at pellentesque lectus \nmalesuada sed. " +
-			"\n\nVivamus ultricies sapien nec \npulvinar ultricies. Maecenas id\nauctor est. Aliquam ut fermentum \neros, in dapibus elit.", 30);
-		welcome_text.alpha = 0;
+	function load_background()
+	{
+		background = game.add.image(0, 0, BACKGROUND_NAME);
+		fader = game.add.image(0, -600, FADER_NAME);
+	}
 
-		make_button('start', "> Vamos allá!!", 490, 480);
+	function load_dialog()
+	{
+		dialog_bubble = game.add.image(DIALOG_X, DIALOG_Y, DIALOG_NAME);
+		hide(dialog_bubble);
 
-		teacher = game.add.image(0, 50, 'hello_ellen');
+		dialog_bubble.content = game.add.bitmapText(DIALOG_TEXT_X, DIALOG_TEXT_Y, DIALOG_TEXT_FONT, DIALOG_TEXT_CONTENT, DIALOG_TEXT_FONT_SIZE);
+		hide(dialog_bubble.content);
+
+		make_button(START_BUTTON_NAME, START_BUTTON_CONTENT, START_BUTTON_X, START_BUTTON_Y);
+	}
+
+	function load_teacher()
+	{
+		teacher = game.add.image(0, 50, TEACHER_NAME);
 	}
 
 	function make_button(name, text, x, y) 
 	{
-	    button = game.add.button(x, y, 'buttons', stage_clear, this, 0, 1, 0);
-	    button.name = name;
-	    button.smoothed = false;
-	   	button.alpha = 0;
+	    start_button = game.add.button(x, y, START_BUTTON_SPRITESHEET, stage_clear, this, 0, 1, 0);
+	    start_button.name = name;
+	    start_button.smoothed = false;
+	    hide(start_button);
 
-	    button_text = game.add.bitmapText(x, y + 15, 'nokia_black', text, 20);
-    	button_text.x += (button.width / 2) - (button_text.textWidth / 2);
-    	button_text.alpha = 0;
+	    start_button.content = game.add.bitmapText(x, y + 15, START_BUTTON_FONT, text, START_BUTTON_FONT_SIZE);
+    	start_button.content.x += (start_button.width / 2) - (start_button.content.textWidth / 2);
+    	hide(start_button.content);
 	}
 
-	function animate()
+	function run_animation()
 	{
-		game.add.tween(fade_back).to({ y: 0 }, 2000, Phaser.Easing.Quadratic.Out, true, 0, 0, false);
-		game.add.tween(dialog).to( { alpha: 1 }, 3000, Phaser.Easing.Quadratic.Out, true, 0, 0, false);
-		game.add.tween(welcome_text).to({ alpha: 1 }, 3000, Phaser.Easing.Quadratic.Out, true, 0, 0, false);
-		game.add.tween(button).to({ alpha: 1 }, 3000, Phaser.Easing.Quadratic.Out, true, 0, 0, false);
-		game.add.tween(button_text).to({ alpha: 1 }, 3000, Phaser.Easing.Quadratic.Out, true, 0, 0, false);
-		game.add.tween(teacher).to({ x: 800 }, 3000, Phaser.Easing.Quadratic.Out, true, 0, 0, false);
+		hide_background();
+
+		fade(dialog_bubble);
+		fade(dialog_bubble.content);
+		fade(start_button);
+		fade(start_button.content);
+
+		drag_teacher();
+	}
+
+	function hide_background()
+	{
+		animate(fader, { y: 0 });
+	}
+
+	function fade(element)
+	{
+		animate(element, { alpha: OPAQUE });
+	}
+
+	function drag_teacher()
+	{
+		animate(teacher, { x: 800 });
+	}
+
+	function animate(element, action)
+	{
+		game.add.tween(element).to(action, 3000, Phaser.Easing.Quadratic.Out, true, 0, 0, false);
+	}
+
+	function hide(element)
+	{
+		element.alpha = TRANSPARENT;
 	}
 
 	function stage_clear()
 	{
-		teacher = null;
-		background = null;
-		fade_back = null;
-		dialog = null;
-		button_text = null;
-		button = null;
-		welcome_text = null;
-
 		game.destroy();
 
-		CURRENT_STATE = new Stage1();
-		CURRENT_STATE.run();
+		CURRENT_STAGE = new Stage1();
+		CURRENT_STAGE.run();
 	}
 }

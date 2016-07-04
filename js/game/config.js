@@ -1,0 +1,29 @@
+//SCREEN SIZE
+SCREEN_WIDTH = 1200;
+SCREEN_HEIGHT = 600;
+
+//GAME PATH
+GAME_PATH = 'js/game/';
+
+//ASSETS
+COMMON_ASSETS = 'assets/'
+
+BACKGROUND_ASSETS = 'background/';
+DIALOGS_ASSETS = 'dialog/';
+CHARS_ASSETS = 'characters/';
+BUTTONS = 'buttons/';
+FONTS = 'fonts/';
+
+NOKIA_BLACK_NAME = 'nokia_black';
+NOKIA_BLACK_PATH = COMMON_ASSETS + FONTS + 'nokia16black.png';
+NOKIA_BLACK_ATLAS = COMMON_ASSETS + FONTS + 'nokia16black.xml';
+
+NOKIA_WHITE = COMMON_ASSETS + FONTS + '.png';
+NOKIA_WHITE_ATLAS = COMMON_ASSETS + FONTS + '.xml';
+
+//STAGE
+CURRENT_STAGE = null;
+
+//ALPHA VALUES
+TRANSPARENT = 0;
+OPAQUE = 1;
