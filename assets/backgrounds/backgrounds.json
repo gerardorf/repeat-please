@@ -1,0 +1,36 @@
+{"frames": [
+
+{
+	"filename": "classroom",
+	"frame": {"x":0,"y":0,"w":1200,"h":600},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":1200,"h":600},
+	"sourceSize": {"w":1200,"h":600}
+},
+{
+	"filename": "blackboard",
+	"frame": {"x":0,"y":600,"w":1200,"h":600},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":1200,"h":600},
+	"sourceSize": {"w":1200,"h":600}
+},
+{
+	"filename": "transparent_layer",
+	"frame": {"x":0,"y":1200,"w":1200,"h":600},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":1200,"h":600},
+	"sourceSize": {"w":1200,"h":600}
+}],
+"meta": {
+	"app": "http://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "backgrounds.png",
+	"format": "RGBA8888",
+	"size": {"w":1200,"h":1800},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:c9206c5e79e98d9e88678536774a0341:971e252dfc7b480764267b8e1092c4ff:f1d160bc8f29cda58a3095e4596a0f13$"
+}
+}

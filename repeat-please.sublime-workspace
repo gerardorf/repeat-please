@@ -4,6 +4,10 @@
 		"selected_items":
 		[
 			[
+				"get_",
+				"get_user_media"
+			],
+			[
 				"s",
 				"small"
 			],
@@ -56,40 +60,10 @@
 	"buffers":
 	[
 		{
-			"contents": "function main()\n{\n	CURRENT_STATE = new Stage0();\n	CURRENT_STATE.run();\n}",
-			"file": "js/main.js",
-			"file_size": 76,
-			"file_write_time": 131111828766427032,
+			"file": "index.html",
 			"settings":
 			{
-				"buffer_size": 72,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "js/game/Stage0/main.js",
-			"settings":
-			{
-				"buffer_size": 1935,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"contents": "function Recorder() \n{\n	var countdown_start;\n	var shared = false;\n	var microphone;\n\n	this.record = function(start)\n	{\n		countdown_start = start;\n	   	get_micro();\n	}\n\n	this.recording = function()\n	{\n		return recording;\n	}\n\n	function get_micro()\n	{\n		if (supported())\n		{\n			microphone = new Microphone(new AudioContext());\n			get_user_media();\n		}\n		else\n		{\n			alert('getUserMedia not supported in this browser.'); \n		}\n	}\n\n	function supported()\n	{\n		if (!navigator.getUserMedia)\n		{\n			navigator.getUserMedia =  navigator.getUserMedia \n			                          || navigator.webkitGetUserMedia \n			                          || navigator.mozGetUserMedia \n			                          || navigator.msGetUserMedia;\n		}\n\n		return navigator.getUserMedia;\n	}\n\n	function get_user_media()\n	{\n		if(shared == false)\n		{\n			navigator.getUserMedia({audio:true}, \n				  					function(stream) { refresh_stream(stream); },\n				  					function(e) { alert('Error capturing audio.'); });\n		}\n	}\n\n	function refresh_stream(stream)\n	{\n		document.dispatchEvent(countdown_start);\n		shared = true;\n		microphone.conf\n		g(stream);\n	}\n}\n",
-			"file": "js/game/Stage1/record/recorder.js",
-			"file_size": 1173,
-			"file_write_time": 131114195147028715,
-			"settings":
-			{
-				"buffer_size": 1115,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "js/game/Stage1/play/audio_json.js",
-			"settings":
-			{
-				"buffer_size": 1466,
+				"buffer_size": 1206,
 				"line_ending": "Windows"
 			}
 		}
@@ -140,29 +114,49 @@
 	"expanded_folders":
 	[
 		"/C/wamp64/www/repeat-please",
-		"/C/wamp64/www/repeat-please/assets",
-		"/C/wamp64/www/repeat-please/assets/audio",
 		"/C/wamp64/www/repeat-please/js",
-		"/C/wamp64/www/repeat-please/js/game",
-		"/C/wamp64/www/repeat-please/js/game/Stage0",
-		"/C/wamp64/www/repeat-please/js/game/Stage1",
-		"/C/wamp64/www/repeat-please/js/game/Stage1/record"
+		"/C/wamp64/www/repeat-please/js/game"
 	],
 	"file_history":
 	[
-		"/C/wamp64/www/repeat-please/js/game/Stage1/record/recorder.js",
-		"/C/wamp64/www/repeat-please/js/game/Stage1/record/spectogram.js",
-		"/C/wamp64/www/repeat-please/js/game/Stage1/record/fft.js",
-		"/C/wamp64/www/repeat-please/js/game/Stage1/record/stream.js",
-		"/C/wamp64/www/repeat-please/js/game/Stage1/play/audio_json.js",
-		"/C/wamp64/www/repeat-please/index.html",
-		"/C/wamp64/www/repeat-please/js/game/Stage1/main.js",
+		"/C/wamp64/www/repeat-please/js/game/Stage0/config.js",
 		"/C/wamp64/www/repeat-please/js/game/Stage0/main.js",
+		"/C/wamp64/www/repeat-please/js/game/Stage1/record/recorder.js",
+		"/C/wamp64/www/repeat-please/js/game/Stage1/main.js",
+		"/C/wamp64/www/repeat-please/js/game/Stage1/config.js",
+		"/C/wamp64/www/repeat-please/js/game/config.js",
+		"/C/wamp64/www/repeat-please/index.html",
+		"/C/wamp64/www/repeat-please/assets/characters/teacher/teacher.json",
 		"/C/wamp64/www/repeat-please/js/game/Stage1/timer.js",
-		"/C/wamp64/www/repeat-please/js/game/Stage1/record/microphone.js",
-		"/C/wamp64/www/repeat-please/js/vendor/phaser.js",
+		"/C/wamp64/www/repeat-please/js/game/stage_template.js",
 		"/C/wamp64/www/repeat-please/js/game/Stage1/play/audio.js",
+		"/C/wamp64/www/repeat-please/js/game/audio/audio_json.js",
+		"/C/wamp64/www/repeat-please/assets/timers/timer.json",
+		"/C/wamp64/www/repeat-please/assets/buttons/buttons.json",
+		"/C/wamp64/www/repeat-please/assets/backgrounds/backgrounds.json",
+		"/C/wamp64/www/repeat-please/assets/dialogs/dialogs.json",
 		"/C/wamp64/www/repeat-please/js/main.js",
+		"/C/wamp64/www/repeat-please/js/game/Stage1/record/ui.js",
+		"/C/wamp64/www/repeat-please/js/game/Stage1/assets/dialog/micro.json",
+		"/C/wamp64/www/repeat-please/js/game/Stage1/record/microphone.js",
+		"/C/wamp64/www/repeat-please/js/game/Stage1/record/spectogram.js",
+		"/C/wamp64/www/repeat-please/js/game/Stage1/play/audio_json.js",
+		"/D/Codigo/OLD_repeat_please/record/recorder.js",
+		"/D/Codigo/OLD_repeat_please/record/microphone.js",
+		"/D/Codigo/OLD_repeat_please/record/spectogram.js",
+		"/D/Codigo/OLD_repeat_please/record/stream.js",
+		"/D/Codigo/OLD_repeat_please/record/ui.js",
+		"/D/Codigo/OLD_repeat_please/record/analyser.js",
+		"/D/Codigo/OLD_repeat_please/record/fft.js",
+		"/D/Codigo/OLD_repeat_please/record/main.js",
+		"/D/Codigo/OLD_repeat_please/record/gain.js",
+		"/C/wamp64/www/repeat-please/js/game/Stage1/record/stream.js",
+		"/C/wamp64/www/repeat-please/js/game/common.js",
+		"/C/wamp64/www/repeat-please/js/game/Stage1/record/analyser.js",
+		"/C/wamp64/www/repeat-please/js/game/state.js",
+		"/C/wamp64/www/repeat-please/js/game/Stage0/assets/buttons/buttons.json",
+		"/C/wamp64/www/repeat-please/js/game/Stage1/record/fft.js",
+		"/C/wamp64/www/repeat-please/js/vendor/phaser.js",
 		"/C/wamp64/www/repeat-please/js/game/Stage2 - repeat a word/main.js",
 		"/C/wamp64/www/repeat-please/js/game/Stage0 - presentation/main.js",
 		"/C/wamp64/www/repeat-please/js/game/Stage1 - repeat a sentence/main.js",
@@ -183,8 +177,6 @@
 		"/C/wamp64/www/repeat-please/js/game/Stage1/listen/ui.js",
 		"/C/wamp64/www/repeat-please/OLD/listen/ui.js",
 		"/C/wamp64/www/repeat-please/OLD/listen/audiolibrary.js",
-		"/C/wamp64/www/repeat-please/js/game/stage_template.js",
-		"/C/wamp64/www/repeat-please/js/game/state.js",
 		"/C/wamp64/www/repeat-please/js/game/Stage0/stage0.js",
 		"/C/wamp64/www/repeat-please/game/Stage0/stage0.js",
 		"/C/wamp64/www/repeat-please/js/ui/main.js",
@@ -248,7 +240,7 @@
 	],
 	"find":
 	{
-		"height": 46.0
+		"height": 34.0
 	},
 	"find_in_files":
 	{
@@ -264,6 +256,8 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"recorder",
+			"Recorder",
 			");\n",
 			"();\n",
 			"countdown_start",
@@ -305,115 +299,29 @@
 	"groups":
 	[
 		{
-			"selected": 2,
+			"selected": 0,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "js/main.js",
+					"file": "index.html",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 72,
+						"buffer_size": 1206,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								70,
-								70
+								484,
+								484
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 2,
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "js/game/Stage0/main.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1935,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								271,
-								271
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 1,
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "js/game/Stage1/record/recorder.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1115,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								720,
-								720
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 450.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 0,
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "js/game/Stage1/play/audio_json.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1466,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								189,
-								224
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
+							"syntax": "Packages/HTML/HTML.sublime-syntax",
 							"tab_size": 4,
 							"translate_tabs_to_spaces": true
 						},
@@ -421,7 +329,7 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 3,
+					"stack_index": 0,
 					"type": "text"
 				}
 			]

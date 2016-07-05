@@ -1,0 +1,60 @@
+{"frames": [
+
+{
+	"filename": "hello",
+	"frame": {"x":0,"y":946,"w":286,"h":550},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":286,"h":550},
+	"sourceSize": {"w":286,"h":550}
+},
+{
+	"filename": "one_last_time",
+	"frame": {"x":0,"y":0,"w":333,"h":470},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":333,"h":470},
+	"sourceSize": {"w":333,"h":470}
+},
+{
+	"filename": "say_this",
+	"frame": {"x":333,"y":0,"w":417,"h":470},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":417,"h":470},
+	"sourceSize": {"w":417,"h":470}
+},
+{
+	"filename": "speaking",
+	"frame": {"x":286,"y":946,"w":612,"h":783},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":612,"h":783},
+	"sourceSize": {"w":612,"h":783}
+},
+{
+	"filename": "well_done",
+	"frame": {"x":0,"y":470,"w":413,"h":470},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":413,"h":470},
+	"sourceSize": {"w":413,"h":470}
+},
+{
+	"filename": "your_turn",
+	"frame": {"x":413,"y":470,"w":413,"h":476},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":413,"h":476},
+	"sourceSize": {"w":413,"h":476}
+}],
+"meta": {
+	"app": "http://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "teacher.png",
+	"format": "RGBA8888",
+	"size": {"w":898,"h":1729},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:f8c8dea5c375c872b99ce9ce4e2d8dd1:68097398530d22669a4452d415ee34fb:59bc5dd000b5e72588320b473e31c312$"
+}
+}
