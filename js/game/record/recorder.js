@@ -1,18 +1,5 @@
 function Recorder(gamePar) 
 {
-	// variables
-	var leftchannel = [];
-	var rightchannel = [];
-	var recorder = null;
-	var recording = false;
-	var recordingLength = 0;
-	var volume = null;
-	var audioInput = null;
-	var sampleRate = null;
-	var audioContext = null;
-	var context = null;
-	var outputElement = document.getElementById('output');
-	var outputString;
 	var game = gamePar;
 	var micro_shared = false;
 
@@ -40,6 +27,12 @@ function Recorder(gamePar)
 		}
 	}
 
+	//// START RECORDING
+	var recording = false;
+	var leftchannel = [];
+	var rightchannel = [];
+	var recording_length = 0;
+
 	this.start_recording = function()
 	{
 		if(micro_shared)
@@ -49,7 +42,7 @@ function Recorder(gamePar)
 	        // reset the buffers
 	        leftchannel.length = 0;
 	        rightchannel.length = 0;
-	        recordingLength = 0;
+	        recording_length = 0;
 		}
 		else
 		{
@@ -57,157 +50,238 @@ function Recorder(gamePar)
 		}
 	}
 
+	var sample_rate = null;
+	var outputElement = document.getElementById('output');
+	var outputString;
+	var analyser;
+
+	function success(stream)
+	{
+		micro_shared = true;
+
+	    var context = create_context();
+	    var gain_node = context.createGain();
+	    window.audio_input = context.createMediaStreamSource(stream);
+	    var recorder = setup_recorder(context, stream);
+
+	    
+
+	    analyser = context.createAnalyser();
+	    analyser.smoothingTimeConstant = 0.3;
+    	analyser.fftSize = 1024;
+    	audio_input.connect(analyser);
+    	analyser.connect(recorder);
+
+	    audio_input.connect(gain_node);
+	    gain_node.connect (recorder);
+	    recorder.connect (context.destination);
+	}
+
+	function create_context()
+	{
+		var audioContext = window.AudioContext || window.webkitAudioContext;
+	    var new_context = new audioContext();
+	    sample_rate = new_context.sampleRate;
+
+	    return new_context;
+	}
+
+	function setup_recorder(context, stream)
+	{
+		var recorder = context.createScriptProcessor(DEFAULT_BUFFER_SIZE, 2, 2);
+
+		recorder.onaudioprocess = function(stream) { record(stream); };
+
+	    return recorder;
+	}
+
+	function record(stream)
+	{
+		if (!recording) return;
+
+		detect_voice();
+		clone_samples(stream);
+	}
+
+	////VOICE RECOGNITION
+	var voice_detected = document.createEvent('Event');
+	voice_detected.name = 'voice_detected';
+	voice_detected.initEvent(voice_detected.name, true, true);
+
+	this.voice_detected_event = function()
+	{
+		return voice_detected.name;
+	}
+
+	var voice_not_detected = document.createEvent('Event');
+	voice_not_detected.name = 'voice_not_detected';
+	voice_not_detected.initEvent(voice_not_detected.name, true, true);
+
+	this.voice_not_detected_event = function()
+	{
+		return voice_not_detected.name;
+	}
+
+	function detect_voice()
+	{
+		var array =  new Uint8Array(analyser.frequencyBinCount);
+        analyser.getByteFrequencyData(array);
+        var values = 0;
+        var length = array.length;
+
+        for (var i = 0; i < length; i++) 
+        {
+            values += array[i];
+        }
+
+        var average = values / length;
+
+        if(average > 10)
+        {
+        	document.dispatchEvent(voice_detected);
+        }
+        else if(average <= 10 )
+        {
+        	document.dispatchEvent(voice_not_detected);;
+        }
+	}
+	////VOICE RECOGNITION
+
+	function clone_samples(stream)
+	{
+		var left = stream.inputBuffer.getChannelData (0);
+        var right = stream.inputBuffer.getChannelData (1);
+
+        // we clone the samples
+        leftchannel.push (new Float32Array (left));
+        rightchannel.push (new Float32Array (right));
+        recording_length += DEFAULT_BUFFER_SIZE;
+	}
+
+	//// START RECORDING
+
+	//// STOP RECORDING
 	this.stop_recording = function()
 	{
-		// we stop recording
         recording = false;
-        
-        console.log('Building wav file...');
+        save_blob(data());
+	}
 
-        // we flat the left and right channels down
-        var leftBuffer = mergeBuffers ( leftchannel, recordingLength );
-        var rightBuffer = mergeBuffers ( rightchannel, recordingLength );
-        // we interleave both channels together
-        var interleaved = interleave ( leftBuffer, rightBuffer );
+	function interleave_channels()
+	{
+		// Flat the left and right channels down
+        var left_buffer = mergeBuffers(leftchannel);
+        var right_buffer = mergeBuffers(rightchannel);
+
+        //Interleave channels
+        return interleave(left_buffer, right_buffer);
+	}
+
+	function mergeBuffers(channel_buffer)
+	{
+		var result = new Float32Array(recording_length);
+		var offset = 0;
+		var lng = channel_buffer.length;
+
+		for (var i = 0; i < lng; i++)
+		{
+			var buffer = channel_buffer[i];
+			result.set(buffer, offset);
+			offset += buffer.length;
+		}
+
+		return result;
+	}
+
+	function interleave(left_buffer, right_buffer)
+	{
+		var length = left_buffer.length + right_buffer.length;
+		var result = new Float32Array(length);
+		var input_index = 0;
+
+		for (var index = 0; index < length; )
+		{
+			result[index++] = left_buffer[input_index];
+			result[index++] = right_buffer[input_index];
+			input_index++;
+		}
+
+		return result;
+	}
+
+	function data()
+	{
+		var interleaved = interleave_channels();
+
+        var file = new DataView(new ArrayBuffer(44 + interleaved.length * 2));
+
+        fill(file, interleaved);
+
+        return file;
+	}
+
+	function fill(data, interleaved)
+	{
+		// RIFF chunk descriptor
+        writeUTFBytes(data, 0, 'RIFF');
+        data.setUint32(4, 44 + interleaved.length * 2, true);
+        writeUTFBytes(data, 8, 'WAVE');
         
-        // we create our wav file
-        var buffer = new ArrayBuffer(44 + interleaved.length * 2);
-        var view = new DataView(buffer);
-        
-        // RIFF chunk descriptor
-        writeUTFBytes(view, 0, 'RIFF');
-        view.setUint32(4, 44 + interleaved.length * 2, true);
-        writeUTFBytes(view, 8, 'WAVE');
         // FMT sub-chunk
-        writeUTFBytes(view, 12, 'fmt ');
-        view.setUint32(16, 16, true);
-        view.setUint16(20, 1, true);
+        writeUTFBytes(data, 12, 'fmt ');
+        data.setUint32(16, 16, true);
+        data.setUint16(20, 1, true);
+        
         // stereo (2 channels)
-        view.setUint16(22, 2, true);
-        view.setUint32(24, sampleRate, true);
-        view.setUint32(28, sampleRate * 4, true);
-        view.setUint16(32, 4, true);
-        view.setUint16(34, 16, true);
+        data.setUint16(22, 2, true);
+        data.setUint32(24, sample_rate, true);
+        data.setUint32(28, sample_rate * 4, true);
+        data.setUint16(32, 4, true);
+        data.setUint16(34, 16, true);
+
         // data sub-chunk
-        writeUTFBytes(view, 36, 'data');
-        view.setUint32(40, interleaved.length * 2, true);
+        writeUTFBytes(data, 36, 'data');
+        data.setUint32(40, interleaved.length * 2, true);
         
         // write the PCM samples
         var lng = interleaved.length;
         var index = 44;
         var volume = 1;
         for (var i = 0; i < lng; i++){
-            view.setInt16(index, interleaved[i] * (0x7FFF * volume), true);
+            data.setInt16(index, interleaved[i] * (0x7FFF * volume), true);
             index += 2;
         }
-        
-        // our final binary blob
-        var blob = new Blob ( [ view ], { type : 'audio/wav' } );
-        save_blob(blob);
 	}
 
-	function save_blob(blob)
+	function save_blob(data)
 	{
+		var blob = new Blob ( [ data ], { type : 'audio/wav' } );
+		var url = (window.URL || window.webkitURL).createObjectURL(blob);
+
 		if(DEBUG)
 		{
-			save_locally(blob);
+			//SAVE MANUALLY ON LOCAL
+	        var link = window.document.createElement('a');
+	        document.body.appendChild(link);
+	        link.id = "stream";
+	        link.href = url;
+	        link.download = 'output.wav';
+			link.click();
 		}
 		else
 		{
-			sent_to_server(blob);
+			//SENT TO SERVER
 		}
 	}
 
-	function save_locally(blob)
-	{
-		var url = (window.URL || window.webkitURL).createObjectURL(blob);
-        var link = window.document.createElement('a');
-        document.body.appendChild(link);
-        link.id = "stream";
-        link.href = url;
-        link.download = 'output.wav';
-		link.click();
+	function writeUTFBytes(view, offset, string)
+	{ 
+		var lng = string.length;
+
+		for (var i = 0; i < lng; i++)
+		{
+			view.setUint8(offset + i, string.charCodeAt(i));
+		}
 	}
-
-	function sent_to_server(blob)
-	{
-
-	}
-
-	function interleave(leftChannel, rightChannel){
-	  var length = leftChannel.length + rightChannel.length;
-	  var result = new Float32Array(length);
-
-	  var inputIndex = 0;
-
-	  for (var index = 0; index < length; ){
-	    result[index++] = leftChannel[inputIndex];
-	    result[index++] = rightChannel[inputIndex];
-	    inputIndex++;
-	  }
-	  return result;
-	}
-
-	function mergeBuffers(channelBuffer, recordingLength){
-	  var result = new Float32Array(recordingLength);
-	  var offset = 0;
-	  var lng = channelBuffer.length;
-	  for (var i = 0; i < lng; i++){
-	    var buffer = channelBuffer[i];
-	    result.set(buffer, offset);
-	    offset += buffer.length;
-	  }
-	  return result;
-	}
-
-	function writeUTFBytes(view, offset, string){ 
-	  var lng = string.length;
-	  for (var i = 0; i < lng; i++){
-	    view.setUint8(offset + i, string.charCodeAt(i));
-	  }
-	}
-
-	function success(e){
-		micro_shared = true;
-
-	    // creates the audio context
-	    audioContext = window.AudioContext || window.webkitAudioContext;
-	    context = new audioContext();
-
-		// we query the context sample rate (varies depending on platforms)
-	    sampleRate = context.sampleRate;
-
-	    console.log('succcess');
-	    
-	    // creates a gain node
-	    volume = context.createGain();
-
-	    // creates an audio node from the microphone incoming stream
-	    audioInput = context.createMediaStreamSource(e);
-
-	    // connect the stream to the gain node
-	    audioInput.connect(volume);
-
-	    /* From the spec: This value controls how frequently the audioprocess event is 
-	    dispatched and how many sample-frames need to be processed each call. 
-	    Lower values for buffer size will result in a lower (better) latency. 
-	    Higher values will be necessary to avoid audio breakup and glitches */
-	    var bufferSize = 2048;
-	    recorder = context.createScriptProcessor(bufferSize, 2, 2);
-
-	    recorder.onaudioprocess = function(e){
-	        if (!recording) return;
-	        var left = e.inputBuffer.getChannelData (0);
-	        var right = e.inputBuffer.getChannelData (1);
-	        // we clone the samples
-	        leftchannel.push (new Float32Array (left));
-	        rightchannel.push (new Float32Array (right));
-	        recordingLength += bufferSize;
-	        console.log('recording');
-	    }
-
-	    // we connect the recorder
-	    volume.connect (recorder);
-	    recorder.connect (context.destination); 
-	}
+	//// STOP RECORDING
 }

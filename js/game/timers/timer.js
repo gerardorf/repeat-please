@@ -1,13 +1,13 @@
-function Timer(gamePar)
+function Timer(gamePar, start_event_name, stop_event_name)
 {
 	var game = gamePar;
 
 	var timer_started = document.createEvent('Event');
-	timer_started.name = 'timer_started';
+	timer_started.name = start_event_name;
 	timer_started.initEvent(timer_started.name, true, true);
 
 	var timer_stopped = document.createEvent('Event');
-	timer_stopped.name = 'timer_stopped';
+	timer_stopped.name = stop_event_name;
 	timer_stopped.initEvent(timer_stopped.name, true, true);
 
 	this.timer_started_event = function()
@@ -27,8 +27,7 @@ function Timer(gamePar)
 
 	var repeat_event;
 	
-
-	this.start_timer = function(time)
+	this.start_timer = function(time, visible)
 	{
 		time_remaining = time;
 		interval = 400 / time;
@@ -36,9 +35,26 @@ function Timer(gamePar)
 		document.dispatchEvent(timer_started);
 	    repeat_event = game.time.events.repeat(Phaser.Timer.SECOND, time + 1, updateTimer, this);
 
-	    loading_bar = game.add.sprite(S1_TIMER_POSITION_X, S1_TIMER_POSITION_Y, TIMER_NAME, TIMER_BAR_NAME);
+	    draw(visible);
+	}
+
+	function draw(visible)
+	{
+		loading_bar = game.add.sprite(S1_TIMER_POSITION_X, S1_TIMER_POSITION_Y, TIMER_NAME, TIMER_BAR_NAME);
 		loading_bar.background = game.add.sprite(S1_TIMER_POSITION_X, S1_TIMER_POSITION_Y, TIMER_NAME, TIMER_BACKGROUND_NAME);
 		loading_bar.text = game.add.bitmapText(loading_bar.background.x + loading_bar.background.width + 5, loading_bar.background.y + 10, DEFAULT_DIALOG_FONT, time_remaining, DEFAULT_FONT_SIZE);
+
+		if(!visible)
+		{
+			hide(loading_bar);
+			hide(loading_bar.background);
+			hide(loading_bar.text);
+		}
+	}
+
+	function hide(element)
+	{
+		element.alpha = TRANSPARENT;
 	}
 
 	function updateTimer()

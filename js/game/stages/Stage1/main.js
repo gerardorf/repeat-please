@@ -23,6 +23,7 @@ function Stage1()
 		game.load.atlas(DIALOG_NAME, DIALOG_PATH, DIALOG_ATLAS);
 		game.load.atlas(TEACHER_NAME, TEACHER_PATH, TEACHER_ATLAS);
 		game.load.atlas(TIMER_NAME, TIMER_PATH, TIMER_ATLAS);
+		game.load.atlas(MICRO_NAME, MICRO_PATH, MICRO_ATLAS);
 		game.load.spritesheet(BUTTONS_SPRITESHEET, BUTTONS_ATLAS, BUTTONS_WIDTH, BUTTONS_HEIGHT, BUTTON_NORMAL, BUTTON_HOVER, BUTTON_CLICK);
 		game.load.bitmapFont(NOKIA_BLACK_NAME, NOKIA_BLACK_PATH, NOKIA_BLACK_ATLAS);
 		game.load.bitmapFont(NOKIA_WHITE_NAME, NOKIA_WHITE_PATH, NOKIA_WHITE_ATLAS);
@@ -134,7 +135,26 @@ function Stage1()
 
 		dialog_bubble.frameName = SMALL_DIALOG_NAME;
 		dialog_bubble.content = game.add.bitmapText(SMALL_DIALOG_CONTENT_X, SMALL_DIALOG_CONTENT_Y, DEFAULT_DIALOG_FONT, S1_SMALL_DIALOG_00, DEFAULT_FONT_SIZE);
+		dialog_bubble.icon = game.add.sprite(S1_TIMER_POSITION_X, S1_TIMER_POSITION_Y, MICRO_NAME, MICRO_OFF);
+		fade(dialog_bubble.icon);
 		dialog_texts.push(dialog_bubble.content);
+	}
+
+	function fade(element)
+	{
+		element.alpha = TRANSPARENT;
+		animate(element, { alpha: OPAQUE });
+	}
+
+	function stop_fade(element)
+	{
+		element.alpha = OPAQUE;
+		animate(element, { alpha: OPAQUE })
+	}
+
+	function animate(element, action)
+	{
+		game.add.tween(element).to(action, 1000, Phaser.Easing.Quadratic.Out, true, 0, -1, true);
 	}
 
 	function clear_array(item, index, arr)
@@ -144,16 +164,19 @@ function Stage1()
 
 	function load_timers()
 	{
-		timer = new Timer(game);
+		timer = new Timer(game, 'activity_timer_started_event', 'activity_timer_stopped_event');
 		
 		document.addEventListener(timer.timer_started_event(), function (e) { start_recording(); }, false);
 		document.addEventListener(timer.timer_stopped_event(), function (e) { stop_recording(); }, false);
 
-		timer.start_timer(5);
+		timer.start_timer(5, false);
 	}
 
 	function start_recording()
 	{
+		document.addEventListener(recorder.voice_detected_event(), function (e) { dialog_bubble.icon.frameName = MICRO_ON_DETECTION; stop_fade(dialog_bubble.icon); }, false);
+		document.addEventListener(recorder.voice_not_detected_event(), function (e) { dialog_bubble.icon.frameName = MICRO_ON_NO_DETECTION; }, false);
+
 		recorder.start_recording();
 	}
 
@@ -168,6 +191,7 @@ function Stage1()
 	function well_done()
 	{
 		dialog_bubble.content.text = S1_SMALL_DIALOG_05;
+		dialog_bubble.icon.destroy();
 		teacher.frameName = TEACHER_WELL_DONE;
 
 		make_button_next_stage(600, 145);

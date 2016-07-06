@@ -12,20 +12,21 @@ GAME_PATH = 'js/game/';
 //ASSETS
 COMMON_ASSETS = 'assets/'
 
-BACKGROUND_ASSETS = 'backgrounds/';
-DIALOGS_ASSETS = 'dialogs/';
-CHARS_ASSETS = 'characters/';
-BUTTONS = 'buttons/';
-FONTS = 'fonts/';
-TIMERS = 'timers/';
+AUDIO_ASSETS = COMMON_ASSETS + 'audio/';
+BACKGROUND_ASSETS = COMMON_ASSETS + 'backgrounds/';
+BUTTON_ASSETS = COMMON_ASSETS + 'buttons/';
+CHARS_ASSETS = COMMON_ASSETS + 'characters/';
+DIALOGS_ASSETS = COMMON_ASSETS + 'dialogs/';
+FONTS_ASSETS = COMMON_ASSETS + 'fonts/';
+TIMERS_ASSETS = COMMON_ASSETS + 'timers/';
 
 NOKIA_BLACK_NAME = 'nokia_black';
-NOKIA_BLACK_PATH = COMMON_ASSETS + FONTS + 'nokia16black.png';
-NOKIA_BLACK_ATLAS = COMMON_ASSETS + FONTS + 'nokia16black.xml';
+NOKIA_BLACK_PATH = FONTS_ASSETS + 'nokia16black.png';
+NOKIA_BLACK_ATLAS = FONTS_ASSETS + 'nokia16black.xml';
 
 NOKIA_WHITE_NAME = 'nokia_white';
-NOKIA_WHITE_PATH = COMMON_ASSETS + FONTS + 'nokia.png';
-NOKIA_WHITE_ATLAS = COMMON_ASSETS + FONTS + 'nokia.xml';
+NOKIA_WHITE_PATH = FONTS_ASSETS + 'nokia.png';
+NOKIA_WHITE_ATLAS = FONTS_ASSETS + 'nokia.xml';
 
 DEFAULT_DIALOG_FONT = NOKIA_BLACK_NAME;
 DEFAULT_FONT_SIZE = 30;
@@ -35,8 +36,8 @@ BLACKBOARD_TEXT_POSITION_Y = 50;
 
 //BACKGROUNDS
 BACKGROUND_NAME = 'background'
-BACKGROUND_PATH = COMMON_ASSETS + BACKGROUND_ASSETS + 'backgrounds.png';
-BACKGROUND_ATLAS = COMMON_ASSETS + BACKGROUND_ASSETS + 'backgrounds.json';
+BACKGROUND_PATH = BACKGROUND_ASSETS + 'backgrounds.png';
+BACKGROUND_ATLAS = BACKGROUND_ASSETS + 'backgrounds.json';
 
 BACKGROUND_CLASSROOM_NAME = 'classroom';
 BACKGROUND_FADER_NAME = 'transparent_layer';
@@ -47,8 +48,8 @@ BACKGROUND_POSITION_Y = 0;
 
 //TEACHER
 TEACHER_NAME = 'teacher';
-TEACHER_PATH = COMMON_ASSETS + CHARS_ASSETS + 'teacher/' + 'teacher.png';
-TEACHER_ATLAS = COMMON_ASSETS + CHARS_ASSETS + 'teacher/' + 'teacher.json';
+TEACHER_PATH = CHARS_ASSETS + 'teacher/' + 'teacher.png';
+TEACHER_ATLAS = CHARS_ASSETS + 'teacher/' + 'teacher.json';
 
 TEACHER_HELLO_NAME = 'hello';
 TEACHER_POINTING_NAME = 'say_this';
@@ -69,18 +70,27 @@ this.random_repeat_frame = function()
 	}
 }
 
+//MICRO
+MICRO_NAME = 'micro';
+MICRO_PATH = AUDIO_ASSETS + 'micro/' + 'micro.png';
+MICRO_ATLAS = AUDIO_ASSETS + 'micro/' + 'micro.json';
+
+MICRO_OFF = 'off';
+MICRO_ON_NO_DETECTION = 'on_no_detection';
+MICRO_ON_DETECTION = 'on_voice_detection';
+
 //TIMERS
 TIMER_NAME = 'timer';
-TIMER_PATH = COMMON_ASSETS + TIMERS + 'timer.png';
-TIMER_ATLAS = COMMON_ASSETS + TIMERS + 'timer.json';
+TIMER_PATH = TIMERS_ASSETS + 'timer.png';
+TIMER_ATLAS = TIMERS_ASSETS + 'timer.json';
 
 TIMER_BAR_NAME = 'bar';
 TIMER_BACKGROUND_NAME = 'background';
 
 //DIALOG BUBBLE
 DIALOG_NAME = 'dialog';
-DIALOG_PATH = COMMON_ASSETS + DIALOGS_ASSETS + 'dialogs.png';
-DIALOG_ATLAS = COMMON_ASSETS + DIALOGS_ASSETS + 'dialogs.json';
+DIALOG_PATH = DIALOGS_ASSETS + 'dialogs.png';
+DIALOG_ATLAS = DIALOGS_ASSETS + 'dialogs.json';
 
 BIG_SQUARE_DIALOG_NAME = 'big_square';
 BIG_SQUARE_DIALOG_WIDTH = 570;
@@ -105,7 +115,7 @@ SMALL_DIALOG_CONTENT_Y = 155;
 
 //BUTTONS
 BUTTONS_SPRITESHEET = 'buttons';
-BUTTONS_ATLAS = COMMON_ASSETS + BUTTONS + 'buttons.png';
+BUTTONS_ATLAS = BUTTON_ASSETS + 'buttons.png';
 BUTTONS_WIDTH = 224;
 BUTTONS_HEIGHT = 50;
 BUTTON_NORMAL = 2;
