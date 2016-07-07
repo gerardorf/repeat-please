@@ -1,9 +1,20 @@
-function Recorder(gamePar) 
-{
-	var game = gamePar;
-	var micro_shared = false;
+micro_shared = false;
 
-	get_user_media();
+function Recorder(iconPosX, iconPosY) 
+{
+	var icon = game.add.sprite(iconPosX, iconPosY, MICRO_NAME, micro_shared ? MICRO_ON_NO_DETECTION : MICRO_OFF);
+	fade_pulse(icon);
+
+	var done = null;
+
+	this.done_event = function(event_name)
+	{
+		done = document.createEvent('Event');
+		done.name = event_name;
+		done.initEvent(done.name, true, true);
+
+		return done.name;
+	}
 
 	function get_user_media()
 	{
@@ -32,39 +43,58 @@ function Recorder(gamePar)
 	var leftchannel = [];
 	var rightchannel = [];
 	var recording_length = 0;
+	var timer = null;
 
 	this.start_recording = function()
 	{
+		if(!micro_shared) get_user_media();
+		try_record();
+	}
+
+	function try_record()
+	{
 		if(micro_shared)
 		{
+			waiting_for_media = false;
 			recording = true;
 
 	        // reset the buffers
 	        leftchannel.length = 0;
 	        rightchannel.length = 0;
 	        recording_length = 0;
+	        start_timer();
 		}
 		else
 		{
-			get_user_media();
+			waiting_for_media = true;
 		}
+	}
+
+	function start_timer()
+	{
+		timer = new Timer();
+		
+		document.addEventListener(timer.timer_stopped_event('record_timer_stopped_event'), function (e) { stop_recording(); }, false);
+
+		timer.start_timer(5, false);
 	}
 
 	var sample_rate = null;
 	var outputElement = document.getElementById('output');
 	var outputString;
 	var analyser;
+	var waiting_for_media = true;
 
 	function success(stream)
 	{
 		micro_shared = true;
 
+		if(waiting_for_media) try_record();
+
 	    var context = create_context();
 	    var gain_node = context.createGain();
 	    window.audio_input = context.createMediaStreamSource(stream);
 	    var recorder = setup_recorder(context, stream);
-
-	    
 
 	    analyser = context.createAnalyser();
 	    analyser.smoothingTimeConstant = 0.3;
@@ -99,29 +129,12 @@ function Recorder(gamePar)
 	{
 		if (!recording) return;
 
+		stop_fade_pulse(icon);
 		detect_voice();
 		clone_samples(stream);
 	}
 
 	////VOICE RECOGNITION
-	var voice_detected = document.createEvent('Event');
-	voice_detected.name = 'voice_detected';
-	voice_detected.initEvent(voice_detected.name, true, true);
-
-	this.voice_detected_event = function()
-	{
-		return voice_detected.name;
-	}
-
-	var voice_not_detected = document.createEvent('Event');
-	voice_not_detected.name = 'voice_not_detected';
-	voice_not_detected.initEvent(voice_not_detected.name, true, true);
-
-	this.voice_not_detected_event = function()
-	{
-		return voice_not_detected.name;
-	}
-
 	function detect_voice()
 	{
 		var array =  new Uint8Array(analyser.frequencyBinCount);
@@ -138,12 +151,22 @@ function Recorder(gamePar)
 
         if(average > 10)
         {
-        	document.dispatchEvent(voice_detected);
+        	voice_detected();
         }
         else if(average <= 10 )
         {
-        	document.dispatchEvent(voice_not_detected);;
+        	voice_not_detected();
         }
+	}
+
+	function voice_detected()
+	{
+		icon.frameName = MICRO_ON_DETECTION;
+	}
+
+	function voice_not_detected()
+	{
+		icon.frameName = MICRO_ON_NO_DETECTION; 
 	}
 	////VOICE RECOGNITION
 
@@ -161,10 +184,12 @@ function Recorder(gamePar)
 	//// START RECORDING
 
 	//// STOP RECORDING
-	this.stop_recording = function()
+	function stop_recording()
 	{
         recording = false;
+        icon.destroy();
         save_blob(data());
+        document.dispatchEvent(done);
 	}
 
 	function interleave_channels()
@@ -247,7 +272,8 @@ function Recorder(gamePar)
         var lng = interleaved.length;
         var index = 44;
         var volume = 1;
-        for (var i = 0; i < lng; i++){
+        for (var i = 0; i < lng; i++)
+        {
             data.setInt16(index, interleaved[i] * (0x7FFF * volume), true);
             index += 2;
         }
@@ -270,7 +296,7 @@ function Recorder(gamePar)
 		}
 		else
 		{
-			//SENT TO SERVER
+			//SEND TO SERVER
 		}
 	}
 

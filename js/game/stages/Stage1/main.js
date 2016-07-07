@@ -1,10 +1,5 @@
 function Stage1()
 {
-	var game = null;
-
-	var teacher_voice = null;
-	var sound_effects = null;
-
 	////START
 	this.run = function()
 	{
@@ -29,6 +24,8 @@ function Stage1()
 		game.load.bitmapFont(NOKIA_WHITE_NAME, NOKIA_WHITE_PATH, NOKIA_WHITE_ATLAS);
 	}
 
+	var teacher_voice = null;
+	var sound_effects = null;
 	function preload_audio()
 	{
 		teacher_voice = new Audio();
@@ -69,10 +66,20 @@ function Stage1()
 	function load_dialog()
 	{
 		dialog_bubble = game.add.sprite(BOTTOM_DIALOG_POSITION_X, BOTTOM_DIALOG_POSITION_Y, DIALOG_NAME, BOTTOM_DIALOG_NAME);
-		dialog_texts.push(game.add.bitmapText(BOTTOM_DIALOG_CONTENT_X, BOTTOM_DIALOG_CONTENT_Y, DEFAULT_DIALOG_FONT, S1_BOTTOM_DIALOG_CONTENT, DEFAULT_FONT_SIZE));
+		add_text(game.add.bitmapText(BOTTOM_DIALOG_CONTENT_X, BOTTOM_DIALOG_CONTENT_Y, DEFAULT_DIALOG_FONT, S1_BOTTOM_DIALOG_CONTENT, DEFAULT_FONT_SIZE));
 
-		make_button_listen(S1_BUTTON_LISTEN_POSITION_X, S1_BUTTON_LISTEN_POSITION_Y);
-		make_button_record(S1_BUTTON_REPEAT_POSITION_X, S1_BUTTON_REPEAT_POSITION_Y);
+		add_button(button_listen());
+		add_button(button_repeat());
+	}
+
+	function button_listen()
+	{
+		return make_button(S1_BUTTON_LISTEN_POSITION_X, S1_BUTTON_LISTEN_POSITION_Y, S1_LISTEN_BUTTON_CONTENT, teacher_reads_sentence);
+	}
+
+	function button_repeat()
+	{
+		return make_button(S1_BUTTON_REPEAT_POSITION_X, S1_BUTTON_REPEAT_POSITION_Y, S1_REPEAT_BUTTON_CONTENT, record_student_voice);
 	}
 
 	function load_teacher()
@@ -82,50 +89,40 @@ function Stage1()
 
 	function load_audio()
 	{
-		recorder = new Recorder(game);
-		
-		sound_effects.set_fx(game.add.audioSprite('sound_effects'));
-		sound_effects.set_current_sprite('charm');
-		sound_effects.play_event();
+		sound_effects.set_fx(game.add.audioSprite('sound_effects'), 'charm');
+		teacher_voice.set_fx(game.add.audioSprite('sentences'), 'things');
 
-		teacher_voice.set_fx(game.add.audioSprite('sentences'));
-		teacher_voice.set_current_sprite('things');
+		play_sound(sound_effects, 'charm');
+
 		sentence = game.add.bitmapText(BLACKBOARD_TEXT_POSITION_X, BLACKBOARD_TEXT_POSITION_Y, NOKIA_WHITE_NAME, teacher_voice.transcription(), DEFAULT_FONT_SIZE);
-	}
-
-	function make_button_listen(x, y) 
-	{
-		make_button(x, y, S1_LISTEN_BUTTON_CONTENT, teacher_speaks);
-	}
-	
-	function make_button_record(x, y) 
-	{
-		make_button(x, y, S1_REPEAT_BUTTON_CONTENT, record_student_voice);
 	}
 
 	function run_animation()
 	{
-		game.add.tween(teacher).to({ x: 0 }, 3000, Phaser.Easing.Quadratic.Out, true, 0, 0, false);
+		drag(teacher, { x: 0 });
 	}
 	////START
 
 	////PLAY
-	function teacher_speaks()
+	function teacher_reads_sentence()
 	{
 		teacher.frameName = TEACHER_SPEAKING;
-		teacher_voice.play_event();
+		play_sound(teacher_voice, S1_TEACHER_CURRENT_SENTENCE);
 	}
 	////PLAY
 
 	////RECORD
-	var timer = null;
 	var recorder = null;
 
 	function record_student_voice()
 	{
 		load_small_dialog_bubble();
+
 		teacher.frameName = random_repeat_frame();
-		load_timers();
+
+		recorder = new Recorder(S1_MICRO_POSITION_X, S1_MICRO_POSITION_Y);
+		document.addEventListener(recorder.done_event('record_finished'), function (e) { record_finished(); }, false);
+		recorder.start_recording();
 	}
 
 	function load_small_dialog_bubble()
@@ -134,27 +131,9 @@ function Stage1()
 		dialog_buttons.forEach(clear_array);
 
 		dialog_bubble.frameName = SMALL_DIALOG_NAME;
+
 		dialog_bubble.content = game.add.bitmapText(SMALL_DIALOG_CONTENT_X, SMALL_DIALOG_CONTENT_Y, DEFAULT_DIALOG_FONT, S1_SMALL_DIALOG_00, DEFAULT_FONT_SIZE);
-		dialog_bubble.icon = game.add.sprite(S1_TIMER_POSITION_X, S1_TIMER_POSITION_Y, MICRO_NAME, MICRO_OFF);
-		fade(dialog_bubble.icon);
-		dialog_texts.push(dialog_bubble.content);
-	}
-
-	function fade(element)
-	{
-		element.alpha = TRANSPARENT;
-		animate(element, { alpha: OPAQUE });
-	}
-
-	function stop_fade(element)
-	{
-		element.alpha = OPAQUE;
-		animate(element, { alpha: OPAQUE })
-	}
-
-	function animate(element, action)
-	{
-		game.add.tween(element).to(action, 1000, Phaser.Easing.Quadratic.Out, true, 0, -1, true);
+		add_text(dialog_bubble.content);
 	}
 
 	function clear_array(item, index, arr)
@@ -162,27 +141,8 @@ function Stage1()
 		arr[index].destroy();
 	}
 
-	function load_timers()
+	function record_finished()
 	{
-		timer = new Timer(game, 'activity_timer_started_event', 'activity_timer_stopped_event');
-		
-		document.addEventListener(timer.timer_started_event(), function (e) { start_recording(); }, false);
-		document.addEventListener(timer.timer_stopped_event(), function (e) { stop_recording(); }, false);
-
-		timer.start_timer(5, false);
-	}
-
-	function start_recording()
-	{
-		document.addEventListener(recorder.voice_detected_event(), function (e) { dialog_bubble.icon.frameName = MICRO_ON_DETECTION; stop_fade(dialog_bubble.icon); }, false);
-		document.addEventListener(recorder.voice_not_detected_event(), function (e) { dialog_bubble.icon.frameName = MICRO_ON_NO_DETECTION; }, false);
-
-		recorder.start_recording();
-	}
-
-	function stop_recording()
-	{
-		recorder.stop_recording();
 		well_done();
 	}
 	////RECORD
@@ -191,28 +151,23 @@ function Stage1()
 	function well_done()
 	{
 		dialog_bubble.content.text = S1_SMALL_DIALOG_05;
-		dialog_bubble.icon.destroy();
 		teacher.frameName = TEACHER_WELL_DONE;
 
-		make_button_next_stage(600, 145);
+		make_button(600, 145, S1_NEXT_STAGE_BUTTON_CONTENT, stage_clear);
 
-		teacher_voice.set_current_sprite('well_done');
-		teacher_voice.play_event();
-	}
-
-	function make_button_next_stage(x, y) 
-	{
-		make_button(x, y, S1_NEXT_STAGE_BUTTON_CONTENT, stage_clear);
+		play_sound(teacher_voice, 'well_done');
 	}
 	////WELL DONE
 
-	function make_button(x, y, text, action)
+	function add_button(button)
 	{
-		var button = game.add.button(x, y, BUTTONS_SPRITESHEET, action, this, 0, 1, 0);
-	    button.content = game.add.bitmapText(x, y + 15, BUTTONS_FONT, text, BUTTONS_FONT_SIZE);
-    	button.content.x = button.x + 50;
-    	dialog_texts.push(button.content);
-    	dialog_buttons.push(button);
+		dialog_buttons.push(button);
+		add_text(button.content);
+	}
+
+	function add_text(text)
+	{
+		dialog_texts.push(text);
 	}
 	
 	function stage_clear()

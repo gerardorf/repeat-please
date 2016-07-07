@@ -1,7 +1,5 @@
 function Stage0()
 {
-	var game = null;
-
 	this.run = function()
 	{
 		game = new Phaser.Game(SCREEN_WIDTH, SCREEN_HEIGHT, Phaser.CANVAS, S0_NAME, { preload: preload, create: create });
@@ -46,12 +44,8 @@ function Stage0()
 	function load_dialog()
 	{
 		dialog_bubble = game.add.sprite(BIG_SQUARE_DIALOG_POSITION_X, BIG_SQUARE_DIALOG_POSITION_Y, DIALOG_NAME, BIG_SQUARE_DIALOG_NAME);
-		hide(dialog_bubble);
-
 		dialog_bubble.content = game.add.bitmapText(BIG_SQUARE_DIALOG_CONTENT_X, BIG_SQUARE_DIALOG_CONTENT_Y, DEFAULT_DIALOG_FONT, S0_DIALOG_TEXT_CONTENT, DEFAULT_FONT_SIZE);
-		hide(dialog_bubble.content);
-
-		make_button(S0_BUTTON_CONTENT, S0_BUTTON_X, S0_BUTTON_Y);
+		start_button = make_button(S0_BUTTON_X, S0_BUTTON_Y, S0_BUTTON_CONTENT, stage_clear);
 	}
 
 	function load_teacher()
@@ -59,52 +53,16 @@ function Stage0()
 		teacher = game.add.sprite(S0_TEACHER_INITIAL_POSITION_X, S0_TEACHER_INITIAL_POSITION_Y, TEACHER_NAME, TEACHER_HELLO_NAME);
 	}
 
-	function make_button(text, x, y) 
-	{
-	    start_button = game.add.button(x, y, BUTTONS_SPRITESHEET, stage_clear, this, 0, 1, 0);
-	    start_button.smoothed = false;
-	    hide(start_button);
-
-	    start_button.content = game.add.bitmapText(x, y + 15, BUTTONS_FONT, text, BUTTONS_FONT_SIZE);
-    	start_button.content.x += (start_button.width / 2) - (start_button.content.textWidth / 2);
-    	hide(start_button.content);
-	}
-
 	function run_animation()
 	{
-		hide_background();
+		drag(fader, { y: 0 });
 
-		fade(dialog_bubble);
-		fade(dialog_bubble.content);
-		fade(start_button);
-		fade(start_button.content);
+		fade_in(dialog_bubble);
+		fade_in(dialog_bubble.content);
+		fade_in(start_button);
+		fade_in(start_button.content);
 
-		drag_teacher();
-	}
-
-	function hide_background()
-	{
-		animate(fader, { y: 0 });
-	}
-
-	function fade(element)
-	{
-		animate(element, { alpha: OPAQUE });
-	}
-
-	function drag_teacher()
-	{
-		animate(teacher, { x: 800 });
-	}
-
-	function animate(element, action)
-	{
-		game.add.tween(element).to(action, 3000, Phaser.Easing.Quadratic.Out, true, 0, 0, false);
-	}
-
-	function hide(element)
-	{
-		element.alpha = TRANSPARENT;
+		drag(teacher, { x: 800 });
 	}
 
 	function stage_clear()

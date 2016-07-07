@@ -2,15 +2,15 @@
 
 {
 	"filename": "off",
-	"frame": {"x":0,"y":0,"w":42,"h":40},
+	"frame": {"x":0,"y":0,"w":225,"h":40},
 	"rotated": false,
 	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":42,"h":40},
-	"sourceSize": {"w":42,"h":40}
+	"spriteSourceSize": {"x":0,"y":0,"w":225,"h":40},
+	"sourceSize": {"w":225,"h":40}
 },
 {
 	"filename": "on_no_detection",
-	"frame": {"x":42,"y":0,"w":42,"h":40},
+	"frame": {"x":225,"y":0,"w":42,"h":40},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":42,"h":40},
@@ -18,7 +18,7 @@
 },
 {
 	"filename": "on_voice_detection",
-	"frame": {"x":84,"y":0,"w":42,"h":40},
+	"frame": {"x":267,"y":0,"w":42,"h":40},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":42,"h":40},
@@ -29,8 +29,8 @@
 	"version": "1.0",
 	"image": "micro.png",
 	"format": "RGBA8888",
-	"size": {"w":126,"h":40},
+	"size": {"w":309,"h":40},
 	"scale": "1",
-	"smartupdate": "$TexturePacker:SmartUpdate:5aef8e998afc297d606001f6f8d1cf51:f79c1de824b92a629ade5e2771036caf:2f70731cac54e8bb6d05b3ec3806a6ee$"
+	"smartupdate": "$TexturePacker:SmartUpdate:1cfa6da502494b985c80da18c04aeaf7:f82bb66e3b0ba5c0dc89f9161cfce6c3:2f70731cac54e8bb6d05b3ec3806a6ee$"
 }
 }

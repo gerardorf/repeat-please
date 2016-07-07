@@ -1,7 +1,5 @@
 DEBUG = true;
 
-S1_NAME = 'Stage 1 - Repeat after me.'
-
 //SCREEN SIZE
 SCREEN_WIDTH = 1200;
 SCREEN_HEIGHT = 600;
@@ -58,7 +56,7 @@ TEACHER_YOUR_TURN = 'your_turn';
 TEACHER_ONE_LAST_TIME = 'one_last_time';
 TEACHER_WELL_DONE = 'well_done';
 
-this.random_repeat_frame = function()
+function random_repeat_frame()
 {
 	if((Math.floor(Math.random() * 3)) == 0)
 	{
@@ -112,7 +110,6 @@ SMALL_DIALOG_POSITION_Y = 0;
 SMALL_DIALOG_CONTENT_X = 350;
 SMALL_DIALOG_CONTENT_Y = 155;
 
-
 //BUTTONS
 BUTTONS_SPRITESHEET = 'buttons';
 BUTTONS_ATLAS = BUTTON_ASSETS + 'buttons.png';
@@ -127,10 +124,19 @@ BUTTONS_FONT_SIZE = 20;
 
 DEFAULT_BUTTON_CONTENT = '> ';
 
+function make_button(x, y, text, action)
+{
+	var button = game.add.button(x, y, BUTTONS_SPRITESHEET, action, this, 0, 1, 0);
+	button.content = game.add.bitmapText(x, y + 15, BUTTONS_FONT, DEFAULT_BUTTON_CONTENT + text, BUTTONS_FONT_SIZE);
+	button.content.x = button.x + 50;
+
+	return button;
+}
+
 //STAGE
 CURRENT_STAGE = null;
 
-this.next_stage = function()
+function next_stage()
 {
 	CURRENT_STAGE = new Stage1();
 	CURRENT_STAGE.run();

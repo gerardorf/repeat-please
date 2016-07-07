@@ -4,6 +4,22 @@
 		"selected_items":
 		[
 			[
+				"add",
+				"add_text"
+			],
+			[
+				"but",
+				"button_repeat"
+			],
+			[
+				"play_",
+				"play_sound"
+			],
+			[
+				"micro",
+				"micro_shared"
+			],
+			[
 				"get_",
 				"get_user_media"
 			],
@@ -59,14 +75,6 @@
 	},
 	"buffers":
 	[
-		{
-			"file": "index.html",
-			"settings":
-			{
-				"buffer_size": 1206,
-				"line_ending": "Windows"
-			}
-		}
 	],
 	"build_system": "",
 	"build_system_choices":
@@ -115,17 +123,36 @@
 	[
 		"/C/wamp64/www/repeat-please",
 		"/C/wamp64/www/repeat-please/js",
-		"/C/wamp64/www/repeat-please/js/game"
+		"/C/wamp64/www/repeat-please/js/game",
+		"/C/wamp64/www/repeat-please/js/game/animations",
+		"/C/wamp64/www/repeat-please/js/game/record",
+		"/C/wamp64/www/repeat-please/js/game/stages",
+		"/C/wamp64/www/repeat-please/js/game/stages/Stage0",
+		"/C/wamp64/www/repeat-please/js/game/stages/Stage1"
 	],
 	"file_history":
 	[
+		"/C/wamp64/www/repeat-please/js/game/record/recorder.js",
+		"/C/wamp64/www/repeat-please/js/game/stages/Stage1/main.js",
+		"/C/wamp64/www/repeat-please/js/game/config.js",
+		"/C/wamp64/www/repeat-please/js/game/stages/Stage0/config.js",
+		"/C/wamp64/www/repeat-please/js/game/stages/Stage0/main.js",
+		"/C/wamp64/www/repeat-please/js/game/stages/Stage1/config.js",
+		"/C/wamp64/www/repeat-please/js/game/animations/common_animations.js",
+		"/C/wamp64/www/repeat-please/js/game/timers/timer.js",
+		"/C/wamp64/www/repeat-please/js/game/play/audio.js",
+		"/C/wamp64/www/repeat-please/index.html",
+		"/C/wamp64/www/repeat-please/assets/audio/micro/micro.json",
+		"/C/wamp64/www/repeat-please/js/main.js",
+		"/C/wamp64/www/repeat-please/js/game/stages/stage_template.js",
+		"/C/wamp64/www/repeat-please/js/game/record/config.js",
+		"/C/wamp64/www/repeat-please/js/game/record/volume-meter.js",
+		"/C/wamp64/www/repeat-please/js/game/play/audio_json.js",
 		"/C/wamp64/www/repeat-please/js/game/Stage0/config.js",
 		"/C/wamp64/www/repeat-please/js/game/Stage0/main.js",
 		"/C/wamp64/www/repeat-please/js/game/Stage1/record/recorder.js",
 		"/C/wamp64/www/repeat-please/js/game/Stage1/main.js",
 		"/C/wamp64/www/repeat-please/js/game/Stage1/config.js",
-		"/C/wamp64/www/repeat-please/js/game/config.js",
-		"/C/wamp64/www/repeat-please/index.html",
 		"/C/wamp64/www/repeat-please/assets/characters/teacher/teacher.json",
 		"/C/wamp64/www/repeat-please/js/game/Stage1/timer.js",
 		"/C/wamp64/www/repeat-please/js/game/stage_template.js",
@@ -135,7 +162,6 @@
 		"/C/wamp64/www/repeat-please/assets/buttons/buttons.json",
 		"/C/wamp64/www/repeat-please/assets/backgrounds/backgrounds.json",
 		"/C/wamp64/www/repeat-please/assets/dialogs/dialogs.json",
-		"/C/wamp64/www/repeat-please/js/main.js",
 		"/C/wamp64/www/repeat-please/js/game/Stage1/record/ui.js",
 		"/C/wamp64/www/repeat-please/js/game/Stage1/assets/dialog/micro.json",
 		"/C/wamp64/www/repeat-please/js/game/Stage1/record/microphone.js",
@@ -233,10 +259,7 @@
 		"/D/Codigo/TestCova/index.html",
 		"/D/Codigo/TestCova/test/test.js",
 		"/D/Codigo/TestCova/js/scripts.js",
-		"/C/Users/Nyan Dev/my.conf.js",
-		"/D/Codigo/TestCova/css/estilos.css",
-		"/C/Users/Nyan Dev/AppData/Roaming/Sublime Text 3/Packages/User/Choose Browser.sublime-build",
-		"/C/Users/Nyan Dev/AppData/Roaming/Sublime Text 3/Packages/User/untitled.sublime-build"
+		"/C/Users/Nyan Dev/my.conf.js"
 	],
 	"find":
 	{
@@ -256,6 +279,36 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"dialog_bubble.content",
+			"push",
+			"\n",
+			"animate",
+			"hide",
+			"fade",
+			"tween",
+			"hide",
+			"animate",
+			"hide",
+			"fade",
+			"icon",
+			"play_event",
+			"teacher_speaks",
+			"play_event",
+			"hide(",
+			"timer",
+			"success",
+			"stop_recording",
+			"start_recording",
+			"timer",
+			"recording",
+			"buffer_size",
+			"timer",
+			"voice_not_detected",
+			"MICRO_ON_DETECTION",
+			"Uint8Array",
+			"sampler",
+			"S1_TIMER_POSITION_X",
+			"TIMER_NAME",
 			"recorder",
 			"Recorder",
 			");\n",
@@ -299,39 +352,8 @@
 	"groups":
 	[
 		{
-			"selected": 0,
 			"sheets":
 			[
-				{
-					"buffer": 0,
-					"file": "index.html",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1206,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								484,
-								484
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/HTML/HTML.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 0,
-					"type": "text"
-				}
 			]
 		}
 	],
