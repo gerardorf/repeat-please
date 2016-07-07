@@ -74,11 +74,12 @@ function Recorder(iconPosX, iconPosY)
 		}
 	}
 
+	var record_timer_stopped_event = null;
 	function start_timer()
 	{
 		timer = new Timer();
 		
-		document.addEventListener(timer.timer_stopped_event('record_timer_stopped_event'), function (e) { stop_recording(); }, false);
+		record_timer_stopped_event = document.addEventListener(timer.timer_stopped_event('record_timer_stopped_event'), function (e) { stop_recording(); }, false);
 
 		timer.start_timer(5, false);
 	}
@@ -188,12 +189,20 @@ function Recorder(iconPosX, iconPosY)
 	//// START RECORDING
 
 	//// STOP RECORDING
+	var blob_generated = false;
+
 	function stop_recording()
 	{
+		game.time.events.remove(record_timer_stopped_event);
         recording = false;
         icon.destroy();
-        save_blob(data());
+        if(!blob_generated) save_blob(data());
         document.dispatchEvent(done);
+	}
+
+	this.force_stop = function()
+	{
+		stop_recording();
 	}
 
 	function interleave_channels()
@@ -285,6 +294,8 @@ function Recorder(iconPosX, iconPosY)
 
 	function save_blob(data)
 	{
+		blob_generated = true;
+
 		var blob = new Blob ( [ data ], { type : 'audio/wav' } );
 		var url = (window.URL || window.webkitURL).createObjectURL(blob);
 

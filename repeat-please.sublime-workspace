@@ -4,6 +4,14 @@
 		"selected_items":
 		[
 			[
+				"cou",
+				"countdown"
+			],
+			[
+				"coun",
+				"countdown_next_event"
+			],
+			[
 				"add",
 				"add_text"
 			],
@@ -75,6 +83,22 @@
 	},
 	"buffers":
 	[
+		{
+			"file": "js/game/stages/Stage1/main.js",
+			"settings":
+			{
+				"buffer_size": 6444,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "js/game/config.js",
+			"settings":
+			{
+				"buffer_size": 3992,
+				"line_ending": "Windows"
+			}
+		}
 	],
 	"build_system": "",
 	"build_system_choices":
@@ -122,32 +146,35 @@
 	"expanded_folders":
 	[
 		"/C/wamp64/www/repeat-please",
+		"/C/wamp64/www/repeat-please/assets",
+		"/C/wamp64/www/repeat-please/assets/dialogs",
+		"/C/wamp64/www/repeat-please/assets/timers",
 		"/C/wamp64/www/repeat-please/js",
 		"/C/wamp64/www/repeat-please/js/game",
-		"/C/wamp64/www/repeat-please/js/game/animations",
 		"/C/wamp64/www/repeat-please/js/game/record",
-		"/C/wamp64/www/repeat-please/js/game/stages",
-		"/C/wamp64/www/repeat-please/js/game/stages/Stage0",
-		"/C/wamp64/www/repeat-please/js/game/stages/Stage1"
+		"/C/wamp64/www/repeat-please/js/game/timers"
 	],
 	"file_history":
 	[
-		"/C/wamp64/www/repeat-please/js/game/record/recorder.js",
-		"/C/wamp64/www/repeat-please/js/game/stages/Stage1/main.js",
 		"/C/wamp64/www/repeat-please/js/game/config.js",
-		"/C/wamp64/www/repeat-please/js/game/stages/Stage0/config.js",
-		"/C/wamp64/www/repeat-please/js/game/stages/Stage0/main.js",
-		"/C/wamp64/www/repeat-please/js/game/stages/Stage1/config.js",
-		"/C/wamp64/www/repeat-please/js/game/animations/common_animations.js",
 		"/C/wamp64/www/repeat-please/js/game/timers/timer.js",
+		"/C/wamp64/www/repeat-please/js/main.js",
+		"/C/wamp64/www/repeat-please/assets/dialogs/dialogs.json",
+		"/C/wamp64/www/repeat-please/js/game/record/recorder.js",
+		"/C/wamp64/www/repeat-please/js/game/animations/common_animations.js",
+		"/C/wamp64/www/repeat-please/js/game/play/audio_json.js",
+		"/C/wamp64/www/repeat-please/js/game/stages/Stage0/main.js",
+		"/C/wamp64/www/repeat-please/assets/timers/timer.json",
+		"/C/wamp64/www/repeat-please/js/game/stages/Stage1/config.js",
 		"/C/wamp64/www/repeat-please/js/game/play/audio.js",
+		"/C/wamp64/www/repeat-please/js/vendor/phaser.js",
+		"/C/wamp64/www/repeat-please/js/game/stages/Stage0/config.js",
+		"/C/wamp64/www/repeat-please/js/game/stages/Stage1/main.js",
 		"/C/wamp64/www/repeat-please/index.html",
 		"/C/wamp64/www/repeat-please/assets/audio/micro/micro.json",
-		"/C/wamp64/www/repeat-please/js/main.js",
 		"/C/wamp64/www/repeat-please/js/game/stages/stage_template.js",
 		"/C/wamp64/www/repeat-please/js/game/record/config.js",
 		"/C/wamp64/www/repeat-please/js/game/record/volume-meter.js",
-		"/C/wamp64/www/repeat-please/js/game/play/audio_json.js",
 		"/C/wamp64/www/repeat-please/js/game/Stage0/config.js",
 		"/C/wamp64/www/repeat-please/js/game/Stage0/main.js",
 		"/C/wamp64/www/repeat-please/js/game/Stage1/record/recorder.js",
@@ -158,10 +185,8 @@
 		"/C/wamp64/www/repeat-please/js/game/stage_template.js",
 		"/C/wamp64/www/repeat-please/js/game/Stage1/play/audio.js",
 		"/C/wamp64/www/repeat-please/js/game/audio/audio_json.js",
-		"/C/wamp64/www/repeat-please/assets/timers/timer.json",
 		"/C/wamp64/www/repeat-please/assets/buttons/buttons.json",
 		"/C/wamp64/www/repeat-please/assets/backgrounds/backgrounds.json",
-		"/C/wamp64/www/repeat-please/assets/dialogs/dialogs.json",
 		"/C/wamp64/www/repeat-please/js/game/Stage1/record/ui.js",
 		"/C/wamp64/www/repeat-please/js/game/Stage1/assets/dialog/micro.json",
 		"/C/wamp64/www/repeat-please/js/game/Stage1/record/microphone.js",
@@ -182,7 +207,6 @@
 		"/C/wamp64/www/repeat-please/js/game/state.js",
 		"/C/wamp64/www/repeat-please/js/game/Stage0/assets/buttons/buttons.json",
 		"/C/wamp64/www/repeat-please/js/game/Stage1/record/fft.js",
-		"/C/wamp64/www/repeat-please/js/vendor/phaser.js",
 		"/C/wamp64/www/repeat-please/js/game/Stage2 - repeat a word/main.js",
 		"/C/wamp64/www/repeat-please/js/game/Stage0 - presentation/main.js",
 		"/C/wamp64/www/repeat-please/js/game/Stage1 - repeat a sentence/main.js",
@@ -279,6 +303,9 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"TIMER",
+			"sentence",
+			"timer",
 			"dialog_bubble.content",
 			"push",
 			"\n",
@@ -352,8 +379,67 @@
 	"groups":
 	[
 		{
+			"selected": 1,
 			"sheets":
 			[
+				{
+					"buffer": 0,
+					"file": "js/game/stages/Stage1/main.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 6444,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2625,
+								2625
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 738.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "js/game/config.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3992,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2542,
+								2570
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 1170.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				}
 			]
 		}
 	],

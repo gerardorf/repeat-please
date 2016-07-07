@@ -1,7 +1,9 @@
-function Timer()
+function Timer(xP = 0, yP = 0)
 {
 	var timer_started = null;
 	var timer_stopped = null;
+	var x = xP
+	var y = yP;
 
 	this.timer_started_event = function(event_name)
 	{
@@ -28,7 +30,7 @@ function Timer()
 
 	var repeat_event;
 	
-	this.start_timer = function(time, visible, x, y)
+	this.start_timer = function(time, visible)
 	{
 		time_remaining = time;
 		interval = 400 / time;
@@ -40,11 +42,11 @@ function Timer()
 	    draw(visible);
 	}
 
-	function draw(visible, x = 0, y = 0)
+	function draw(visible)
 	{
 		loading_bar = game.add.sprite(x, y, TIMER_NAME, TIMER_BAR_NAME);
 		loading_bar.background = game.add.sprite(x, y, TIMER_NAME, TIMER_BACKGROUND_NAME);
-		loading_bar.text = game.add.bitmapText(loading_bar.background.x + loading_bar.background.width + 5, loading_bar.background.y + 10, DEFAULT_DIALOG_FONT, time_remaining, DEFAULT_FONT_SIZE);
+		loading_bar.text = game.add.bitmapText(loading_bar.background.x + loading_bar.background.width + 5, loading_bar.background.y + 10, NOKIA_WHITE_NAME, 'Te quedan ' + time_remaining + ' segundos.', DEFAULT_FONT_SIZE);
 
 		if(!visible)
 		{
@@ -67,7 +69,7 @@ function Timer()
 			document.dispatchEvent(timer_stopped);
 		}
 
-		loading_bar.text.text = time_remaining;
+		loading_bar.text.text = 'Te quedan ' + time_remaining + ' segundos.';
 	}
 
 	function reset()

@@ -55,6 +55,7 @@ function Stage1()
 	{
 		load_dialog();
 		load_teacher();
+		load_timer();
 	}
 
 	function load_background()
@@ -86,6 +87,19 @@ function Stage1()
 		teacher = game.add.sprite(S1_TEACHER_INITIAL_POSITION_X, S1_TEACHER_INITIAL_POSITION_Y, TEACHER_NAME, TEACHER_POINTING_NAME);
 	}
 
+	var total_timer = null;
+	var time_out_event;
+	var timer_dialog = null;
+
+	function load_timer()
+	{
+		timer_dialog = game.add.sprite(BLACK_PLAIN_DIALOG_POSITION_X, BLACK_PLAIN_DIALOG_POSITION_Y, DIALOG_NAME, BLACK_PLAIN_NAME);
+
+		total_timer = new Timer(BLACK_PLAIN_DIALOG_POSITION_X + 4, BLACK_PLAIN_DIALOG_POSITION_Y + 4);
+		time_out_event = document.addEventListener(total_timer.timer_stopped_event('time_out_event'), function (e) { well_done(); }, false);
+		total_timer.start_timer(10, true);
+	}
+
 	function load_audio()
 	{
 		sound_effects.set_fx(game.add.audioSprite('sound_effects'), 'charm');
@@ -98,12 +112,11 @@ function Stage1()
 	}
 
 	var countdown = null;
-	var timer = null;
+	var initial_countdown_timer = null;
 	function show_countdown()
 	{
-		timer = new Timer();
-		countdown_next_event = document.addEventListener(timer.timer_stopped_event('countdown_next_event'), function (e) { update_countdown(); }, false);
-
+		initial_countdown_timer = new Timer();
+		countdown_next_event = document.addEventListener(initial_countdown_timer.timer_stopped_event('countdown_next_event'), function (e) { update_countdown(); }, false);
 		update_countdown();
 	}
 
@@ -111,36 +124,26 @@ function Stage1()
 	{
 		if(countdown == null)
 		{
-			countdown = game.add.sprite(COUNTDOWN_ANIMATION_X, COUNTDOWN_ANIMATION_Y, TIMER_NAME, COUNTDOWN_3_NAME);
-			play_sound(sound_effects, 'normal_countdown_tone');
-			fade_pulse_once(countdown);
-
-			timer.start_timer(0, false);
+			next_countdown(COUNTDOWN_3_NAME, 'normal_countdown_tone');
 		}
 		else if(countdown.frameName == COUNTDOWN_3_NAME)
 		{
-			countdown.frameName = COUNTDOWN_2_NAME;
-			play_sound(sound_effects, 'normal_countdown_tone');
-			fade_pulse_once(countdown);
-			timer.start_timer(0, false);
+			next_countdown(COUNTDOWN_2_NAME, 'normal_countdown_tone');
 		}
 		else if(countdown.frameName == COUNTDOWN_2_NAME)
 		{
-			countdown.frameName = COUNTDOWN_1_NAME;
-			play_sound(sound_effects, 'normal_countdown_tone');
-			fade_pulse_once(countdown);
-			timer.start_timer(0, false);
+			next_countdown(COUNTDOWN_1_NAME, 'normal_countdown_tone');
 		} 
 		else if(countdown.frameName == COUNTDOWN_1_NAME) 
 		{
-			countdown.frameName = COUNTDOWN_GO_NAME;
 			countdown.x = SCREEN_WIDTH / 7;
-			play_sound(sound_effects, 'final_countdown_tone');
-			fade_pulse_once(countdown);
-			timer.start_timer(0, false);
+			next_countdown(COUNTDOWN_GO_NAME, 'final_countdown_tone');
 		}
 		else if(countdown.frameName == COUNTDOWN_GO_NAME) 
 		{
+			game.time.events.remove(countdown_next_event);
+			initial_countdown_timer = null;
+
 			hide(countdown);
 
 			load_assets();
@@ -149,12 +152,28 @@ function Stage1()
 			teacher_reads_sentence();
 		}
 	}
+
+	function next_countdown(frame_name, sound_effect)
+	{
+		if(countdown == null) 
+		{
+			countdown = game.add.sprite(COUNTDOWN_ANIMATION_X, COUNTDOWN_ANIMATION_Y, TIMER_NAME, frame_name);
+		}
+		else
+		{
+			countdown.frameName = frame_name;
+		}
+
+		play_sound(sound_effects, sound_effect);
+		fade_pulse_once(countdown);
+
+		initial_countdown_timer.start_timer(0, false);
+	}
 	////START
 
 	////PLAY
 	function teacher_reads_sentence()
 	{
-		//teacher.frameName = TEACHER_SPEAKING;
 		play_sound(teacher_voice, S1_TEACHER_CURRENT_SENTENCE);
 	}
 	////PLAY
@@ -198,6 +217,14 @@ function Stage1()
 	////WELL DONE
 	function well_done()
 	{
+		timer_dialog.destroy();
+		recorder.force_stop();
+
+		if(dialog_bubble.content == null)
+		{
+			load_small_dialog_bubble();
+		}
+
 		dialog_bubble.content.text = S1_SMALL_DIALOG_05;
 		sentence.destroy();
 
