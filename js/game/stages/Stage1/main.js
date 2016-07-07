@@ -46,14 +46,13 @@ function Stage1()
 
 	function create()
 	{
-		load_assets();
+		load_background();
 		load_audio();
 		run_animation();
 	}
 
 	function load_assets()
 	{
-		load_background();
 		load_dialog();
 		load_teacher();
 	}
@@ -91,22 +90,71 @@ function Stage1()
 	{
 		sound_effects.set_fx(game.add.audioSprite('sound_effects'), 'charm');
 		teacher_voice.set_fx(game.add.audioSprite('sentences'), 'things');
-
-		play_sound(sound_effects, 'charm');
-
-		sentence = game.add.bitmapText(BLACKBOARD_TEXT_POSITION_X, BLACKBOARD_TEXT_POSITION_Y, NOKIA_WHITE_NAME, teacher_voice.transcription(), DEFAULT_FONT_SIZE);
 	}
 
 	function run_animation()
 	{
-		drag(teacher, { x: 0 });
+		show_countdown();
+	}
+
+	var countdown = null;
+	var timer = null;
+	function show_countdown()
+	{
+		timer = new Timer();
+		countdown_next_event = document.addEventListener(timer.timer_stopped_event('countdown_next_event'), function (e) { update_countdown(); }, false);
+
+		update_countdown();
+	}
+
+	function update_countdown()
+	{
+		if(countdown == null)
+		{
+			countdown = game.add.sprite(COUNTDOWN_ANIMATION_X, COUNTDOWN_ANIMATION_Y, TIMER_NAME, COUNTDOWN_3_NAME);
+			play_sound(sound_effects, 'normal_countdown_tone');
+			fade_pulse_once(countdown);
+
+			timer.start_timer(0, false);
+		}
+		else if(countdown.frameName == COUNTDOWN_3_NAME)
+		{
+			countdown.frameName = COUNTDOWN_2_NAME;
+			play_sound(sound_effects, 'normal_countdown_tone');
+			fade_pulse_once(countdown);
+			timer.start_timer(0, false);
+		}
+		else if(countdown.frameName == COUNTDOWN_2_NAME)
+		{
+			countdown.frameName = COUNTDOWN_1_NAME;
+			play_sound(sound_effects, 'normal_countdown_tone');
+			fade_pulse_once(countdown);
+			timer.start_timer(0, false);
+		} 
+		else if(countdown.frameName == COUNTDOWN_1_NAME) 
+		{
+			countdown.frameName = COUNTDOWN_GO_NAME;
+			countdown.x = SCREEN_WIDTH / 7;
+			play_sound(sound_effects, 'final_countdown_tone');
+			fade_pulse_once(countdown);
+			timer.start_timer(0, false);
+		}
+		else if(countdown.frameName == COUNTDOWN_GO_NAME) 
+		{
+			hide(countdown);
+
+			load_assets();
+			sentence = game.add.bitmapText(BLACKBOARD_TEXT_POSITION_X, BLACKBOARD_TEXT_POSITION_Y, NOKIA_WHITE_NAME, teacher_voice.transcription(), DEFAULT_FONT_SIZE);
+			drag(teacher, { x: 0 });
+			teacher_reads_sentence();
+		}
 	}
 	////START
 
 	////PLAY
 	function teacher_reads_sentence()
 	{
-		teacher.frameName = TEACHER_SPEAKING;
+		//teacher.frameName = TEACHER_SPEAKING;
 		play_sound(teacher_voice, S1_TEACHER_CURRENT_SENTENCE);
 	}
 	////PLAY
@@ -151,11 +199,13 @@ function Stage1()
 	function well_done()
 	{
 		dialog_bubble.content.text = S1_SMALL_DIALOG_05;
+		sentence.destroy();
+
 		teacher.frameName = TEACHER_WELL_DONE;
 
 		make_button(600, 145, S1_NEXT_STAGE_BUTTON_CONTENT, stage_clear);
 
-		play_sound(teacher_voice, 'well_done');
+		play_sound(sound_effects, 'well_done');
 	}
 	////WELL DONE
 

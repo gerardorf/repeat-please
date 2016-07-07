@@ -1,8 +1,40 @@
 {"frames": [
 
 {
+	"filename": "1",
+	"frame": {"x":0,"y":0,"w":313,"h":361},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":313,"h":361},
+	"sourceSize": {"w":313,"h":361}
+},
+{
+	"filename": "2",
+	"frame": {"x":313,"y":0,"w":351,"h":361},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":351,"h":361},
+	"sourceSize": {"w":351,"h":361}
+},
+{
+	"filename": "3",
+	"frame": {"x":664,"y":0,"w":351,"h":361},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":351,"h":361},
+	"sourceSize": {"w":351,"h":361}
+},
+{
+	"filename": "go",
+	"frame": {"x":0,"y":361,"w":942,"h":361},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":942,"h":361},
+	"sourceSize": {"w":942,"h":361}
+},
+{
 	"filename": "bar",
-	"frame": {"x":0,"y":0,"w":400,"h":42},
+	"frame": {"x":0,"y":722,"w":400,"h":42},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":400,"h":42},
@@ -10,7 +42,7 @@
 },
 {
 	"filename": "background",
-	"frame": {"x":400,"y":0,"w":400,"h":42},
+	"frame": {"x":400,"y":722,"w":400,"h":42},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":400,"h":42},
@@ -21,8 +53,8 @@
 	"version": "1.0",
 	"image": "timer.png",
 	"format": "RGBA8888",
-	"size": {"w":800,"h":42},
+	"size": {"w":1015,"h":764},
 	"scale": "1",
-	"smartupdate": "$TexturePacker:SmartUpdate:4fdefa17f8a7b00b0466969a4a78e191:de21e2aa08bec70109c712bc8d8b94e9:af97b94046b90be4e30b7f1b3d68dcbb$"
+	"smartupdate": "$TexturePacker:SmartUpdate:c96aefc9027ec77b902c7154059fbd77:0651b6a4a260671091b08b0a8bf288b8:af97b94046b90be4e30b7f1b3d68dcbb$"
 }
 }

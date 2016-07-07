@@ -1,8 +1,8 @@
-micro_shared = false;
-
 function Recorder(iconPosX, iconPosY) 
 {
-	var icon = game.add.sprite(iconPosX, iconPosY, MICRO_NAME, micro_shared ? MICRO_ON_NO_DETECTION : MICRO_OFF);
+	var micro_shared = false;
+
+	var icon = game.add.sprite(iconPosX, iconPosY, MICRO_NAME, MICRO_OFF);
 	fade_pulse(icon);
 
 	var done = null;
@@ -30,7 +30,11 @@ function Recorder(iconPosX, iconPosY)
 		{
 		    navigator.getUserMedia(	{audio:true}, 
 	    							success, 
-	    							function(e) { micro_shared = false; alert('Please share your microphone to continue.'); });
+	    							function(e) 
+	    							{ 
+	    								micro_shared = false; 
+	    								alert('Please share your microphone to continue.'); 
+	    							});
 		} 
 		else
 		{
