@@ -18,6 +18,7 @@ function Stage0()
 		game.load.atlas(BACKGROUND_NAME, BACKGROUND_PATH, BACKGROUND_ATLAS);
 		game.load.atlas(DIALOG_NAME, DIALOG_PATH, DIALOG_ATLAS);
 		game.load.atlas(TEACHER_NAME, TEACHER_PATH, TEACHER_ATLAS);
+		game.load.atlas(MICRO_NAME, MICRO_PATH, MICRO_ATLAS);
 		game.load.spritesheet(BUTTONS_SPRITESHEET, BUTTONS_ATLAS, BUTTONS_WIDTH, BUTTONS_HEIGHT, BUTTON_NORMAL, BUTTON_HOVER, BUTTON_CLICK);
 		game.load.bitmapFont(NOKIA_BLACK_NAME, NOKIA_BLACK_PATH, NOKIA_BLACK_ATLAS);
 	}
@@ -60,7 +61,17 @@ function Stage0()
 	{
 		dialog_bubble = game.add.sprite(BIG_SQUARE_DIALOG_POSITION_X, BIG_SQUARE_DIALOG_POSITION_Y, DIALOG_NAME, BIG_SQUARE_DIALOG_NAME);
 		dialog_bubble.content = game.add.bitmapText(BIG_SQUARE_DIALOG_CONTENT_X, BIG_SQUARE_DIALOG_CONTENT_Y, DEFAULT_DIALOG_FONT, S0_DIALOG_TEXT_CONTENT, DEFAULT_FONT_SIZE);
+
+		RECORDER_INSTANCE = new Recorder(S0_BUTTON_X, S0_BUTTON_Y);
+		document.addEventListener(RECORDER_INSTANCE.micro_acquired_event('micro_acquired'), function (e) { micro_acquired(); }, false);
+		RECORDER_INSTANCE.get_user_media();
+	}
+
+	function micro_acquired()
+	{
 		start_button = make_button(S0_BUTTON_X, S0_BUTTON_Y, S0_BUTTON_CONTENT, stage_clear);
+		fade_in(start_button);
+		fade_in(start_button.content);
 	}
 
 	function load_teacher()
@@ -79,8 +90,6 @@ function Stage0()
 
 		fade_in(dialog_bubble);
 		fade_in(dialog_bubble.content);
-		fade_in(start_button);
-		fade_in(start_button.content);
 
 		drag(teacher, { x: 800 });
 

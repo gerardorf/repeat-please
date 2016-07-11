@@ -1,7 +1,7 @@
-function Recorder(iconPosX, iconPosY) 
-{
-	var micro_shared = false;
+RECORDER_INSTANCE = null;
 
+function Recorder(iconPosX, iconPosY) 
+{	
 	var icon = game.add.sprite(iconPosX, iconPosY, MICRO_NAME, MICRO_OFF);
 	fade_pulse(icon);
 
@@ -16,7 +16,7 @@ function Recorder(iconPosX, iconPosY)
 		return done.name;
 	}
 
-	function get_user_media()
+	this.get_user_media = function()
 	{
 		if (!navigator.getUserMedia)
 		{
@@ -32,7 +32,6 @@ function Recorder(iconPosX, iconPosY)
 	    							success, 
 	    							function(e) 
 	    							{ 
-	    								micro_shared = false; 
 	    								alert('Please share your microphone to continue.'); 
 	    							});
 		} 
@@ -49,29 +48,27 @@ function Recorder(iconPosX, iconPosY)
 	var recording_length = 0;
 	var timer = null;
 
-	this.start_recording = function()
+	this.set_icon_at = function(x, y)
 	{
-		if(!micro_shared) get_user_media();
-		try_record();
+		icon = game.add.sprite(x, y, MICRO_NAME, MICRO_OFF);
 	}
 
-	function try_record()
+	this.start_recording = function()
 	{
-		if(micro_shared)
-		{
-			waiting_for_media = false;
-			recording = true;
+		recording = true;
 
-	        // reset the buffers
-	        leftchannel.length = 0;
-	        rightchannel.length = 0;
-	        recording_length = 0;
-	        start_timer();
-		}
-		else
-		{
-			waiting_for_media = true;
-		}
+        // reset the buffers
+        leftchannel.length = 0;
+        rightchannel.length = 0;
+        recording_length = 0;
+
+        start_timer();
+	}
+
+	this.move_icon_to = function(x, y)
+	{
+		icon.x = x;
+		icon.y = y;
 	}
 
 	var record_timer_stopped_event = null;
@@ -79,23 +76,18 @@ function Recorder(iconPosX, iconPosY)
 	{
 		timer = new Timer();
 		
-		record_timer_stopped_event = document.addEventListener(timer.timer_stopped_event('record_timer_stopped_event'), function (e) { stop_recording(); }, false);
+		record_timer_stopped_event = document.addEventListener(timer.timer_stopped_event('record_timer_stopped_event'), function (e) { sample_done(); }, false);
 
-		timer.start_timer(5, false);
+		timer.start(TIME_AVAILABLE, false);
 	}
 
 	var sample_rate = null;
 	var outputElement = document.getElementById('output');
 	var outputString;
 	var analyser;
-	var waiting_for_media = true;
 
 	function success(stream)
 	{
-		micro_shared = true;
-
-		if(waiting_for_media) try_record();
-
 	    var context = create_context();
 	    var gain_node = context.createGain();
 	    window.audio_input = context.createMediaStreamSource(stream);
@@ -110,6 +102,22 @@ function Recorder(iconPosX, iconPosY)
 	    audio_input.connect(gain_node);
 	    gain_node.connect (recorder);
 	    recorder.connect (context.destination);
+
+		document.dispatchEvent(micro_acquired);
+		game.time.events.remove(micro_acquired);
+
+		icon.destroy();
+	}
+
+	var micro_acquired = null;
+
+	this.micro_acquired_event = function(event_name)
+	{
+		micro_acquired = document.createEvent('Event');
+		micro_acquired.name = event_name;
+		micro_acquired.initEvent(micro_acquired.name, true, true);
+
+		return micro_acquired.name;
 	}
 
 	function create_context()
@@ -134,7 +142,6 @@ function Recorder(iconPosX, iconPosY)
 	{
 		if (!recording) return;
 
-		stop_fade_pulse(icon);
 		detect_voice();
 		clone_samples(stream);
 	}
@@ -191,20 +198,20 @@ function Recorder(iconPosX, iconPosY)
 	//// STOP RECORDING
 	var blob_generated = false;
 
-	function stop_recording()
+	function sample_done()
 	{
+		document.dispatchEvent(done);
+	}
+
+	this.stop_recording = function()
+	{
+		timer.stop();
 		game.time.events.remove(record_timer_stopped_event);
         recording = false;
         icon.destroy();
         if(!blob_generated) save_blob(data());
-        document.dispatchEvent(done);
 	}
-
-	this.force_stop = function()
-	{
-		stop_recording();
-	}
-
+	
 	function interleave_channels()
 	{
 		// Flat the left and right channels down

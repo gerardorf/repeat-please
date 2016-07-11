@@ -39,8 +39,6 @@ function Stage1()
 	var sentence = null;
 
 	var dialog_bubble = null;
-	var dialog_texts = [];
-	var dialog_buttons = []; 
 
 	var teacher = null;
 
@@ -63,23 +61,18 @@ function Stage1()
 		background = game.add.sprite(BACKGROUND_POSITION_X, BACKGROUND_POSITION_Y, BACKGROUND_NAME, BACKGROUND_BLACKBOARD_NAME);
 	}
 
+	var button_lsn = null;
 	function load_dialog()
 	{
 		dialog_bubble = game.add.sprite(BOTTOM_DIALOG_POSITION_X, BOTTOM_DIALOG_POSITION_Y, DIALOG_NAME, BOTTOM_DIALOG_NAME);
-		add_text(game.add.bitmapText(BOTTOM_DIALOG_CONTENT_X, BOTTOM_DIALOG_CONTENT_Y, DEFAULT_DIALOG_FONT, S1_BOTTOM_DIALOG_CONTENT, DEFAULT_FONT_SIZE));
-
-		add_button(button_listen());
-		add_button(button_repeat());
+		dialog_bubble.content = game.add.bitmapText(BOTTOM_DIALOG_CONTENT_X, BOTTOM_DIALOG_CONTENT_Y, DEFAULT_DIALOG_FONT, S1_BOTTOM_DIALOG_CONTENT, DEFAULT_FONT_SIZE);
+		
+		button_lsn = button_listen();
 	}
 
 	function button_listen()
 	{
 		return make_button(S1_BUTTON_LISTEN_POSITION_X, S1_BUTTON_LISTEN_POSITION_Y, S1_LISTEN_BUTTON_CONTENT, teacher_reads_sentence);
-	}
-
-	function button_repeat()
-	{
-		return make_button(S1_BUTTON_REPEAT_POSITION_X, S1_BUTTON_REPEAT_POSITION_Y, S1_REPEAT_BUTTON_CONTENT, record_student_voice);
 	}
 
 	function load_teacher()
@@ -97,7 +90,7 @@ function Stage1()
 
 		total_timer = new Timer(BLACK_PLAIN_DIALOG_POSITION_X + 4, BLACK_PLAIN_DIALOG_POSITION_Y + 4);
 		time_out_event = document.addEventListener(total_timer.timer_stopped_event('time_out_event'), function (e) { well_done(); }, false);
-		total_timer.start_timer(10, true);
+		total_timer.start(S1_TOTAL_TIME, true);
 	}
 
 	function load_audio()
@@ -143,13 +136,9 @@ function Stage1()
 		{
 			game.time.events.remove(countdown_next_event);
 			initial_countdown_timer = null;
-
 			hide(countdown);
 
-			load_assets();
-			sentence = game.add.bitmapText(BLACKBOARD_TEXT_POSITION_X, BLACKBOARD_TEXT_POSITION_Y, NOKIA_WHITE_NAME, teacher_voice.transcription(), DEFAULT_FONT_SIZE);
-			drag(teacher, { x: 0 });
-			teacher_reads_sentence();
+			start_level();
 		}
 	}
 
@@ -167,86 +156,73 @@ function Stage1()
 		play_sound(sound_effects, sound_effect);
 		fade_pulse_once(countdown);
 
-		initial_countdown_timer.start_timer(0, false);
+		initial_countdown_timer.start(0, false);
+	}
+
+	function start_level()
+	{
+		load_assets();
+
+		sentence = game.add.bitmapText(BLACKBOARD_TEXT_POSITION_X, BLACKBOARD_TEXT_POSITION_Y, NOKIA_WHITE_NAME, teacher_voice.transcription(), HUGE_FONT_SIZE);
+		drag(teacher, { x: 0 });
+		teacher_reads_sentence();
+		
+		record_student_voice();
 	}
 	////START
 
 	////PLAY
 	function teacher_reads_sentence()
 	{
-		play_sound(teacher_voice, S1_TEACHER_CURRENT_SENTENCE);
+		play_sound(teacher_voice, S1_TEACHER_DEFAULT_SENTENCE);
 	}
 	////PLAY
 
 	////RECORD
-	var recorder = null;
-
 	function record_student_voice()
 	{
-		load_small_dialog_bubble();
-
 		teacher.frameName = random_repeat_frame();
 
-		recorder = new Recorder(S1_MICRO_POSITION_X, S1_MICRO_POSITION_Y);
-		document.addEventListener(recorder.done_event('record_finished'), function (e) { record_finished(); }, false);
-		recorder.start_recording();
-	}
-
-	function load_small_dialog_bubble()
-	{
-		dialog_texts.forEach(clear_array);
-		dialog_buttons.forEach(clear_array);
-
-		dialog_bubble.frameName = SMALL_DIALOG_NAME;
-
-		dialog_bubble.content = game.add.bitmapText(SMALL_DIALOG_CONTENT_X, SMALL_DIALOG_CONTENT_Y, DEFAULT_DIALOG_FONT, S1_SMALL_DIALOG_00, DEFAULT_FONT_SIZE);
-		add_text(dialog_bubble.content);
-	}
-
-	function clear_array(item, index, arr)
-	{
-		arr[index].destroy();
+		RECORDER_INSTANCE.set_icon_at(S1_MICRO_POSITION_X, S1_MICRO_POSITION_Y);
+		document.addEventListener(RECORDER_INSTANCE.done_event('record_finished'), function (e) { record_finished(); }, false);
+		RECORDER_INSTANCE.start_recording();
 	}
 
 	function record_finished()
 	{
-		well_done();
+		next_level();
+	}
+
+	function next_level()
+	{
+		S1_TEACHER_DEFAULT_SENTENCE = 'people';
+		teacher_reads_sentence();
+		sentence.text = teacher_voice.transcription();
 	}
 	////RECORD
 
 	////WELL DONE
 	function well_done()
 	{
-		timer_dialog.destroy();
-		recorder.force_stop();
-
-		if(dialog_bubble.content == null)
-		{
-			load_small_dialog_bubble();
-		}
-
-		dialog_bubble.content.text = S1_SMALL_DIALOG_05;
-		sentence.destroy();
+		RECORDER_INSTANCE.stop_recording();
 
 		teacher.frameName = TEACHER_WELL_DONE;
+		sentence.destroy();
 
-		make_button(600, 145, S1_NEXT_STAGE_BUTTON_CONTENT, stage_clear);
+		dialog_bubble.content.destroy();
+		dialog_bubble.destroy();
 
-		play_sound(sound_effects, 'well_done');
+		dialog_bubble = game.add.sprite(SMALL_DIALOG_POSITION_X, SMALL_DIALOG_POSITION_Y, DIALOG_NAME, SMALL_DIALOG_NAME);
+		dialog_bubble.content = game.add.bitmapText(SMALL_DIALOG_CONTENT_X, SMALL_DIALOG_CONTENT_Y, DEFAULT_DIALOG_FONT, '¡Hemos acabado!', HUGE_FONT_SIZE);
+		fade_pulse(dialog_bubble.content);
+
+		button_lsn.content.destroy();
+		button_lsn.destroy();
+
+		timer_dialog.destroy();
 	}
 	////WELL DONE
 
-	function add_button(button)
-	{
-		dialog_buttons.push(button);
-		add_text(button.content);
-	}
-
-	function add_text(text)
-	{
-		dialog_texts.push(text);
-	}
-	
 	function stage_clear()
 	{
 		game.destroy();

@@ -11,7 +11,7 @@ function AudioLibrary()  //TODO REFACTOR
                 start: 0,
                 end: 2.5,
                 loop: false,
-                text: "I've seen things you people wouldn't believe."
+                text: "I've seen things you people \nwouldn't believe."
             },
 
             'live_long': 
@@ -28,6 +28,14 @@ function AudioLibrary()  //TODO REFACTOR
                 end: 5.5,
                 loop: false,
                 text: "Well done."
+            },
+
+            'people': 
+            {
+                start: 5.3,
+                end: 6,
+                loop: false,
+                text: "PEOPLE"
             }
         }
     };

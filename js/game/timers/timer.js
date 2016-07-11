@@ -30,7 +30,7 @@ function Timer(xP = 0, yP = 0)
 
 	var repeat_event;
 	
-	this.start_timer = function(time, visible)
+	this.start = function(time, visible)
 	{
 		time_remaining = time;
 		interval = 400 / time;
@@ -40,6 +40,11 @@ function Timer(xP = 0, yP = 0)
 	    repeat_event = game.time.events.repeat(Phaser.Timer.SECOND, time + 1, updateTimer, this);
 
 	    draw(visible);
+	}
+
+	this.stop = function()
+	{
+		time_remaining = 0;
 	}
 
 	function draw(visible)

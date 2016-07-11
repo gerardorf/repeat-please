@@ -34,6 +34,11 @@ function hide(element)
 	element.alpha = TRANSPARENT;
 }
 
+function show(element)
+{
+	element.alpha = OPAQUE;
+}
+
 function animate(element, action, speed = 2000, forever, revert)
 {
 	game.add.tween(element).to(action, speed, Phaser.Easing.Quadratic.Out, true, 0, forever ? -1 : 0, revert);
