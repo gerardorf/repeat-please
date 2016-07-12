@@ -20,29 +20,9 @@ function Audio() //TODO REFACTOR
 	    fx.play(current_sprite);
 	}
 
-	this.path_sentences = function()
-	{
-		return audiolibrary.path_sentences();
-	}
-
-	this.path_effects = function()
-	{
-		return audiolibrary.path_effects();
-	}
-
 	this.transcription = function()
 	{
 		return audiolibrary.get_text(current_sprite);
-	}
-
-	this.sentences = function()
-	{
-		return audiolibrary.sentences();
-	}
-
-	this.sound_effects = function()
-	{
-		return audiolibrary.sound_effects();
 	}
 
 	this.set_fx = function(audio_sprite, default_sprite)

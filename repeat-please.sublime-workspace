@@ -4,6 +4,10 @@
 		"selected_items":
 		[
 			[
+				"audio",
+				"audiolibrary"
+			],
+			[
 				"cou",
 				"countdown"
 			],
@@ -87,31 +91,15 @@
 			"file": "js/game/stages/Stage1/main.js",
 			"settings":
 			{
-				"buffer_size": 6565,
+				"buffer_size": 1638,
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "js/game/record/recorder.js",
+			"file": "js/game/stages/Stage1/level1.js",
 			"settings":
 			{
-				"buffer_size": 7288,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "js/game/timers/timer.js",
-			"settings":
-			{
-				"buffer_size": 1863,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "js/game/config.js",
-			"settings":
-			{
-				"buffer_size": 3975,
+				"buffer_size": 2587,
 				"line_ending": "Windows"
 			}
 		},
@@ -119,7 +107,15 @@
 			"file": "js/game/stages/Stage1/config.js",
 			"settings":
 			{
-				"buffer_size": 610,
+				"buffer_size": 532,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "js/game/stages/Stage1/level5.js",
+			"settings":
+			{
+				"buffer_size": 621,
 				"line_ending": "Windows"
 			}
 		}
@@ -170,43 +166,48 @@
 	"expanded_folders":
 	[
 		"/C/wamp64/www/repeat-please",
-		"/C/wamp64/www/repeat-please/assets",
-		"/C/wamp64/www/repeat-please/assets/dialogs",
-		"/C/wamp64/www/repeat-please/assets/timers",
 		"/C/wamp64/www/repeat-please/js",
 		"/C/wamp64/www/repeat-please/js/game",
+		"/C/wamp64/www/repeat-please/js/game/animations",
+		"/C/wamp64/www/repeat-please/js/game/play",
 		"/C/wamp64/www/repeat-please/js/game/record",
 		"/C/wamp64/www/repeat-please/js/game/stages",
 		"/C/wamp64/www/repeat-please/js/game/stages/Stage1",
-		"/C/wamp64/www/repeat-please/js/game/timers"
+		"/C/wamp64/www/repeat-please/js/game/timers",
+		"/C/wamp64/www/repeat-please/js/vendor"
 	],
 	"file_history":
 	[
-		"/C/wamp64/www/repeat-please/js/game/record/config.js",
-		"/C/wamp64/www/repeat-please/js/game/config.js",
-		"/C/wamp64/www/repeat-please/js/game/timers/timer.js",
-		"/C/wamp64/www/repeat-please/js/main.js",
-		"/C/wamp64/www/repeat-please/assets/dialogs/dialogs.json",
-		"/C/wamp64/www/repeat-please/js/game/record/recorder.js",
-		"/C/wamp64/www/repeat-please/js/game/animations/common_animations.js",
-		"/C/wamp64/www/repeat-please/js/game/play/audio_json.js",
-		"/C/wamp64/www/repeat-please/js/game/stages/Stage0/main.js",
-		"/C/wamp64/www/repeat-please/assets/timers/timer.json",
-		"/C/wamp64/www/repeat-please/js/game/stages/Stage1/config.js",
-		"/C/wamp64/www/repeat-please/js/game/play/audio.js",
-		"/C/wamp64/www/repeat-please/js/vendor/phaser.js",
-		"/C/wamp64/www/repeat-please/js/game/stages/Stage0/config.js",
+		"/C/wamp64/www/repeat-please/js/game/animations/countdown.js",
 		"/C/wamp64/www/repeat-please/js/game/stages/Stage1/main.js",
+		"/C/wamp64/www/repeat-please/js/game/stages/Stage1/level1.js",
+		"/C/wamp64/www/repeat-please/js/game/play/audio.js",
+		"/C/wamp64/www/repeat-please/js/game/play/audio_json.js",
+		"/C/wamp64/www/repeat-please/js/game/timers/timer.js",
+		"/C/wamp64/www/repeat-please/js/game/record/recorder.js",
+		"/C/wamp64/www/repeat-please/js/game/stages/Stage1/config.js",
+		"/C/wamp64/www/repeat-please/js/game/stages/Stage0/main.js",
+		"/C/wamp64/www/repeat-please/js/game/animations/common_animations.js",
+		"/C/wamp64/www/repeat-please/js/game/config.js",
+		"/C/wamp64/www/repeat-please/js/game/stages/Stage1/level5.js",
 		"/C/wamp64/www/repeat-please/index.html",
-		"/C/wamp64/www/repeat-please/assets/audio/micro/micro.json",
+		"/C/wamp64/www/repeat-please/js/game/events/event_manager.js",
+		"/C/wamp64/www/repeat-please/js/game/record/config.js",
+		"/C/wamp64/www/repeat-please/js/game/stages/Stage0/config.js",
+		"/C/Users/Nyan Dev/Downloads/output.wav",
+		"/C/wamp64/www/repeat-please/js/vendor/phaser.js",
 		"/C/wamp64/www/repeat-please/js/game/stages/stage_template.js",
+		"/C/wamp64/www/repeat-please/js/main.js",
+		"/C/wamp64/www/repeat-please/assets/characters/teacher/teacher.json",
+		"/C/wamp64/www/repeat-please/assets/dialogs/dialogs.json",
+		"/C/wamp64/www/repeat-please/assets/timers/timer.json",
+		"/C/wamp64/www/repeat-please/assets/audio/micro/micro.json",
 		"/C/wamp64/www/repeat-please/js/game/record/volume-meter.js",
 		"/C/wamp64/www/repeat-please/js/game/Stage0/config.js",
 		"/C/wamp64/www/repeat-please/js/game/Stage0/main.js",
 		"/C/wamp64/www/repeat-please/js/game/Stage1/record/recorder.js",
 		"/C/wamp64/www/repeat-please/js/game/Stage1/main.js",
 		"/C/wamp64/www/repeat-please/js/game/Stage1/config.js",
-		"/C/wamp64/www/repeat-please/assets/characters/teacher/teacher.json",
 		"/C/wamp64/www/repeat-please/js/game/Stage1/timer.js",
 		"/C/wamp64/www/repeat-please/js/game/stage_template.js",
 		"/C/wamp64/www/repeat-please/js/game/Stage1/play/audio.js",
@@ -304,12 +305,7 @@
 		"/C/wamp64/www/repeat-please/js/fft_node.js",
 		"/C/wamp64/www/repeat-please/js/analyser_node.js",
 		"/C/wamp64/www/repeat-please/js/audio_context.js",
-		"/C/wamp64/www/repeat-please/js/Stream.js",
-		"/C/wamp64/www/repeat-please/indexOLD.html",
-		"/D/Codigo/TestCova/index.html",
-		"/D/Codigo/TestCova/test/test.js",
-		"/D/Codigo/TestCova/js/scripts.js",
-		"/C/Users/Nyan Dev/my.conf.js"
+		"/C/wamp64/www/repeat-please/js/Stream.js"
 	],
 	"find":
 	{
@@ -329,6 +325,60 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"Audio",
+			"time_out_event",
+			"background",
+			"sound_effects",
+			"teacher_voice",
+			"dialog_bubble",
+			"();\n",
+			"button_listen",
+			"button_ls",
+			"button_listen",
+			"evt_mng",
+			"done",
+			"done_evt",
+			"micro_acquired_evt",
+			"events.remove",
+			"dispatchEvent",
+			"addEventListener",
+			"document.createEvent",
+			"));",
+			"micro_acquired",
+			"run_animation",
+			"content.text",
+			"dialog_bubble",
+			"well_done",
+			"spritename",
+			"DIALOG_NAME",
+			"start_tim",
+			"start_recording",
+			"icon",
+			"try_record",
+			"waiting_for_media",
+			"icon",
+			"recorder",
+			"get_user_media",
+			"start_button",
+			"done",
+			"start_button",
+			"dialog_buttons",
+			"clear_array",
+			"well_done",
+			"small_",
+			"sample_done",
+			"stop_recording",
+			"icon",
+			"timer_dialog",
+			"well_done",
+			"ICON",
+			"icon",
+			"stop_recording",
+			"start_timer",
+			"recorder",
+			"record_timer_stopped_event",
+			"teacher_reads",
+			"S1_TEACHER_CURRENT_SENTENCE",
 			"timer",
 			"load_timer",
 			"stop_recording",
@@ -409,7 +459,7 @@
 	"groups":
 	[
 		{
-			"selected": 0,
+			"selected": 1,
 			"sheets":
 			[
 				{
@@ -418,72 +468,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 6565,
+						"buffer_size": 1638,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								3041,
-								3041
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 1053.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 0,
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "js/game/record/recorder.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 7288,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								365,
-								379
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax"
-						},
-						"translation.x": 0.0,
-						"translation.y": 315.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 1,
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "js/game/timers/timer.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1863,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1767,
-								1729
+								1111,
+								1111
 							]
 						],
 						"settings":
@@ -492,27 +485,27 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": -0.0,
-						"translation.y": 889.0,
+						"translation.y": 336.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 4,
+					"stack_index": 1,
 					"type": "text"
 				},
 				{
-					"buffer": 3,
-					"file": "js/game/config.js",
+					"buffer": 1,
+					"file": "js/game/stages/Stage1/level1.js",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 3975,
+						"buffer_size": 2587,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								3536,
-								3536
+								2103,
+								2103
 							]
 						],
 						"settings":
@@ -521,32 +514,61 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 1780.0,
+						"translation.y": 882.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 2,
+					"stack_index": 0,
 					"type": "text"
 				},
 				{
-					"buffer": 4,
+					"buffer": 2,
 					"file": "js/game/stages/Stage1/config.js",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 610,
+						"buffer_size": 532,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								389,
-								389
+								481,
+								500
 							]
 						],
 						"settings":
 						{
 							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "js/game/stages/Stage1/level5.js",
+					"semi_transient": true,
+					"settings":
+					{
+						"buffer_size": 621,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
+							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
@@ -560,7 +582,7 @@
 	],
 	"incremental_find":
 	{
-		"height": 23.0
+		"height": 22.0
 	},
 	"input":
 	{
@@ -597,7 +619,7 @@
 	"project": "repeat-please.sublime-project",
 	"replace":
 	{
-		"height": 42.0
+		"height": 40.0
 	},
 	"save_all_on_build": true,
 	"select_file":

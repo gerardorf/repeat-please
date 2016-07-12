@@ -1,4 +1,5 @@
 game = null;
+CURRENT_STAGE = null;
 
 function drag(element, action)
 {
@@ -42,4 +43,28 @@ function show(element)
 function animate(element, action, speed = 2000, forever, revert)
 {
 	game.add.tween(element).to(action, speed, Phaser.Easing.Quadratic.Out, true, 0, forever ? -1 : 0, revert);
+}
+
+function stage_clear()
+{
+	game.destroy();
+	next_stage();
+}
+
+function next_stage()
+{
+	CURRENT_STAGE = new Stage1();
+	CURRENT_STAGE.run();
+}
+
+function random_repeat_frame()
+{
+	if((Math.floor(Math.random() * 3)) == 0)
+	{
+		return TEACHER_YOUR_TURN;
+	}
+	else
+	{
+		return TEACHER_ONE_LAST_TIME;
+	}
 }

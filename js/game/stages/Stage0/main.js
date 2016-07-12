@@ -1,5 +1,10 @@
 function Stage0()
 {
+	var background = null;
+	var fader = null;
+	var dialog_bubble = null;
+	var start_button = null;
+	var teacher = null;
 	var sound_effects = null;
 
 	this.run = function()
@@ -7,36 +12,35 @@ function Stage0()
 		game = new Phaser.Game(SCREEN_WIDTH, SCREEN_HEIGHT, Phaser.CANVAS, S0_NAME, { preload: preload, create: create });
 	}
 
+	//PRELOAD
 	function preload()
 	{
-		preload_assets();
+		preload_images();
+		preload_fonts();
 		preload_audio();
 	}
 
-	function preload_assets()
+	function preload_images()
 	{
 		game.load.atlas(BACKGROUND_NAME, BACKGROUND_PATH, BACKGROUND_ATLAS);
 		game.load.atlas(DIALOG_NAME, DIALOG_PATH, DIALOG_ATLAS);
 		game.load.atlas(TEACHER_NAME, TEACHER_PATH, TEACHER_ATLAS);
 		game.load.atlas(MICRO_NAME, MICRO_PATH, MICRO_ATLAS);
 		game.load.spritesheet(BUTTONS_SPRITESHEET, BUTTONS_ATLAS, BUTTONS_WIDTH, BUTTONS_HEIGHT, BUTTON_NORMAL, BUTTON_HOVER, BUTTON_CLICK);
+	}
+
+	function preload_fonts()
+	{
 		game.load.bitmapFont(NOKIA_BLACK_NAME, NOKIA_BLACK_PATH, NOKIA_BLACK_ATLAS);
 	}
 
 	function preload_audio()
 	{
-		sound_effects = new Audio();
-		game.load.audiosprite('sound_effects', sound_effects.path_effects(), null, sound_effects.sound_effects());
+		var audiolibrary = new AudioLibrary();
+		game.load.audiosprite('sound_effects', audiolibrary.path_effects(), null, audiolibrary.sound_effects());
 	}
 
-	var background = null;
-	var fader = null;
-
-	var dialog_bubble = null;
-	var start_button = null;
-
-	var teacher = null;
-
+	//CREATE
 	function create()
 	{
 		load_assets();
@@ -63,7 +67,8 @@ function Stage0()
 		dialog_bubble.content = game.add.bitmapText(BIG_SQUARE_DIALOG_CONTENT_X, BIG_SQUARE_DIALOG_CONTENT_Y, DEFAULT_DIALOG_FONT, S0_DIALOG_TEXT_CONTENT, DEFAULT_FONT_SIZE);
 
 		RECORDER_INSTANCE = new Recorder(S0_BUTTON_X, S0_BUTTON_Y);
-		document.addEventListener(RECORDER_INSTANCE.micro_acquired_event('micro_acquired'), function (e) { micro_acquired(); }, false);
+		RECORDER_INSTANCE.listen_to_micro_acquired_event(function (e) { micro_acquired(); });
+		
 		RECORDER_INSTANCE.get_user_media();
 	}
 
@@ -81,6 +86,7 @@ function Stage0()
 
 	function load_sound()
 	{
+		sound_effects = new Audio();
 		sound_effects.set_fx(game.add.audioSprite('sound_effects'), 'charm');
 	}
 
@@ -94,11 +100,5 @@ function Stage0()
 		drag(teacher, { x: 800 });
 
 		play_sound(sound_effects, 'charm');
-	}
-
-	function stage_clear()
-	{
-		game.destroy();
-		next_stage();
 	}
 }

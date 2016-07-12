@@ -2,18 +2,22 @@ RECORDER_INSTANCE = null;
 
 function Recorder(iconPosX, iconPosY) 
 {	
+	var evt_mng = new Event_Manager();
+	var micro_acquired_evt = evt_mng.create('micro_acquired');
+	var done_evt = evt_mng.create('record_finished');
+	var record_timer_stopped_evt = evt_mng.create('record_timer_stopped_event');
+
 	var icon = game.add.sprite(iconPosX, iconPosY, MICRO_NAME, MICRO_OFF);
 	fade_pulse(icon);
 
-	var done = null;
-
-	this.done_event = function(event_name)
+	this.listen_to_micro_acquired_event = function(action)
 	{
-		done = document.createEvent('Event');
-		done.name = event_name;
-		done.initEvent(done.name, true, true);
+		evt_mng.listen(micro_acquired_evt, action);
+	}
 
-		return done.name;
+	this.listen_to_done_event = function(action)
+	{
+		evt_mng.listen(done_evt, action);
 	}
 
 	this.get_user_media = function()
@@ -71,13 +75,10 @@ function Recorder(iconPosX, iconPosY)
 		icon.y = y;
 	}
 
-	var record_timer_stopped_event = null;
 	function start_timer()
 	{
 		timer = new Timer();
-		
-		record_timer_stopped_event = document.addEventListener(timer.timer_stopped_event('record_timer_stopped_event'), function (e) { sample_done(); }, false);
-
+		timer.listen_to_timer_stopped_event('recorder', function (e) { sample_done(); });
 		timer.start(TIME_AVAILABLE, false);
 	}
 
@@ -103,23 +104,12 @@ function Recorder(iconPosX, iconPosY)
 	    gain_node.connect (recorder);
 	    recorder.connect (context.destination);
 
-		document.dispatchEvent(micro_acquired);
-		game.time.events.remove(micro_acquired);
+		evt_mng.dispatch(micro_acquired_evt);
+		evt_mng.remove(micro_acquired_evt);
 
 		icon.destroy();
 	}
-
-	var micro_acquired = null;
-
-	this.micro_acquired_event = function(event_name)
-	{
-		micro_acquired = document.createEvent('Event');
-		micro_acquired.name = event_name;
-		micro_acquired.initEvent(micro_acquired.name, true, true);
-
-		return micro_acquired.name;
-	}
-
+	
 	function create_context()
 	{
 		var audioContext = window.AudioContext || window.webkitAudioContext;
@@ -200,15 +190,19 @@ function Recorder(iconPosX, iconPosY)
 
 	function sample_done()
 	{
-		document.dispatchEvent(done);
+		evt_mng.dispatch(done_evt);
 	}
 
 	this.stop_recording = function()
 	{
 		timer.stop();
-		game.time.events.remove(record_timer_stopped_event);
+
+		evt_mng.remove(record_timer_stopped_evt);
+		evt_mng.remove(done_evt);
+
         recording = false;
         icon.destroy();
+
         if(!blob_generated) save_blob(data());
 	}
 	

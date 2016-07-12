@@ -40,12 +40,12 @@ function AudioLibrary()  //TODO REFACTOR
         }
     };
 
-    this.path_sentences = function()
+    this.path_voice = function()
     {
         return sentences_sprites;
     }
 
-    this.sentences = function()
+    this.voice = function()
     {
         return sentences;
     }

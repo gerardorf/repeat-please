@@ -1,26 +1,22 @@
 function Timer(xP = 0, yP = 0)
 {
+	var evt_mng = new Event_Manager();
 	var timer_started = null;
 	var timer_stopped = null;
+
 	var x = xP
 	var y = yP;
 
-	this.timer_started_event = function(event_name)
+	this.listen_to_timer_started_event = function(listener, action)
 	{
-		timer_started = document.createEvent('Event');
-		timer_started.name = event_name;
-		timer_started.initEvent(timer_started.name, true, true);
-
-		return timer_started.name;
+		timer_started = evt_mng.create('timer_started_event' + listener);
+		evt_mng.listen(timer_started, action);
 	}
 
-	this.timer_stopped_event = function(event_name)
+	this.listen_to_timer_stopped_event = function(listener, action)
 	{
-		timer_stopped = document.createEvent('Event');
-		timer_stopped.name = event_name;
-		timer_stopped.initEvent(timer_stopped.name, true, true);
-
-		return timer_stopped.name;
+		timer_stopped = evt_mng.create('timer_stopped_event' + listener);
+		evt_mng.listen(timer_stopped, action);
 	}
 
 	var loading_bar;
@@ -32,12 +28,12 @@ function Timer(xP = 0, yP = 0)
 	
 	this.start = function(time, visible)
 	{
-		time_remaining = time;
-		interval = 400 / time;
+		time_remaining = time - 1;
+		interval = 400 / time_remaining;
 
-		if(timer_started != null) document.dispatchEvent(timer_started);
+		if(timer_started != null) evt_mng.dispatch(timer_started);
 		
-	    repeat_event = game.time.events.repeat(Phaser.Timer.SECOND, time + 1, updateTimer, this);
+	    repeat_event = game.time.events.repeat(Phaser.Timer.SECOND, time, updateTimer, this);
 
 	    draw(visible);
 	}
@@ -71,7 +67,7 @@ function Timer(xP = 0, yP = 0)
 		else
 		{
 			reset();
-			document.dispatchEvent(timer_stopped);
+			evt_mng.dispatch(timer_stopped);
 		}
 
 		loading_bar.text.text = 'Te quedan ' + time_remaining + ' segundos.';
@@ -79,7 +75,7 @@ function Timer(xP = 0, yP = 0)
 
 	function reset()
 	{
-		game.time.events.remove(repeat_event);
+		evt_mng.remove(repeat_event);
 		loading_bar.background.destroy();
 		loading_bar.text.destroy();
 		loading_bar.destroy();

@@ -57,18 +57,6 @@ TEACHER_YOUR_TURN = 'your_turn';
 TEACHER_ONE_LAST_TIME = 'one_last_time';
 TEACHER_WELL_DONE = 'well_done';
 
-function random_repeat_frame()
-{
-	if((Math.floor(Math.random() * 3)) == 0)
-	{
-		return TEACHER_YOUR_TURN;
-	}
-	else
-	{
-		return TEACHER_ONE_LAST_TIME;
-	}
-}
-
 //MICRO
 MICRO_NAME = 'micro';
 MICRO_PATH = AUDIO_ASSETS + 'micro/' + 'micro.png';
@@ -144,15 +132,6 @@ function make_button(x, y, text, action)
 	button.content.x = button.x + 50;
 
 	return button;
-}
-
-//STAGE
-CURRENT_STAGE = null;
-
-function next_stage()
-{
-	CURRENT_STAGE = new Stage1();
-	CURRENT_STAGE.run();
 }
 
 //ALPHA VALUES
