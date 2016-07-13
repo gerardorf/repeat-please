@@ -83,12 +83,21 @@ function Level1()
 
 		RECORDER_INSTANCE.set_icon_at(S1_MICRO_POSITION_X, S1_MICRO_POSITION_Y);
 		RECORDER_INSTANCE.listen_to_done_event(function (e) { record_finished(); });
+		RECORDER_INSTANCE.listen_to_voice_match_event(function (e) { match(); });
 		RECORDER_INSTANCE.start_recording();
 	}
 
 	function record_finished()
 	{
 		console.log('record finished');
+	}
+
+	function match()
+	{
+		game.add.sprite(0, 0, 'match');
+
+		timer.stop();
+		timer.start(2, false);
 	}
 
 	function activity_finished()

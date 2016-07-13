@@ -9,6 +9,8 @@ function Stage1()
 	function preload()
 	{
 		game.load.image('time_over', 'assets/backgrounds/split/time_over.png');
+		game.load.image('match', 'assets/backgrounds/split/match.png');
+
 		game.load.atlas(BACKGROUND_NAME, BACKGROUND_PATH, BACKGROUND_ATLAS);
 		game.load.atlas(DIALOG_NAME, DIALOG_PATH, DIALOG_ATLAS);
 		game.load.atlas(TEACHER_NAME, TEACHER_PATH, TEACHER_ATLAS);

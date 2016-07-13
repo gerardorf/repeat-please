@@ -32,7 +32,7 @@ function Level2()
 		game.add.sprite(BACKGROUND_POSITION_X, BACKGROUND_POSITION_Y, BACKGROUND_NAME, BACKGROUND_BLACKBOARD_NAME);
 
 		dialog_bubble = game.add.sprite(SMALL_DIALOG_POSITION_X, SMALL_DIALOG_POSITION_Y, DIALOG_NAME, SMALL_DIALOG_NAME);
-		dialog_bubble.content = game.add.bitmapText(SMALL_DIALOG_CONTENT_X, SMALL_DIALOG_CONTENT_Y, DEFAULT_DIALOG_FONT, '¡Se ha acabado el tiempo!', DEFAULT_FONT_SIZE);
+		dialog_bubble.content = game.add.bitmapText(SMALL_DIALOG_CONTENT_X, SMALL_DIALOG_CONTENT_Y, DEFAULT_DIALOG_FONT, 'Hemos terminado.', DEFAULT_FONT_SIZE);
 		fade_pulse(dialog_bubble.content);
 
 		make_button(SMALL_DIALOG_CONTENT_X + 400, SMALL_DIALOG_CONTENT_Y - 5, 'Exit', activity_finished);

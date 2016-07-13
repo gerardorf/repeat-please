@@ -29,6 +29,14 @@ function CountDown(visibleP = true)
 		update();
 	}
 
+	this.stop = function()
+	{
+		timer.stop();
+		countdown.destroy();
+		evt_mng.dispatch(done_evt);
+		evt_mng.remove(done_evt);
+	}
+
 	function update()
 	{
 		if(countdown == null)

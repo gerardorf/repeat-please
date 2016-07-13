@@ -77,20 +77,21 @@ function Timer(xP = 0, yP = 0)
 
 	function updateTimer()
 	{
-		launch_advices();
-
 		if(time_remaining > 0)
 		{
 			time_remaining -= 1;
 
-			if(visible) change_loading_bar_width(interval);
+			if(visible) 
+			{
+				launch_advices();
+				change_loading_bar_width(interval);
+				loading_bar_text.text = 'Quedan ' + time_remaining + ' segundos.';
+			}
 		}
 		else
 		{
 			reset();
 		}
-
-		if(visible) loading_bar_text.text = 'Quedan ' + time_remaining + ' segundos.';
 	}
 
 	var half_time_reached = false;
@@ -100,7 +101,7 @@ function Timer(xP = 0, yP = 0)
 	{
 		if(visible)
 		{
-			if((time_remaining - 1 <= (total_time / 2)) && !half_time_reached)
+			if((time_remaining <= (total_time / 2)) && !half_time_reached)
 			{
 				half_time_reached = true;
 
@@ -111,18 +112,18 @@ function Timer(xP = 0, yP = 0)
 				fade_pulse(loading_bar_text, 500);
 			}
 			
-			if((time_remaining - 1  <= (total_time / 4)) && !quarter_time_reached)
+			if((time_remaining  <= (total_time / 4)) && !quarter_time_reached)
 			{
 				quarter_time_reached = true;
 				change_loading_bar_color('#dd0000');
 			}
 
-			if(time_remaining == 4)
+			if(time_remaining == 3)
 			{
 				run_countdown();
 			}
 
-			if(time_remaining == 1)
+			if(time_remaining == 0)
 			{
 				game.add.sprite(0, 0, 'time_over');
 			}

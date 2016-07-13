@@ -6,6 +6,9 @@ function Recorder(iconPosX, iconPosY)
 	var micro_acquired_evt = evt_mng.create('micro_acquired');
 	var done_evt = evt_mng.create('record_finished');
 	var record_timer_stopped_evt = evt_mng.create('record_timer_stopped_event');
+	var voice_match_evt = evt_mng.create('voice_match_event');
+
+	var voice_detected_for = 0;
 
 	var icon = game.add.sprite(iconPosX, iconPosY, MICRO_NAME, MICRO_OFF);
 	fade_pulse(icon);
@@ -18,6 +21,11 @@ function Recorder(iconPosX, iconPosY)
 	this.listen_to_done_event = function(action)
 	{
 		evt_mng.listen(done_evt, action);
+	}
+
+	this.listen_to_voice_match_event = function(action)
+	{
+		evt_mng.listen(voice_match_evt, action);
 	}
 
 	this.get_user_media = function()
@@ -79,7 +87,7 @@ function Recorder(iconPosX, iconPosY)
 	{
 		timer = new Timer();
 		timer.listen_to_timer_stopped_event('recorder', function (e) { sample_done(); });
-		timer.start(TIME_AVAILABLE, false);
+		timer.start(S1_TOTAL_TIME, false);
 	}
 
 	var sample_rate = null;
@@ -151,11 +159,11 @@ function Recorder(iconPosX, iconPosY)
 
         var average = values / length;
 
-        if(average > 10)
+        if(average > 30)
         {
         	voice_detected();
         }
-        else if(average <= 10 )
+        else
         {
         	voice_not_detected();
         }
@@ -163,12 +171,35 @@ function Recorder(iconPosX, iconPosY)
 
 	function voice_detected()
 	{
+		voice_detected_for += 1;
+
 		icon.frameName = MICRO_ON_DETECTION;
 	}
 
 	function voice_not_detected()
 	{
+		if(voice_detected_for >= 30)
+		{
+			voice_detected_for = 0;
+			try_match();
+		}
+
 		icon.frameName = MICRO_ON_NO_DETECTION; 
+	}
+
+	function try_match()
+	{
+		var matched = Math.floor((Math.random() * 10) + 1);
+
+		if(matched >= 7)
+		{
+			evt_mng.dispatch(voice_match_evt);
+		}
+		else
+		{
+			console.log('could not match' + matched);
+		}
+		
 	}
 	////VOICE RECOGNITION
 
