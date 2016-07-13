@@ -1,5 +1,6 @@
-function CountDown()
+function CountDown(visibleP = true)
 {
+	var visible = visibleP;
 	var countdown = null;
 	var timer = null;
 
@@ -8,10 +9,11 @@ function CountDown()
 	var FINAL_COUNTDOWN_TONE = 'final_countdown_tone';
 
 	var evt_mng = new Event_Manager();
-	var done_evt = evt_mng.create('countdown_done_event');
+	var done_evt = null;
 
-	this.listen_done_event = function(action)
+	this.listen_done_event = function(listener, action)
 	{
+		done_evt = evt_mng.create('countdown_done_event' + listener);
 		evt_mng.listen(done_evt, action);
 	}
 
@@ -59,6 +61,7 @@ function CountDown()
 		if(countdown == null) 
 		{
 			countdown = game.add.sprite(COUNTDOWN_ANIMATION_X, COUNTDOWN_ANIMATION_Y, TIMER_NAME, frame_name);
+			if(!visible) hide(countdown);
 		}
 		else
 		{
@@ -66,7 +69,7 @@ function CountDown()
 		}
 
 		play_sound(sounds, sound_effect);
-		fade_pulse_once(countdown);
+		if(visible) fade_pulse_once(countdown);
 
 		timer.start(1, false);
 	}

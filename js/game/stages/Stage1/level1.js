@@ -29,7 +29,6 @@ function Level1()
 	{
 		load_dialog();
 		load_teacher();
-		load_timer();
 		load_audio();
 	}
 
@@ -44,11 +43,6 @@ function Level1()
 	function load_teacher()
 	{
 		teacher = game.add.sprite(S1_TEACHER_INITIAL_POSITION_X, S1_TEACHER_INITIAL_POSITION_Y, TEACHER_NAME, TEACHER_POINTING_NAME);
-	}
-
-	function load_timer()
-	{
-		timer_dialog = game.add.sprite(BLACK_PLAIN_DIALOG_POSITION_X, BLACK_PLAIN_DIALOG_POSITION_Y, DIALOG_NAME, BLACK_PLAIN_NAME);
 	}
 
 	function load_audio()

@@ -8,6 +8,7 @@ function Stage1()
 
 	function preload()
 	{
+		game.load.image('time_over', 'assets/backgrounds/split/time_over.png');
 		game.load.atlas(BACKGROUND_NAME, BACKGROUND_PATH, BACKGROUND_ATLAS);
 		game.load.atlas(DIALOG_NAME, DIALOG_PATH, DIALOG_ATLAS);
 		game.load.atlas(TEACHER_NAME, TEACHER_PATH, TEACHER_ATLAS);
@@ -36,8 +37,8 @@ function Stage1()
 
 	function run_countdown()
 	{
-		var countdown = new CountDown();
-		countdown.listen_done_event(function (e) { run_level(1); });
+		var countdown = new CountDown(true);
+		countdown.listen_done_event('s1_main', function (e) { run_level(1); });
 		countdown.start();
 	}
 

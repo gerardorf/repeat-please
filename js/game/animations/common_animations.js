@@ -27,7 +27,7 @@ function fade_pulse_once(element)
 function stop_fade_pulse(element)
 {
 	element.alpha = OPAQUE;
-	animate(element, { alpha: OPAQUE },null, false, false)
+	animate(element, { alpha: OPAQUE }, null, false, false)
 }
 
 function hide(element)
