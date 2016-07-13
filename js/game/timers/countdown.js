@@ -61,15 +61,23 @@ function CountDown(visibleP = true)
 		if(countdown == null) 
 		{
 			countdown = game.add.sprite(COUNTDOWN_ANIMATION_X, COUNTDOWN_ANIMATION_Y, TIMER_NAME, frame_name);
-			if(!visible) hide(countdown);
 		}
 		else
 		{
 			countdown.frameName = frame_name;
 		}
 
+		if(!visible && countdown.frameName == COUNTDOWN_GO_NAME)
+		{
+			hide(countdown);
+		}
+		else if((!visible && countdown.frameName != COUNTDOWN_GO_NAME) || visible)
+		{
+			fade_pulse_once(countdown);
+		}
+
 		play_sound(sounds, sound_effect);
-		if(visible) fade_pulse_once(countdown);
+		
 
 		timer.start(1, false);
 	}

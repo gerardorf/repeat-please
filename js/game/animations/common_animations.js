@@ -12,10 +12,10 @@ function fade_in(element)
 	animate(element, { alpha: OPAQUE },null, false, false);
 }
 
-function fade_pulse(element)
+function fade_pulse(element, speed = null)
 {
 	element.alpha = TRANSPARENT;
-	animate(element, { alpha: OPAQUE },null, true, true);
+	animate(element, { alpha: OPAQUE }, speed, true, true);
 }
 
 function fade_pulse_once(element)

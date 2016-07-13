@@ -54,23 +54,23 @@ function Timer(xP = 0, yP = 0)
 	{
 		if(visible)
 		{
-			loading_bar_color = '#ffffff';
+			loading_bar_color = '#000000';
 			loading_bar_width = BLACK_PLAIN_DIALOG_WIDTH;
-			loading_bar = new_rectangle(loading_bar_color, loading_bar_width);
+			loading_bar = new_rectangle(BLACK_PLAIN_DIALOG_POSITION_X + 5, BLACK_PLAIN_DIALOG_POSITION_Y + 5, loading_bar_color, loading_bar_width, BLACK_PLAIN_DIALOG_HEIGHT - 10);
 
-			loading_bar_background = new_rectangle('#000000', BLACK_PLAIN_DIALOG_WIDTH);
+			loading_bar_background = new_rectangle(BLACK_PLAIN_DIALOG_POSITION_X, BLACK_PLAIN_DIALOG_POSITION_Y, '#ffffff', BLACK_PLAIN_DIALOG_WIDTH, BLACK_PLAIN_DIALOG_HEIGHT);
 
-			loading_bar_text = game.add.bitmapText(0, BLACK_PLAIN_DIALOG_HEIGHT, NOKIA_BLACK_NAME, 'Quedan ' + time_remaining + ' segundos.', DEFAULT_FONT_SIZE);
+			loading_bar_text = game.add.bitmapText(0, BLACK_PLAIN_DIALOG_HEIGHT, NOKIA_WHITE_NAME, 'Quedan ' + time_remaining + ' segundos.', DEFAULT_FONT_SIZE);
 
 			loading_bar_background.addToWorld();
 			loading_bar.addToWorld();
 		}
 	}
 
-	function new_rectangle(color, width)
+	function new_rectangle(x, y, color, width, height)
 	{
 		var rect = game.add.bitmapData(game.width, game.height);
-	    rect.rect(BLACK_PLAIN_DIALOG_POSITION_X, BLACK_PLAIN_DIALOG_POSITION_Y, width, BLACK_PLAIN_DIALOG_HEIGHT, color);
+	    rect.rect(x, y, width, height, color);
 
 	    return rect;
 	}
@@ -104,18 +104,17 @@ function Timer(xP = 0, yP = 0)
 			{
 				half_time_reached = true;
 
-				change_loading_bar_color('#FE2E2E');
-				fade_pulse_once(game.add.bitmapText(0, BLACK_PLAIN_DIALOG_HEIGHT, NOKIA_BLACK_NAME, '¡¡Te quedan ' + time_remaining + ' segundos!!', HUGE_FONT_SIZE));
+				change_loading_bar_color('#fd9901');
+
+				loading_bar_text.destroy();
+				loading_bar_text = game.add.bitmapText(0, BLACK_PLAIN_DIALOG_HEIGHT, NOKIA_WHITE_NAME, 'Quedan ' + time_remaining + ' segundos.', DEFAULT_FONT_SIZE);
+				fade_pulse(loading_bar_text, 500);
 			}
 			
 			if((time_remaining - 1  <= (total_time / 4)) && !quarter_time_reached)
 			{
 				quarter_time_reached = true;
 				change_loading_bar_color('#dd0000');
-
-				fade_pulse_once(game.add.bitmapText(450, 150, NOKIA_BLACK_NAME, '¡¡Solo quedan', HUGE_FONT_SIZE));
-				fade_pulse_once(game.add.bitmapText(600, 250, NOKIA_BLACK_NAME, time_remaining, HUGE_FONT_SIZE + 30));
-				fade_pulse_once(game.add.bitmapText(500, 350, NOKIA_BLACK_NAME, 'segundos!!', HUGE_FONT_SIZE));
 			}
 
 			if(time_remaining == 4)
@@ -136,7 +135,7 @@ function Timer(xP = 0, yP = 0)
 
 		loading_bar.destroy();
 
-		loading_bar = new_rectangle(loading_bar_color, loading_bar_width);
+		loading_bar = new_rectangle(BLACK_PLAIN_DIALOG_POSITION_X + 5, BLACK_PLAIN_DIALOG_POSITION_Y + 5, loading_bar_color, loading_bar_width, BLACK_PLAIN_DIALOG_HEIGHT - 10);
 		
 		loading_bar.addToWorld();
 	}
@@ -147,7 +146,7 @@ function Timer(xP = 0, yP = 0)
 
 		loading_bar.destroy();
 
-		loading_bar = new_rectangle(loading_bar_color, loading_bar_width);
+		loading_bar = new_rectangle(loading_bar_color, loading_bar_width, BLACK_PLAIN_DIALOG_HEIGHT - 10);
 		
 		loading_bar.addToWorld();
 	}
