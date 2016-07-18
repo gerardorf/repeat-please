@@ -55,7 +55,7 @@ function Timer()
 
 	function updateTimer()
 	{
-		evt_mng.dispatch(tick_evt);
+		if(tick_evt != null) evt_mng.dispatch(tick_evt);
 		
 		if(time_remaining > 0)
 		{

@@ -4,11 +4,18 @@ function Voice_Recognizer()
 
 	var evt_mng = new Event_Manager();
 
+	var voice_recorded_evt = evt_mng.create('voice_recorded_event');
+
 	var voice_detected_evt = evt_mng.create('voice_detected_event');
 	var voice_not_detected_evt = evt_mng.create('voice_not_detected_event');
 
 	var voice_match_evt = evt_mng.create('voice_match_event');
 	var voice_not_match_evt = evt_mng.create('voice_not_match_event');
+
+	this.listen_to_voice_recorded_event = function(action)
+	{
+		evt_mng.listen(voice_detected_evt, action);
+	}
 
 	this.listen_to_voice_detected_event = function(action)
 	{
@@ -27,6 +34,7 @@ function Voice_Recognizer()
 
 	this.listen_to_voice_not_match_event = function(action)
 	{
+
 		evt_mng.listen(voice_not_match_evt, action);
 	}
 
@@ -66,6 +74,7 @@ function Voice_Recognizer()
 		if(voice_detected_for >= 30)
 		{
 			voice_detected_for = 0;
+			evt_mng.dispatch(voice_recorded_evt);
 			try_match();
 		}
 
@@ -90,7 +99,7 @@ function Voice_Recognizer()
 
 	function prob()
 	{
-		var match_prob = 10;
-		return Math.floor((Math.random() * 100) + 1) >= match_prob;
+		var match_prob = 50;
+		return Math.floor((Math.random() * 100) + 1) <= match_prob;
 	}
 }

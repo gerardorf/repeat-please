@@ -3,8 +3,7 @@ function Stage2()
 	var timer = null;
 
 	var current_level = null;
-	var first_level = 1;
-	var last_level = 7;
+	var last_level = 3;
 
 	var dialog_bubble = null;
 	var teacher = null;
@@ -74,6 +73,7 @@ function Stage2()
 
 	function run_animtaion()
 	{
+		teacher.frameName = random_repeat_frame();
 		drag(teacher, { x: 0 });
 	}
 
@@ -81,23 +81,19 @@ function Stage2()
 	{
 		start_timer();
 		start_recorder();
-		run_level(first_level);
+		run_next_level();
 	}
 
 	function start_timer()
 	{
 		timer = new Remaining_Time_Bar(BLACK_PLAIN_DIALOG_POSITION_X + 4, BLACK_PLAIN_DIALOG_POSITION_Y + 4);
-		timer.listen_to_done_event('level1', function (e) { time_out(); });
-		timer.start(S1_TOTAL_TIME, true);
+		timer.listen_to_done_event('s2_main', function (e) { time_out(); });
+		timer.start(S2_TOTAL_TIME, true);
 	}
 
 	function start_recorder()
 	{
-		teacher.frameName = random_repeat_frame();
-
 		RECORDER_INSTANCE.set_icon_at(S1_MICRO_POSITION_X, S1_MICRO_POSITION_Y);
-		//RECORDER_INSTANCE.listen_to_voice_match_event(function (e) { audio_match(); });
-		RECORDER_INSTANCE.listen_to_voice_not_match_event(function (e) { run_next_level(); });
 		RECORDER_INSTANCE.start_recording();
 	}
 
@@ -107,33 +103,35 @@ function Stage2()
 		run_level(last_level);
 	}
 
-	function audio_match()
-	{
-		LS_TEXT = '¡Hemos terminado!';
-		run_level(last_level);
-	}
-
 	function run_next_level()
 	{
-		run_level(current_level.number + 1);
+		var next_lvl = 0;
+
+		if(current_level != null)
+		{
+			next_lvl = current_level.number + 1;
+		}
+		else
+		{
+			next_lvl = 1;
+		}
+
+		run_level(next_lvl);
 	}
 
 	function run_level(level_number)
 	{
 		console.log(level_number);
+		current_level = null;
 
 		switch(level_number) 
 		{
 		    case 1:
-		        current_level = new Level1();
+		        current_level = new Level1(2);
 		        break;
 
-		   	case 2:
-		   		current_level = new Level2();
-		        break;
-
-	        case 3:
-		        current_level = new Level3();
+	        case 2:
+		        current_level = new Level2();
 	        	break;
 
 		    case last_level:
@@ -142,6 +140,7 @@ function Stage2()
 		}
 
 		current_level.number = level_number;
+		current_level.listen_to_done_event(function (e) { run_next_level(); });
 		current_level.run();
 	}
 }

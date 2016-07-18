@@ -4,8 +4,10 @@ function Recorder(iconPosX, iconPosY)
 {	
 	var evt_mng = new Event_Manager();
 	var micro_acquired_evt = evt_mng.create('micro_acquired');
-	var voice_match_evt = evt_mng.create('voice_match_event');
-	var voice_not_match_evt = evt_mng.create('voice_match_event');
+
+	var vr = new Voice_Recognizer();
+	vr.listen_to_voice_detected_event(function (e) { voice_detected(); });
+	vr.listen_to_voice_not_detected_event(function (e) { voice_not_detected(); });
 
 	var icon = game.add.sprite(iconPosX, iconPosY, MICRO_NAME, MICRO_OFF);
 	fade_pulse(icon);
@@ -15,14 +17,19 @@ function Recorder(iconPosX, iconPosY)
 		evt_mng.listen(micro_acquired_evt, action);
 	}
 
+	this.listen_to_voice_recorded_event = function(action)
+	{
+		vr.listen_to_voice_recorded_event(action);
+	}
+
 	this.listen_to_voice_match_event = function(action)
 	{
-		evt_mng.listen(voice_match_evt, action);
+		vr.listen_to_voice_match_event(action);
 	}
 
 	this.listen_to_voice_not_match_event = function(action)
 	{
-		evt_mng.listen(voice_not_match_evt, action);
+		vr.listen_to_voice_not_match_event(action);
 	}
 
 	this.get_user_media = function()
@@ -273,13 +280,6 @@ function Recorder(iconPosX, iconPosY)
 	}
 
 	////VOICE RECOGNITION
-	var vr = new Voice_Recognizer();
-
-	vr.listen_to_voice_detected_event(function (e) { voice_detected(); });
-	vr.listen_to_voice_not_detected_event(function (e) { voice_not_detected(); });
-	vr.listen_to_voice_match_event(function (e) { voice_detected(); });
-	vr.listen_to_voice_not_match_event(function (e) { voice_not_detected(); });
-
 	function voice_detected()
 	{
 		icon.frameName = MICRO_ON_DETECTION;
@@ -288,15 +288,5 @@ function Recorder(iconPosX, iconPosY)
 	function voice_not_detected()
 	{
 		icon.frameName = MICRO_ON_NO_DETECTION; 
-	}
-
-	function voice_match()
-	{
-		evt_mng.dispatch(voice_match_evt);
-	}
-
-	function voice_not_match()
-	{
-		evt_mng.dispatch(voice_not_match_evt);
 	}
 }

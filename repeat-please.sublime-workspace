@@ -100,10 +100,29 @@
 	"buffers":
 	[
 		{
-			"file": "js/game/stages/Stage2/main.js",
+			"file": "js/game/record/recorder.js",
 			"settings":
 			{
-				"buffer_size": 3767,
+				"buffer_size": 6754,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "js/game/record/voice_recognizer.js",
+			"settings":
+			{
+				"buffer_size": 2102,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"contents": "function Stage2()\n{\n	var timer = null;\n\n	var current_level = null;\n	var first_level = 1;\n	var last_level = 7;\n\n	var dialog_bubble = null;\n	var teacher = null;\n	var button_listen = null;\n\n	//PRELOAD\n	this.run = function()\n	{\n		game = new Phaser.Game(SCREEN_WIDTH, SCREEN_HEIGHT, Phaser.CANVAS, S2_NAME, { preload: preload, create: create });\n	}\n\n	function preload()\n	{\n		game.load.image('not_match', 'assets/backgrounds/split/not_match.png');\n\n		game.load.atlas(BACKGROUND_NAME, BACKGROUND_PATH, BACKGROUND_ATLAS);\n		game.load.atlas(DIALOG_NAME, DIALOG_PATH, DIALOG_ATLAS);\n		game.load.atlas(TEACHER_NAME, TEACHER_PATH, TEACHER_ATLAS);\n		game.load.atlas(TIMER_NAME, TIMER_PATH, TIMER_ATLAS);\n		game.load.atlas(MICRO_NAME, MICRO_PATH, MICRO_ATLAS);\n		game.load.spritesheet(BUTTONS_SPRITESHEET, BUTTONS_ATLAS, BUTTONS_WIDTH, BUTTONS_HEIGHT, BUTTON_NORMAL, BUTTON_HOVER, BUTTON_CLICK);\n		game.load.bitmapFont(NOKIA_BLACK_NAME, NOKIA_BLACK_PATH, NOKIA_BLACK_ATLAS);\n		game.load.bitmapFont(NOKIA_WHITE_NAME, NOKIA_WHITE_PATH, NOKIA_WHITE_ATLAS);\n\n		var audiolibrary = new AudioLibrary();\n		game.load.audiosprite('sound_effects', audiolibrary.path_effects(), null, audiolibrary.sound_effects());\n		game.load.audiosprite('voice', audiolibrary.path_voice(), null, audiolibrary.voice());\n	}\n\n	//CREATE\n	function create()\n	{\n		load_assets();\n		run_animtaion();\n		run_logic();\n	}\n\n	function load_assets()\n	{\n		load_background();\n		load_teacher();\n		load_dialog();\n	}\n\n	function load_background()\n	{\n		game.add.sprite(BACKGROUND_POSITION_X, BACKGROUND_POSITION_Y, BACKGROUND_NAME, BACKGROUND_BLACKBOARD_NAME);\n	}\n\n	function load_teacher()\n	{\n		teacher = game.add.sprite(S1_TEACHER_INITIAL_POSITION_X, S1_TEACHER_INITIAL_POSITION_Y, TEACHER_NAME, TEACHER_POINTING_NAME);\n	}\n\n	function load_dialog()\n	{\n		dialog_bubble = game.add.sprite(BOTTOM_DIALOG_POSITION_X, BOTTOM_DIALOG_POSITION_Y, DIALOG_NAME, BOTTOM_DIALOG_NAME);\n		dialog_bubble.content = game.add.bitmapText(BOTTOM_DIALOG_CONTENT_X, BOTTOM_DIALOG_CONTENT_Y, DEFAULT_DIALOG_FONT, S1_BOTTOM_DIALOG_CONTENT, DEFAULT_FONT_SIZE);\n		\n		button_listen = make_button(S1_BUTTON_LISTEN_POSITION_X, S1_BUTTON_LISTEN_POSITION_Y, S1_LISTEN_BUTTON_CONTENT, play_sentence);\n	}\n\n	function play_sentence()\n	{\n		play_sound(teacher_voice, S1_CURRENT_SENTENCE);\n	}\n\n	function run_animtaion()\n	{\n		drag(teacher, { x: 0 });\n	}\n\n	function run_logic()\n	{\n		start_timer();\n		start_recorder();\n		run_level(first_level);\n	}\n\n	function start_timer()\n	{\n		timer = new Remaining_Time_Bar(BLACK_PLAIN_DIALOG_POSITION_X + 4, BLACK_PLAIN_DIALOG_POSITION_Y + 4);\n		timer.listen_to_done_event('level1', function (e) { time_out(); });\n		timer.start(S1_TOTAL_TIME, true);\n	}\n\n	function start_recorder()\n	{\n		teacher.frameName = random_repeat_frame();\n\n		RECORDER_INSTANCE.set_icon_at(S1_MICRO_POSITION_X, S1_MICRO_POSITION_Y);\n		//RECORDER_INSTANCE.listen_to_voice_match_event(function (e) { audio_match(); });\n		RECORDER_INSTANCE.listen_to_voice_not_match_event(function (e) { run_next_level(); });\n		RECORDER_INSTANCE.start_recording();\n	}\n\n	function time_out()\n	{\n		LS_TEXT = '¡Se ha acabado el tiempo!';\n		run_level(last_level);\n	}\n\n	function audio_match()\n	{\n		LS_TEXT = '¡Hemos terminado!';\n		run_level(last_level);\n	}\n\n	function run_next_level()\n	{\n		run_level(current_level.number + 1);\n	}\n\n	var level_sentence = new Level1();\n\n	function run_level(level_number)\n	{\n		console.log(level_number);\n\n		switch(level_number) \n		{\n		    case 1:\n		    	if (level_sentence)\n		        current_level = level_sentence;\n		        break;\n\n		   	case 2:\n		   		current_level = new Level2();\n		        break;\n\n	        case 3:\n		        current_level = new Level3();\n	        	break;\n\n		    case last_level:\n		    	current_level = new Last_Level();\n		    	break;\n		}\n\n		current_level.number = level_number;\n		current_level.run();\n	}\n}",
+			"file": "js/game/stages/Stage2/main.js",
+			"file_size": 3956,
+			"file_write_time": 131133034374614270,
+			"settings":
+			{
+				"buffer_size": 3833,
 				"line_ending": "Windows"
 			}
 		},
@@ -507,19 +526,19 @@
 			[
 				{
 					"buffer": 0,
-					"file": "js/game/stages/Stage2/main.js",
+					"file": "js/game/record/recorder.js",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 3767,
+						"buffer_size": 6754,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								3415,
-								3415
+								687,
+								714
 							]
 						],
 						"settings":
@@ -528,7 +547,7 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 1573.0,
+						"translation.y": 14.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 1,
@@ -536,6 +555,63 @@
 				},
 				{
 					"buffer": 1,
+					"file": "js/game/record/voice_recognizer.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2102,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2100,
+								2100
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 951.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "js/game/stages/Stage2/main.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3833,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								3140,
+								3140
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 1234.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
 					"file": "js/game/stages/Stage2/level1.js",
 					"semi_transient": false,
 					"settings":
@@ -547,8 +623,8 @@
 						"selection":
 						[
 							[
-								179,
-								179
+								162,
+								162
 							]
 						],
 						"settings":
@@ -560,11 +636,11 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 0,
+					"stack_index": 3,
 					"type": "text"
 				},
 				{
-					"buffer": 2,
+					"buffer": 4,
 					"file": "js/game/stages/Stage2/level2.js",
 					"semi_transient": false,
 					"settings":
@@ -589,11 +665,11 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 2,
+					"stack_index": 4,
 					"type": "text"
 				},
 				{
-					"buffer": 3,
+					"buffer": 5,
 					"file": "js/game/stages/Stage2/level3.js",
 					"semi_transient": false,
 					"settings":
@@ -618,11 +694,11 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 4,
+					"stack_index": 6,
 					"type": "text"
 				},
 				{
-					"buffer": 4,
+					"buffer": 6,
 					"file": "js/game/stages/LastStage/main.js",
 					"semi_transient": false,
 					"settings":
@@ -647,11 +723,11 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 3,
+					"stack_index": 5,
 					"type": "text"
 				},
 				{
-					"buffer": 5,
+					"buffer": 7,
 					"file": "js/game/stages/Stage2/config.js",
 					"semi_transient": false,
 					"settings":
@@ -675,7 +751,7 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 5,
+					"stack_index": 7,
 					"type": "text"
 				}
 			]

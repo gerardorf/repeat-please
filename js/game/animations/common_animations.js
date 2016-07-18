@@ -18,10 +18,10 @@ function fade_pulse(element, speed = null)
 	animate(element, { alpha: OPAQUE }, speed, true, true);
 }
 
-function fade_pulse_once(element)
+function fade_pulse_once(element, revert = true)
 {
 	element.alpha = TRANSPARENT;
-	animate(element, { alpha: OPAQUE }, 500, false, true);
+	animate(element, { alpha: OPAQUE }, 500, false, revert);
 }
 
 function stop_fade_pulse(element)
