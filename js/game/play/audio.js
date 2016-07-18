@@ -28,9 +28,6 @@ function Audio() //TODO REFACTOR
 	this.set_fx = function(audio_sprite, default_sprite)
 	{
 		fx = audio_sprite;
-		fx.allowMultiple = true;
-		fx.autoplay = true;
-
 		current_sprite = default_sprite;
 	}
 }

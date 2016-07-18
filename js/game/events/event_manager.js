@@ -1,6 +1,6 @@
 function Event_Manager()
 {
-	this.create = function(event_name, action)
+	this.create = function(event_name)
 	{
 		var event = document.createEvent('Event');
 		event.name = event_name;
@@ -11,7 +11,7 @@ function Event_Manager()
 
 	this.listen = function(event, action) //function (e) { action(); }
 	{
-		document.addEventListener(event.name, action, false);
+		document.addEventListener(event.name, action);
 	}
 
 	this.dispatch = function(event)
@@ -19,8 +19,9 @@ function Event_Manager()
 		document.dispatchEvent(event);
 	}
 
-	this.remove = function(event)
+	this.remove = function(event, action)
 	{
-		game.time.events.remove(event);
+		document.removeEventListener(event.name, action);
+		event = null;
 	}
 }

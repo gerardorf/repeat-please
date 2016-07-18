@@ -68,13 +68,13 @@ function Stage0()
 
 		RECORDER_INSTANCE = new Recorder(S0_BUTTON_X, S0_BUTTON_Y);
 		RECORDER_INSTANCE.listen_to_micro_acquired_event(function (e) { micro_acquired(); });
-		
 		RECORDER_INSTANCE.get_user_media();
 	}
 
 	function micro_acquired()
 	{
 		start_button = make_button(S0_BUTTON_X, S0_BUTTON_Y, S0_BUTTON_CONTENT, stage_clear);
+
 		fade_in(start_button);
 		fade_in(start_button.content);
 	}
@@ -92,13 +92,13 @@ function Stage0()
 
 	function run_animation()
 	{
+		play_sound(sound_effects, 'charm');
+
 		drag(fader, { y: 0 });
 
 		fade_in(dialog_bubble);
 		fade_in(dialog_bubble.content);
 
 		drag(teacher, { x: 800 });
-
-		play_sound(sound_effects, 'charm');
 	}
 }

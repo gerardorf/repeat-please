@@ -4,11 +4,8 @@ function Recorder(iconPosX, iconPosY)
 {	
 	var evt_mng = new Event_Manager();
 	var micro_acquired_evt = evt_mng.create('micro_acquired');
-	var done_evt = evt_mng.create('record_finished');
-	var record_timer_stopped_evt = evt_mng.create('record_timer_stopped_event');
 	var voice_match_evt = evt_mng.create('voice_match_event');
-
-	var voice_detected_for = 0;
+	var voice_not_match_evt = evt_mng.create('voice_match_event');
 
 	var icon = game.add.sprite(iconPosX, iconPosY, MICRO_NAME, MICRO_OFF);
 	fade_pulse(icon);
@@ -18,14 +15,14 @@ function Recorder(iconPosX, iconPosY)
 		evt_mng.listen(micro_acquired_evt, action);
 	}
 
-	this.listen_to_done_event = function(action)
-	{
-		evt_mng.listen(done_evt, action);
-	}
-
 	this.listen_to_voice_match_event = function(action)
 	{
 		evt_mng.listen(voice_match_evt, action);
+	}
+
+	this.listen_to_voice_not_match_event = function(action)
+	{
+		evt_mng.listen(voice_not_match_evt, action);
 	}
 
 	this.get_user_media = function()
@@ -58,7 +55,11 @@ function Recorder(iconPosX, iconPosY)
 	var leftchannel = [];
 	var rightchannel = [];
 	var recording_length = 0;
-	var timer = null;
+
+	var sample_rate = null;
+	var outputElement = document.getElementById('output');
+	var outputString;
+	var analyser;
 
 	this.set_icon_at = function(x, y)
 	{
@@ -73,8 +74,6 @@ function Recorder(iconPosX, iconPosY)
         leftchannel.length = 0;
         rightchannel.length = 0;
         recording_length = 0;
-
-        start_timer();
 	}
 
 	this.move_icon_to = function(x, y)
@@ -82,19 +81,7 @@ function Recorder(iconPosX, iconPosY)
 		icon.x = x;
 		icon.y = y;
 	}
-
-	function start_timer()
-	{
-		timer = new Timer();
-		timer.listen_to_timer_stopped_event('recorder', function (e) { sample_done(); });
-		timer.start(S1_TOTAL_TIME, false);
-	}
-
-	var sample_rate = null;
-	var outputElement = document.getElementById('output');
-	var outputString;
-	var analyser;
-
+	
 	function success(stream)
 	{
 	    var context = create_context();
@@ -140,68 +127,10 @@ function Recorder(iconPosX, iconPosY)
 	{
 		if (!recording) return;
 
-		detect_voice();
+		vr.detect_voice(analyser);
+
 		clone_samples(stream);
 	}
-
-	////VOICE RECOGNITION
-	function detect_voice()
-	{
-		var array =  new Uint8Array(analyser.frequencyBinCount);
-        analyser.getByteFrequencyData(array);
-        var values = 0;
-        var length = array.length;
-
-        for (var i = 0; i < length; i++) 
-        {
-            values += array[i];
-        }
-
-        var average = values / length;
-
-        if(average > 30)
-        {
-        	voice_detected();
-        }
-        else
-        {
-        	voice_not_detected();
-        }
-	}
-
-	function voice_detected()
-	{
-		voice_detected_for += 1;
-
-		icon.frameName = MICRO_ON_DETECTION;
-	}
-
-	function voice_not_detected()
-	{
-		if(voice_detected_for >= 30)
-		{
-			voice_detected_for = 0;
-			try_match();
-		}
-
-		icon.frameName = MICRO_ON_NO_DETECTION; 
-	}
-
-	function try_match()
-	{
-		var matched = Math.floor((Math.random() * 10) + 1);
-
-		if(matched >= 7)
-		{
-			evt_mng.dispatch(voice_match_evt);
-		}
-		else
-		{
-			console.log('could not match' + matched);
-		}
-		
-	}
-	////VOICE RECOGNITION
 
 	function clone_samples(stream)
 	{
@@ -214,27 +143,47 @@ function Recorder(iconPosX, iconPosY)
         recording_length += DEFAULT_BUFFER_SIZE;
 	}
 
-	//// START RECORDING
 
 	//// STOP RECORDING
-	var blob_generated = false;
-
-	function sample_done()
-	{
-		evt_mng.dispatch(done_evt);
-	}
-
 	this.stop_recording = function()
 	{
-		timer.stop();
-
-		evt_mng.remove(record_timer_stopped_evt);
-		evt_mng.remove(done_evt);
-
         recording = false;
+
         icon.destroy();
 
-        if(!blob_generated) save_blob(data());
+        save_blob(data());
+	}
+
+	function save_blob(data)
+	{
+		var blob = new Blob ( [ data ], { type : 'audio/wav' } );
+		var url = (window.URL || window.webkitURL).createObjectURL(blob);
+
+		if(DEBUG)
+		{
+			//SAVE MANUALLY ON LOCAL
+	        var link = window.document.createElement('a');
+	        document.body.appendChild(link);
+	        link.id = "stream";
+	        link.href = url;
+	        link.download = 'output.wav';
+			link.click();
+		}
+		else
+		{
+			//SEND TO SERVER
+		}
+	}
+
+	function data()
+	{
+		var interleaved = interleave_channels();
+
+        var file = new DataView(new ArrayBuffer(44 + interleaved.length * 2));
+
+        fill(file, interleaved);
+
+        return file;
 	}
 	
 	function interleave_channels()
@@ -279,17 +228,6 @@ function Recorder(iconPosX, iconPosY)
 		return result;
 	}
 
-	function data()
-	{
-		var interleaved = interleave_channels();
-
-        var file = new DataView(new ArrayBuffer(44 + interleaved.length * 2));
-
-        fill(file, interleaved);
-
-        return file;
-	}
-
 	function fill(data, interleaved)
 	{
 		// RIFF chunk descriptor
@@ -324,29 +262,6 @@ function Recorder(iconPosX, iconPosY)
         }
 	}
 
-	function save_blob(data)
-	{
-		blob_generated = true;
-
-		var blob = new Blob ( [ data ], { type : 'audio/wav' } );
-		var url = (window.URL || window.webkitURL).createObjectURL(blob);
-
-		if(DEBUG)
-		{
-			//SAVE MANUALLY ON LOCAL
-	        var link = window.document.createElement('a');
-	        document.body.appendChild(link);
-	        link.id = "stream";
-	        link.href = url;
-	        link.download = 'output.wav';
-			link.click();
-		}
-		else
-		{
-			//SEND TO SERVER
-		}
-	}
-
 	function writeUTFBytes(view, offset, string)
 	{ 
 		var lng = string.length;
@@ -356,5 +271,32 @@ function Recorder(iconPosX, iconPosY)
 			view.setUint8(offset + i, string.charCodeAt(i));
 		}
 	}
-	//// STOP RECORDING
+
+	////VOICE RECOGNITION
+	var vr = new Voice_Recognizer();
+
+	vr.listen_to_voice_detected_event(function (e) { voice_detected(); });
+	vr.listen_to_voice_not_detected_event(function (e) { voice_not_detected(); });
+	vr.listen_to_voice_match_event(function (e) { voice_detected(); });
+	vr.listen_to_voice_not_match_event(function (e) { voice_not_detected(); });
+
+	function voice_detected()
+	{
+		icon.frameName = MICRO_ON_DETECTION;
+	}
+
+	function voice_not_detected()
+	{
+		icon.frameName = MICRO_ON_NO_DETECTION; 
+	}
+
+	function voice_match()
+	{
+		evt_mng.dispatch(voice_match_evt);
+	}
+
+	function voice_not_match()
+	{
+		evt_mng.dispatch(voice_not_match_evt);
+	}
 }

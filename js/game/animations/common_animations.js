@@ -53,7 +53,27 @@ function stage_clear()
 
 function next_stage()
 {
-	CURRENT_STAGE = new Stage1();
+	if(CURRENT_STAGE == null)
+	{
+		CURRENT_STAGE = new Stage0();
+		CURRENT_STAGE.number = 0;
+	}
+	else if(CURRENT_STAGE.number == 0)
+	{
+		CURRENT_STAGE = new Stage1();
+		CURRENT_STAGE.number = 1;
+	}
+	else if(CURRENT_STAGE.number == 1)
+	{
+		CURRENT_STAGE = new Stage2();
+		CURRENT_STAGE.number = 2;
+	}
+	else if(CURRENT_STAGE.number == 2)
+	{
+		CURRENT_STAGE = new Last_Stage();
+		CURRENT_STAGE.number = 3;
+	}
+
 	CURRENT_STAGE.run();
 }
 

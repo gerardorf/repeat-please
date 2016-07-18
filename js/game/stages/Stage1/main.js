@@ -1,5 +1,13 @@
 function Stage1()
 {
+	var countdown_control = null;
+
+	var sounds = null;
+	var NORMAL_COUNTDOWN_TONE = 'normal_countdown_tone';
+	var FINAL_COUNTDOWN_TONE = 'final_countdown_tone';
+
+	var countdown_model = null;
+
 	//PRELOAD
 	this.run = function()
 	{
@@ -8,28 +16,25 @@ function Stage1()
 
 	function preload()
 	{
-		game.load.image('time_over', 'assets/backgrounds/split/time_over.png');
-		game.load.image('match', 'assets/backgrounds/split/match.png');
-
 		game.load.atlas(BACKGROUND_NAME, BACKGROUND_PATH, BACKGROUND_ATLAS);
-		game.load.atlas(DIALOG_NAME, DIALOG_PATH, DIALOG_ATLAS);
-		game.load.atlas(TEACHER_NAME, TEACHER_PATH, TEACHER_ATLAS);
 		game.load.atlas(TIMER_NAME, TIMER_PATH, TIMER_ATLAS);
-		game.load.atlas(MICRO_NAME, MICRO_PATH, MICRO_ATLAS);
-		game.load.spritesheet(BUTTONS_SPRITESHEET, BUTTONS_ATLAS, BUTTONS_WIDTH, BUTTONS_HEIGHT, BUTTON_NORMAL, BUTTON_HOVER, BUTTON_CLICK);
-		game.load.bitmapFont(NOKIA_BLACK_NAME, NOKIA_BLACK_PATH, NOKIA_BLACK_ATLAS);
-		game.load.bitmapFont(NOKIA_WHITE_NAME, NOKIA_WHITE_PATH, NOKIA_WHITE_ATLAS);
 
 		var audiolibrary = new AudioLibrary();
 		game.load.audiosprite('sound_effects', audiolibrary.path_effects(), null, audiolibrary.sound_effects());
-		game.load.audiosprite('voice', audiolibrary.path_voice(), null, audiolibrary.voice());
 	}
 
 	//CREATE
 	function create()
 	{
+		load_sounds();
 		load_background();
 		run_countdown();
+	}
+
+	function load_sounds()
+	{
+		sounds = new Audio();
+		sounds.set_fx(game.add.audioSprite('sound_effects'), NORMAL_COUNTDOWN_TONE);
 	}
 
 	function load_background()
@@ -39,29 +44,45 @@ function Stage1()
 
 	function run_countdown()
 	{
-		var countdown = new CountDown(true);
-		countdown.listen_done_event('s1_main', function (e) { run_level(1); });
-		countdown.start();
+		var countdown_model = new CountDown();
+		countdown_model.listen_update_event('s1_main', function (e) { update_animation(); });
+		countdown_model.listen_done_event('s1_main', function (e) { stage_clear(); });
+		countdown_model.start();
 	}
 
-	function run_level(levelP)
+	function update_animation()
 	{
-		var level = null;
-
-		switch(levelP) 
+		if(countdown_control == null)
 		{
-		    case 1:
-		        level = new Level1();
-		        break;
-		    case 2:
-		        level = new Level2();
-		        break;
-		    case 3:
-		    	game.destroy();
-		    	break;
+			next(COUNTDOWN_3_NAME, NORMAL_COUNTDOWN_TONE);
+		}
+		else if(countdown_control.frameName == COUNTDOWN_3_NAME)
+		{
+			next(COUNTDOWN_2_NAME, NORMAL_COUNTDOWN_TONE);
+		}
+		else if(countdown_control.frameName == COUNTDOWN_2_NAME)
+		{
+			next(COUNTDOWN_1_NAME, NORMAL_COUNTDOWN_TONE);
 		} 
+		else if(countdown_control.frameName == COUNTDOWN_1_NAME) 
+		{
+			countdown_control.x = SCREEN_WIDTH / 7;
+			next(COUNTDOWN_GO_NAME, FINAL_COUNTDOWN_TONE);
+		}
+	}
 
-		level.listen_to_done_event(function (e) { run_level(levelP + 1); });
-		level.run();
+	function next(frame_name, sound_effect)
+	{
+		if(countdown_control == null) 
+		{
+			countdown_control = game.add.sprite(COUNTDOWN_ANIMATION_X, COUNTDOWN_ANIMATION_Y, TIMER_NAME, frame_name);
+		}
+		else
+		{
+			countdown_control.frameName = frame_name;
+		}
+		
+		fade_pulse_once(countdown_control);
+		play_sound(sounds, sound_effect);
 	}
 }
