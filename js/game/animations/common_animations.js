@@ -77,14 +77,11 @@ function next_stage()
 	CURRENT_STAGE.run();
 }
 
-function random_repeat_frame()
+function make_button(x, y, text, action)
 {
-	if((Math.floor(Math.random() * 3)) == 0)
-	{
-		return TEACHER_YOUR_TURN;
-	}
-	else
-	{
-		return TEACHER_ONE_LAST_TIME;
-	}
+	var button = game.add.button(x, y, BUTTONS_SPRITESHEET, action, this, 0, 1, 0);
+	button.content = game.add.bitmapText(x, y + 15, BUTTONS_FONT, DEFAULT_BUTTON_CONTENT + text, BUTTONS_FONT_SIZE);
+	button.content.x = button.x + 50;
+
+	return button;
 }

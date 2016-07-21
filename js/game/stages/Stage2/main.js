@@ -1,3 +1,4 @@
+
 function Stage2()
 {
 	var timer = null;
@@ -9,6 +10,11 @@ function Stage2()
 	var teacher = null;
 	var button_listen = null;
 
+	var sound_effects = 'sound_effects';
+	var sentences = 'sentences';
+	var keywords = 'keywords';
+	var sentences_fx = null;
+
 	//PRELOAD
 	this.run = function()
 	{
@@ -17,20 +23,33 @@ function Stage2()
 
 	function preload()
 	{
-		game.load.image('not_match', 'assets/backgrounds/split/not_match.png');
+		preload_images();
+		preload_fonts();
+		preload_audio();
+	}
 
+	function preload_images()
+	{
+		game.load.image('not_match', 'assets/backgrounds/split/not_match.png');
 		game.load.atlas(BACKGROUND_NAME, BACKGROUND_PATH, BACKGROUND_ATLAS);
 		game.load.atlas(DIALOG_NAME, DIALOG_PATH, DIALOG_ATLAS);
 		game.load.atlas(TEACHER_NAME, TEACHER_PATH, TEACHER_ATLAS);
 		game.load.atlas(TIMER_NAME, TIMER_PATH, TIMER_ATLAS);
 		game.load.atlas(MICRO_NAME, MICRO_PATH, MICRO_ATLAS);
 		game.load.spritesheet(BUTTONS_SPRITESHEET, BUTTONS_ATLAS, BUTTONS_WIDTH, BUTTONS_HEIGHT, BUTTON_NORMAL, BUTTON_HOVER, BUTTON_CLICK);
+	}
+
+	function preload_fonts()
+	{
 		game.load.bitmapFont(NOKIA_BLACK_NAME, NOKIA_BLACK_PATH, NOKIA_BLACK_ATLAS);
 		game.load.bitmapFont(NOKIA_WHITE_NAME, NOKIA_WHITE_PATH, NOKIA_WHITE_ATLAS);
+	}
 
-		var audiolibrary = new AudioLibrary();
-		game.load.audiosprite('sound_effects', audiolibrary.path_effects(), null, audiolibrary.sound_effects());
-		game.load.audiosprite('voice', audiolibrary.path_voice(), null, audiolibrary.voice());
+	function preload_audio()
+	{
+		game.load.audiosprite(sound_effects, SOUND_EFFECTS_ATLAS, null, SOUNDEFFECTSJSON.get());
+		game.load.audiosprite(sentences, SENTENCES_ATLAS, null, SENTENCESJSON.get());
+		game.load.audiosprite(keywords, KEYWORDS_ATLAS, null, KEYWORDSJSON.get());
 	}
 
 	//CREATE
@@ -44,18 +63,14 @@ function Stage2()
 	function load_assets()
 	{
 		load_background();
-		load_teacher();
 		load_dialog();
+		load_teacher();
+		load_sounds();
 	}
 
 	function load_background()
 	{
 		game.add.sprite(BACKGROUND_POSITION_X, BACKGROUND_POSITION_Y, BACKGROUND_NAME, BACKGROUND_BLACKBOARD_NAME);
-	}
-
-	function load_teacher()
-	{
-		teacher = game.add.sprite(S1_TEACHER_INITIAL_POSITION_X, S1_TEACHER_INITIAL_POSITION_Y, TEACHER_NAME, TEACHER_POINTING_NAME);
 	}
 
 	function load_dialog()
@@ -66,14 +81,23 @@ function Stage2()
 		button_listen = make_button(S1_BUTTON_LISTEN_POSITION_X, S1_BUTTON_LISTEN_POSITION_Y, S1_LISTEN_BUTTON_CONTENT, play_sentence);
 	}
 
+	function load_teacher()
+	{
+		teacher = game.add.sprite(S1_TEACHER_INITIAL_POSITION_X, S1_TEACHER_INITIAL_POSITION_Y, TEACHER_NAME, TEACHER_POINTING);
+	}
+
+	function load_sounds()
+	{
+		sentences_fx = game.add.audioSprite(sentences);
+	}
+
 	function play_sentence()
 	{
-		play_sound(teacher_voice, S1_CURRENT_SENTENCE);
+		sentences_fx.play(S2_CURRENT_SENTENCE);
 	}
 
 	function run_animtaion()
 	{
-		teacher.frameName = random_repeat_frame();
 		drag(teacher, { x: 0 });
 	}
 
@@ -131,7 +155,7 @@ function Stage2()
 		        break;
 
 	        case 2:
-		        current_level = new Level2();
+		        current_level = new Level2(teacher);
 	        	break;
 
 		    case last_level:

@@ -5,7 +5,9 @@ function Stage0()
 	var dialog_bubble = null;
 	var start_button = null;
 	var teacher = null;
-	var sound_effects = null;
+
+	var sound_effects = 'sound_effects';
+	var fx = null;
 
 	this.run = function()
 	{
@@ -36,8 +38,7 @@ function Stage0()
 
 	function preload_audio()
 	{
-		var audiolibrary = new AudioLibrary();
-		game.load.audiosprite('sound_effects', audiolibrary.path_effects(), null, audiolibrary.sound_effects());
+		game.load.audiosprite(sound_effects, SOUND_EFFECTS_ATLAS, null, SOUNDEFFECTSJSON.get());
 	}
 
 	//CREATE
@@ -81,18 +82,17 @@ function Stage0()
 
 	function load_teacher()
 	{
-		teacher = game.add.sprite(S0_TEACHER_INITIAL_POSITION_X, S0_TEACHER_INITIAL_POSITION_Y, TEACHER_NAME, TEACHER_HELLO_NAME);
+		teacher = game.add.sprite(S0_TEACHER_INITIAL_POSITION_X, S0_TEACHER_INITIAL_POSITION_Y, TEACHER_NAME, TEACHER_HELLO);
 	}
 
 	function load_sound()
 	{
-		sound_effects = new Audio();
-		sound_effects.set_fx(game.add.audioSprite('sound_effects'), 'charm');
+		fx = game.add.audioSprite(sound_effects);
 	}
 
 	function run_animation()
 	{
-		play_sound(sound_effects, 'charm');
+		fx.play('charm');
 
 		drag(fader, { y: 0 });
 

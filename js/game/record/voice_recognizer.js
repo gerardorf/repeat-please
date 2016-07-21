@@ -99,7 +99,7 @@ function Voice_Recognizer()
 
 	function prob()
 	{
-		var match_prob = 50;
+		var match_prob = 20;
 		return Math.floor((Math.random() * 100) + 1) <= match_prob;
 	}
 }

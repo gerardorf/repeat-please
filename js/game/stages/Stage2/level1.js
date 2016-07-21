@@ -9,8 +9,13 @@ function Level1(loop_times = 0)
 	var loop = loop_times;
 	var sentence = null;
 
-	var teacher_voice = null;
-	var sound_effects = null;
+	var repeat_screen = null;
+
+	var sentences = 'sentences';
+	var sentences_fx = null;
+
+	var sound_effects = 'sound_effects';
+	var sound_effects_fx = null;
 
 	var timer = null;
 	var user_spoke = false;
@@ -32,19 +37,17 @@ function Level1(loop_times = 0)
 
 	function load_assets()
 	{
+		sentence = game.add.bitmapText(	BLACKBOARD_TEXT_POSITION_X, BLACKBOARD_TEXT_POSITION_Y, 
+										NOKIA_WHITE_NAME, 
+										SENTENCESJSON.get().spritemap[S2_CURRENT_SENTENCE].text,
+										HUGE_FONT_SIZE);
 		load_audio();
 	}
 
 	function load_audio()
 	{
-		sound_effects = new Audio();
-		sound_effects.set_fx(game.add.audioSprite('sound_effects'), 'charm');
-
-		teacher_voice = new Audio();
-		teacher_voice.set_fx(game.add.audioSprite('voice'), 'things');
-
-		sentence = game.add.bitmapText(BLACKBOARD_TEXT_POSITION_X, BLACKBOARD_TEXT_POSITION_Y, NOKIA_WHITE_NAME, teacher_voice.transcription(), HUGE_FONT_SIZE);
-		S1_CURRENT_SENTENCE = 'things';
+		sentences_fx = game.add.audioSprite(sentences);
+		sound_effects_fx = game.add.audioSprite(sound_effects);
 	}
 
 	function run_animation()
@@ -85,8 +88,11 @@ function Level1(loop_times = 0)
 		}
 		else
 		{
-			play_sentence();
-			restart_timer();
+			show_repeat_screen(	function (e) 
+								{
+									play_sentence();
+									restart_timer();
+								});
 		}
 	}
 
@@ -95,9 +101,12 @@ function Level1(loop_times = 0)
 		loop -= 1;
 
 		user_spoke = false;
-		repeat_screen = game.add.sprite(0, 0, 'not_match'); 
-		fade_pulse_once(repeat_screen);
+		
+		show_repeat_screen(function (e) { console.log('pasa1'); continue_animation(); });
+	}
 
+	function continue_animation()
+	{
 		if(loop > 0) 
 		{
 			fade_pulse_once(sentence, false);
@@ -111,15 +120,29 @@ function Level1(loop_times = 0)
 		restart_timer();
 	}
 
+	var repeat_screen_timer = new Timer();
+	function show_repeat_screen(action)
+	{
+		if(repeat_screen == null) repeat_screen = game.add.sprite(0, 0, 'not_match'); 
+		fade_pulse_once(repeat_screen);
+		sound_effects_fx.play('repeat');
+
+		repeat_screen_timer.listen_to_timer_stopped_event('lvl1_repeat_screen' + Math.floor((Math.random() * 100) + 1) , action);
+		repeat_screen_timer.start(1);
+	}
+
 	function play_sentence()
 	{
-		play_sound(teacher_voice, S1_CURRENT_SENTENCE);
+		sentences_fx.play(S2_CURRENT_SENTENCE);
 	}
 
 	function end()
 	{
 		sentence.text = '';
-		sentence = game.add.bitmapText(BLACKBOARD_TEXT_POSITION_X, BLACKBOARD_TEXT_POSITION_Y, NOKIA_WHITE_NAME, teacher_voice.transcription(), HUGE_FONT_SIZE);
+		sentence = game.add.bitmapText(	BLACKBOARD_TEXT_POSITION_X, BLACKBOARD_TEXT_POSITION_Y, 
+										NOKIA_WHITE_NAME, 
+										SENTENCESJSON.get().spritemap[S2_CURRENT_SENTENCE].text,
+										HUGE_FONT_SIZE);
 		
 		evt_mng.dispatch(done_evt);
 		evt_mng.remove(done_evt);

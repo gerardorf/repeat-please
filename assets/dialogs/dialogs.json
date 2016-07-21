@@ -10,23 +10,23 @@
 },
 {
 	"filename": "bottom",
-	"frame": {"x":570,"y":0,"w":1200,"h":600},
+	"frame": {"x":0,"y":1150,"w":1200,"h":600},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":1200,"h":600},
 	"sourceSize": {"w":1200,"h":600}
 },
 {
-	"filename": "dark_plain",
-	"frame": {"x":0,"y":600,"w":1200,"h":52},
+	"filename": "hint",
+	"frame": {"x":570,"y":0,"w":704,"h":108},
 	"rotated": false,
 	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":1200,"h":52},
-	"sourceSize": {"w":1200,"h":52}
+	"spriteSourceSize": {"x":0,"y":0,"w":704,"h":108},
+	"sourceSize": {"w":704,"h":108}
 },
 {
 	"filename": "small",
-	"frame": {"x":0,"y":652,"w":1200,"h":600},
+	"frame": {"x":0,"y":550,"w":1200,"h":600},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":1200,"h":600},
@@ -37,8 +37,8 @@
 	"version": "1.0",
 	"image": "dialogs.png",
 	"format": "RGBA8888",
-	"size": {"w":1770,"h":1252},
+	"size": {"w":1274,"h":1750},
 	"scale": "1",
-	"smartupdate": "$TexturePacker:SmartUpdate:c1ab5b3fa3e1463dad2abe89e401f3d5:c86964d1e0eadc0c4f8ace860604ce39:cd3cde70b658b79e59657b35e252e44c$"
+	"smartupdate": "$TexturePacker:SmartUpdate:f03d403c7126066c78dd3c34ccbb5a41:d9eebeef79fc925046c6646bd40c2b05:cd3cde70b658b79e59657b35e252e44c$"
 }
 }

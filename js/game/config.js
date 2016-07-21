@@ -8,7 +8,7 @@ SCREEN_HEIGHT = 600;
 GAME_PATH = 'js/game/';
 
 //ASSETS
-COMMON_ASSETS = 'assets/'
+COMMON_ASSETS = 'assets/';
 
 AUDIO_ASSETS = COMMON_ASSETS + 'audio/';
 BACKGROUND_ASSETS = COMMON_ASSETS + 'backgrounds/';
@@ -31,13 +31,17 @@ DEFAULT_FONT_SIZE = 30;
 HUGE_FONT_SIZE = 60;
 
 BLACKBOARD_TEXT_POSITION_X = 350;
-BLACKBOARD_TEXT_POSITION_Y = 150;
+BLACKBOARD_TEXT_POSITION_Y = 100;
+
+SENTENCES_ATLAS = 'assets/audio/sentences.ogg';
+KEYWORDS_ATLAS = 'assets/audio/sentences.ogg';
+SOUND_EFFECTS_ATLAS = 'assets/audio/sound_effects.ogg';
 
 NORMAL_COUNTDOWN_TONE = 'normal_countdown_tone';
 FINAL_COUNTDOWN_TONE = 'final_countdown_tone';
 
 //BACKGROUNDS
-BACKGROUND_NAME = 'background'
+BACKGROUND_NAME = 'background';
 BACKGROUND_PATH = BACKGROUND_ASSETS + 'backgrounds.png';
 BACKGROUND_ATLAS = BACKGROUND_ASSETS + 'backgrounds.json';
 
@@ -53,12 +57,11 @@ TEACHER_NAME = 'teacher';
 TEACHER_PATH = CHARS_ASSETS + 'teacher/' + 'teacher.png';
 TEACHER_ATLAS = CHARS_ASSETS + 'teacher/' + 'teacher.json';
 
-TEACHER_HELLO_NAME = 'hello';
-TEACHER_POINTING_NAME = 'say_this';
-TEACHER_SPEAKING = 'speaking';
-TEACHER_YOUR_TURN = 'your_turn';
-TEACHER_ONE_LAST_TIME = 'one_last_time';
+TEACHER_HELLO = 'hello';
+TEACHER_HINT = 'hint';
+TEACHER_POINTING = 'say_this';
 TEACHER_WELL_DONE = 'well_done';
+TEACHER_YOUR_TURN = 'your_turn';
 
 //MICRO
 MICRO_NAME = 'micro';
@@ -113,8 +116,10 @@ SMALL_DIALOG_CONTENT_Y = 155;
 BLACK_PLAIN_NAME = 'dark_plain';
 BLACK_PLAIN_DIALOG_POSITION_X = 0;
 BLACK_PLAIN_DIALOG_POSITION_Y = 0;
-BLACK_PLAIN_DIALOG_WIDTH = SCREEN_WIDTH
+BLACK_PLAIN_DIALOG_WIDTH = SCREEN_WIDTH;
 BLACK_PLAIN_DIALOG_HEIGHT = 50;
+
+HINT_DIALOG_NAME = 'hint';
 
 
 //BUTTONS
@@ -130,15 +135,6 @@ BUTTONS_FONT = NOKIA_BLACK_NAME;
 BUTTONS_FONT_SIZE = 20;
 
 DEFAULT_BUTTON_CONTENT = '> ';
-
-function make_button(x, y, text, action)
-{
-	var button = game.add.button(x, y, BUTTONS_SPRITESHEET, action, this, 0, 1, 0);
-	button.content = game.add.bitmapText(x, y + 15, BUTTONS_FONT, DEFAULT_BUTTON_CONTENT + text, BUTTONS_FONT_SIZE);
-	button.content.x = button.x + 50;
-
-	return button;
-}
 
 //ALPHA VALUES
 TRANSPARENT = 0;

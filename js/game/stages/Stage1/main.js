@@ -8,6 +8,9 @@ function Stage1()
 
 	var countdown_model = null;
 
+	var sound_effects = 'sound_effects';
+	var sound_effects_fx = null;
+
 	//PRELOAD
 	this.run = function()
 	{
@@ -19,8 +22,7 @@ function Stage1()
 		game.load.atlas(BACKGROUND_NAME, BACKGROUND_PATH, BACKGROUND_ATLAS);
 		game.load.atlas(TIMER_NAME, TIMER_PATH, TIMER_ATLAS);
 
-		var audiolibrary = new AudioLibrary();
-		game.load.audiosprite('sound_effects', audiolibrary.path_effects(), null, audiolibrary.sound_effects());
+		game.load.audiosprite(sound_effects, SOUND_EFFECTS_ATLAS, null, SOUNDEFFECTSJSON.get());
 	}
 
 	//CREATE
@@ -33,8 +35,7 @@ function Stage1()
 
 	function load_sounds()
 	{
-		sounds = new Audio();
-		sounds.set_fx(game.add.audioSprite('sound_effects'), NORMAL_COUNTDOWN_TONE);
+		sound_effects_fx = game.add.audioSprite(sound_effects);
 	}
 
 	function load_background()
@@ -71,7 +72,7 @@ function Stage1()
 		}
 	}
 
-	function next(frame_name, sound_effect)
+	function next(frame_name, sound_sprite)
 	{
 		if(countdown_control == null) 
 		{
@@ -83,6 +84,6 @@ function Stage1()
 		}
 		
 		fade_pulse_once(countdown_control);
-		play_sound(sounds, sound_effect);
+		sound_effects_fx.play(sound_sprite);
 	}
 }

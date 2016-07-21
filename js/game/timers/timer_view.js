@@ -18,7 +18,8 @@ function Remaining_Time_Bar(xP, yP)
 
 	var countdown_control = null;
 
-	var sounds = null;
+	var sound_effects = 'sound_effects';
+	var fx = null;
 
 	var evt_mng = new Event_Manager();
 	var done_evt = null;
@@ -62,8 +63,7 @@ function Remaining_Time_Bar(xP, yP)
 
 	function load_sounds()
 	{
-		sounds = new Audio();
-		sounds.set_fx(game.add.audioSprite('sound_effects'), NORMAL_COUNTDOWN_TONE);
+		fx = game.add.audioSprite(sound_effects);
 	}
 
 	function update()
@@ -147,7 +147,7 @@ function Remaining_Time_Bar(xP, yP)
 		}
 	}
 
-	function next_countdown_animation(frame_name, sound_effect)
+	function next_countdown_animation(frame_name, audio_sprite)
 	{
 		if(countdown_control == null) 
 		{
@@ -160,7 +160,7 @@ function Remaining_Time_Bar(xP, yP)
 
 		if(frame_name != null) fade_pulse_once(countdown_control);
 
-		play_sound(sounds, sound_effect);
+		fx.play(audio_sprite);
 	}
 
 	function reset()
