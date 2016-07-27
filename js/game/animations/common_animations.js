@@ -12,6 +12,11 @@ function fade_in(element)
 	animate(element, { alpha: OPAQUE },null, false, false);
 }
 
+function fade_out(element)
+{
+	animate(element, { alpha: TRANSPARENT },null, false, false);
+}
+
 function fade_pulse(element, speed = null)
 {
 	element.alpha = TRANSPARENT;
@@ -45,6 +50,18 @@ function animate(element, action, speed = 2000, forever, revert)
 	game.add.tween(element).to(action, speed, Phaser.Easing.Quadratic.Out, true, 0, forever ? -1 : 0, revert);
 }
 
+function restart_activity()
+{
+	CURRENT_STAGE.number = 0;
+	stage_clear();
+}
+
+function restart_all()
+{
+	CURRENT_STAGE.number = -1;
+	stage_clear();
+}
+
 function stage_clear()
 {
 	game.destroy();
@@ -53,7 +70,7 @@ function stage_clear()
 
 function next_stage()
 {
-	if(CURRENT_STAGE == null)
+	if(CURRENT_STAGE == null || CURRENT_STAGE.number == -1)
 	{
 		CURRENT_STAGE = new Stage0();
 		CURRENT_STAGE.number = 0;

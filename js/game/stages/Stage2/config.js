@@ -1,5 +1,7 @@
 S2_NAME = 'Stage 2 - Repeat after me.'
 
+S2_TOTAL_TIME = 5;
+
 S1_TEACHER_INITIAL_POSITION_X = -415;
 S1_TEACHER_INITIAL_POSITION_Y = 135;
 
@@ -20,4 +22,7 @@ S1_MICRO_POSITION_Y = 535;
 
 S2_CURRENT_SENTENCE = 'things';
 
-S2_TOTAL_TIME = 50;
+S2_SOUND_EFFECTS = 'sound_effects';
+S2_SENTENCES = 'sentences';
+S2_KEYWORDS = 'keywords';
+

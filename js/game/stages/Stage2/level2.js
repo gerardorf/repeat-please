@@ -14,24 +14,23 @@ function Level2(teacherP, loop_times = 0)
 
 	var repeat_screen = null;
 
-	var keywords = 'keywords';
 	var keywords_fx = null;
-
-	var sound_effects = 'sound_effects';
 	var sound_effects_fx = null;
 
 	var keyword = null;
 	var keyword_id;
+	var keyword_text;
 	var hint = null;
 	var hint_id;
 	var times_not_matched = 0;
 
-	var evt_mng = new Event_Manager();
-	var done_evt = evt_mng.create('level2_done');
+	var done_evt = new Event('level2_done');
+
+	var repeat_screen_timer = new Timer();
 
 	this.listen_to_done_event = function(action)
 	{
-		evt_mng.listen(done_evt, action);
+		done_evt.add_listener(action);
 	}
 
 	this.run = function()
@@ -43,27 +42,27 @@ function Level2(teacherP, loop_times = 0)
 
 	function load_assets()
 	{
-		keywords_fx = game.add.audioSprite(keywords);
-		sound_effects_fx = game.add.audioSprite(sound_effects);
+		keywords_fx = game.add.audioSprite(S2_KEYWORDS);
+		sound_effects_fx = game.add.audioSprite(S2_SOUND_EFFECTS);
 
 		keyword_id = SENTENCESJSON.get().spritemap[S2_CURRENT_SENTENCE].keyword;
 		keyword = KEYWORDSJSON.get().spritemap[keyword_id];
 		
-		game.add.bitmapText(	BLACKBOARD_TEXT_POSITION_X, BLACKBOARD_TEXT_POSITION_Y + 150,
-								NOKIA_WHITE_NAME, 
-								keyword.text, 
-								HUGE_FONT_SIZE);
+		keyword_text = game.add.bitmapText(	BLACKBOARD_TEXT_POSITION_X, BLACKBOARD_TEXT_POSITION_Y + 150,
+											NOKIA_WHITE_NAME, 
+											keyword.text, 
+											HUGE_FONT_SIZE);
 	}
 
 	function run_animation()
 	{
-		show_repeat_screen(function (e) { play_keyword(); });
+		show_repeat_screen(play_keyword);
 	}
 
 	function run_logic()
 	{
-		RECORDER_INSTANCE.listen_to_voice_match_event(function (e) { match(); });
-		RECORDER_INSTANCE.listen_to_voice_not_match_event(function (e) { no_match(); });
+		RECORDER_INSTANCE.listen_to_voice_match_event(match);
+		RECORDER_INSTANCE.listen_to_voice_not_match_event(no_match);
 	}
 
 	function match()
@@ -128,11 +127,13 @@ function Level2(teacherP, loop_times = 0)
 
 	function run_repeat_animation()
 	{
-		show_repeat_screen(function (e) 
-			{
-			 	fade_pulse(sentence);
-				play_sentence();
-			});
+		show_repeat_screen(restart_animation);
+	}
+
+	function restart_animation()
+	{
+		fade_pulse(keyword_text);
+		play_keyword();
 	}
 
 	function play_keyword()
@@ -145,7 +146,6 @@ function Level2(teacherP, loop_times = 0)
 		keywords_fx.play(hint_id);
 	}
 
-	var repeat_screen_timer = new Timer();
 	function show_repeat_screen(action)
 	{
 		if(repeat_screen == null) repeat_screen = game.add.sprite(0, 0, 'not_match'); 
@@ -160,7 +160,15 @@ function Level2(teacherP, loop_times = 0)
 	{
 		LS_TEXT = '¡Hemos terminado!';
 
-		evt_mng.dispatch(done_evt);
-		evt_mng.remove(done_evt);
+		repeat_screen_timer.destroy();
+
+		done_evt.dispatch();
+		done_evt.remove();
+	}
+
+	this.force_end = function ()
+	{
+		repeat_screen_timer.destroy();
+		done_evt.remove();
 	}
 }

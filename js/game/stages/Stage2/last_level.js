@@ -10,4 +10,9 @@ function Last_Level()
 		RECORDER_INSTANCE.stop_recording();
 		stage_clear();
 	}
+
+	this.force_end = function()
+	{
+		
+	}
 }

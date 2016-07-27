@@ -2,19 +2,18 @@ RECORDER_INSTANCE = null;
 
 function Recorder(iconPosX, iconPosY) 
 {	
-	var evt_mng = new Event_Manager();
-	var micro_acquired_evt = evt_mng.create('micro_acquired');
+	var micro_acquired_evt = new Event('micro_acquired'); 
 
 	var vr = new Voice_Recognizer();
-	vr.listen_to_voice_detected_event(function (e) { voice_detected(); });
-	vr.listen_to_voice_not_detected_event(function (e) { voice_not_detected(); });
+	vr.listen_to_voice_detected_event(voice_detected);
+	vr.listen_to_voice_not_detected_event(voice_not_detected);
 
 	var icon = game.add.sprite(iconPosX, iconPosY, MICRO_NAME, MICRO_OFF);
 	fade_pulse(icon);
 
 	this.listen_to_micro_acquired_event = function(action)
 	{
-		evt_mng.listen(micro_acquired_evt, action);
+		micro_acquired_evt.add_listener(action);
 	}
 
 	this.listen_to_voice_recorded_event = function(action)
@@ -44,7 +43,7 @@ function Recorder(iconPosX, iconPosY)
 
 		if (navigator.getUserMedia)
 		{
-		    navigator.getUserMedia(	{audio:true}, 
+		    navigator.getUserMedia(	{ audio:true }, 
 	    							success, 
 	    							function(e) 
 	    							{ 
@@ -106,8 +105,8 @@ function Recorder(iconPosX, iconPosY)
 	    gain_node.connect (recorder);
 	    recorder.connect (context.destination);
 
-		evt_mng.dispatch(micro_acquired_evt);
-		evt_mng.remove(micro_acquired_evt);
+		micro_acquired_evt.dispatch();
+		micro_acquired_evt.remove();
 
 		icon.destroy();
 	}
@@ -154,8 +153,9 @@ function Recorder(iconPosX, iconPosY)
 	//// STOP RECORDING
 	this.stop_recording = function()
 	{
-        recording = false;
+		recording = false;
 
+		vr.destroy();
         icon.destroy();
 
         save_blob(data());
@@ -288,5 +288,15 @@ function Recorder(iconPosX, iconPosY)
 	function voice_not_detected()
 	{
 		icon.frameName = MICRO_ON_NO_DETECTION; 
+	}
+
+	//CANCEL
+	this.force_end = function()
+	{
+		recording = false;
+
+		micro_acquired_evt.remove();
+		vr.destroy();
+        icon.destroy();
 	}
 }

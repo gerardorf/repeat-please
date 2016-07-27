@@ -6,7 +6,7 @@ function Stage1()
 	var NORMAL_COUNTDOWN_TONE = 'normal_countdown_tone';
 	var FINAL_COUNTDOWN_TONE = 'final_countdown_tone';
 
-	var countdown_model = null;
+	var countdown_model = new CountDown();
 
 	var sound_effects = 'sound_effects';
 	var sound_effects_fx = null;
@@ -21,7 +21,6 @@ function Stage1()
 	{
 		game.load.atlas(BACKGROUND_NAME, BACKGROUND_PATH, BACKGROUND_ATLAS);
 		game.load.atlas(TIMER_NAME, TIMER_PATH, TIMER_ATLAS);
-
 		game.load.audiosprite(sound_effects, SOUND_EFFECTS_ATLAS, null, SOUNDEFFECTSJSON.get());
 	}
 
@@ -31,6 +30,8 @@ function Stage1()
 		load_sounds();
 		load_background();
 		run_countdown();
+
+		game.onResume.add(reset_game, this);
 	}
 
 	function load_sounds()
@@ -45,9 +46,8 @@ function Stage1()
 
 	function run_countdown()
 	{
-		var countdown_model = new CountDown();
-		countdown_model.listen_update_event('s1_main', function (e) { update_animation(); });
-		countdown_model.listen_done_event('s1_main', function (e) { stage_clear(); });
+		countdown_model.listen_update_event('s1_main', update_animation);
+		countdown_model.listen_done_event('s1_main', stage_clear);
 		countdown_model.start();
 	}
 
@@ -85,5 +85,13 @@ function Stage1()
 		
 		fade_pulse_once(countdown_control);
 		sound_effects_fx.play(sound_sprite);
+	}
+
+	//CANCEL
+	function reset_game(event)
+	{
+		RECORDER_INSTANCE.force_end();
+		countdown_model.destroy();
+		restart_all();
 	}
 }

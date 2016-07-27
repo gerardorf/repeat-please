@@ -1,4 +1,4 @@
-function Remaining_Time_Bar(xP, yP)
+function RemainingTimeBar(xP, yP)
 {
 	var x = xP
 	var y = yP;
@@ -14,26 +14,25 @@ function Remaining_Time_Bar(xP, yP)
 	var half_time_reached = false;
 	var quarter_time_reached = false;
 
-	var timer = null;
+	var timer = new Timer();
 
+	var countdown_model = new CountDown();
 	var countdown_control = null;
 
 	var sound_effects = 'sound_effects';
 	var fx = null;
 
-	var evt_mng = new Event_Manager();
 	var done_evt = null;
 
 	this.listen_to_done_event = function(listener, action)
 	{
-		done_evt = evt_mng.create('rtb_done_event_' + listener);
-		evt_mng.listen(done_evt, action);
+		done_evt = new Event('rtb_done_event_' + listener + Math.floor((Math.random() * 100) + 1));
+		done_evt.add_listener(action);
 	}
 
 	this.start = function(timeP)
 	{
-		timer = new Timer();
-		timer.listen_to_tick_event('time_bar', function (e) { update(); });
+		timer.listen_to_tick_event('time_bar', update);
 		timer.start(timeP);
 
 		interval = game.width / timer.get_time_remaining();
@@ -121,9 +120,8 @@ function Remaining_Time_Bar(xP, yP)
 
 	function run_countdown()
 	{
-		var countdown_model = new CountDown();
-		countdown_model.listen_done_event('time_bar', function (e) { reset(); });
-		countdown_model.listen_update_event('time_bar', function (e) { update_countdown_animation(); });
+		countdown_model.listen_done_event('time_bar', reset);
+		countdown_model.listen_update_event('time_bar', update_countdown_animation);
 		countdown_model.start();
 	}
 
@@ -165,10 +163,25 @@ function Remaining_Time_Bar(xP, yP)
 
 	function reset()
 	{
+		timer.destroy();
+
+		countdown_model.destroy();
+		
 		loading_bar_background.destroy();
 		loading_bar_text.destroy();
 		loading_bar.destroy();
 
-		evt_mng.dispatch(done_evt);
+		done_evt.dispatch();
+		done_evt.remove();
+	}
+
+	this.destroy = function()
+	{
+		timer.destroy();
+		countdown_model.destroy();
+		loading_bar_background.destroy();
+		loading_bar_text.destroy();
+		loading_bar.destroy();
+		done_evt.remove();
 	}
 }

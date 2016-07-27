@@ -6,26 +6,30 @@
 
 function Level1(loop_times = 0)
 {
+	var TIME_UNTIL_REPEAT_SCREEN = 5;
+	var TIME_TO_SHOW_STATEMENT = 3;
+
 	var loop = loop_times;
+
 	var sentence = null;
+	var statement = null;
+	var statement_bubble = null;
 
 	var repeat_screen = null;
 
-	var sentences = 'sentences';
 	var sentences_fx = null;
-
-	var sound_effects = 'sound_effects';
 	var sound_effects_fx = null;
 
-	var timer = null;
+	var detect_voice_timer = new Timer();
+	var repeat_screen_timer = new Timer();
+	var show_statement_timer = new Timer();
 	var user_spoke = false;
 
-	var evt_mng = new Event_Manager();
-	var done_evt = evt_mng.create('level1_done');
+	var done_evt = new Event('level1_done');
 
 	this.listen_to_done_event = function(action)
 	{
-		evt_mng.listen(done_evt, action);
+		done_evt.add_listener(action);
 	}
 
 	this.run = function()
@@ -37,21 +41,49 @@ function Level1(loop_times = 0)
 
 	function load_assets()
 	{
-		sentence = game.add.bitmapText(	BLACKBOARD_TEXT_POSITION_X, BLACKBOARD_TEXT_POSITION_Y, 
-										NOKIA_WHITE_NAME, 
-										SENTENCESJSON.get().spritemap[S2_CURRENT_SENTENCE].text,
-										HUGE_FONT_SIZE);
 		load_audio();
 	}
 
 	function load_audio()
 	{
-		sentences_fx = game.add.audioSprite(sentences);
-		sound_effects_fx = game.add.audioSprite(sound_effects);
+		sentences_fx = game.add.audioSprite(S2_SENTENCES);
+		sound_effects_fx = game.add.audioSprite(S2_SOUND_EFFECTS);
 	}
 
 	function run_animation()
 	{
+		show_statement();
+		show_sentence();
+	}
+
+	function show_statement()
+	{
+		statement_bubble = game.add.sprite(BLACKBOARD_TEXT_POSITION_X - 150, BLACKBOARD_TEXT_POSITION_Y - 20, DIALOG_NAME, STATEMENT_DIALOG_NAME);
+
+		statement = game.add.bitmapText(BLACKBOARD_TEXT_POSITION_X - 50, BLACKBOARD_TEXT_POSITION_Y + 20, 
+										NOKIA_BLACK_NAME, 
+										'Repite en voz alta la siguiente frase:',
+										DEFAULT_FONT_SIZE);
+
+		show_statement_timer.listen_to_timer_stopped_event('lvl1_show_statement', hide_statement);
+		show_statement_timer.start(TIME_TO_SHOW_STATEMENT);
+	}
+
+	function hide_statement()
+	{
+		fade_out(statement_bubble);
+		fade_out(statement);
+
+		drag(sentence, { y: BLACKBOARD_TEXT_POSITION_Y });
+	}
+
+	function show_sentence()
+	{
+		sentence = game.add.bitmapText(	BLACKBOARD_TEXT_POSITION_X, BLACKBOARD_TEXT_POSITION_Y + 100, 
+										NOKIA_WHITE_NAME, 
+										SENTENCESJSON.get().spritemap[S2_CURRENT_SENTENCE].text,
+										HUGE_FONT_SIZE);
+
 		play_sentence();
 	}
 
@@ -59,18 +91,22 @@ function Level1(loop_times = 0)
 	{
 		load_timer();
 		restart_timer();
-		RECORDER_INSTANCE.listen_to_voice_recorded_event(function (e) { user_spoke = true; });
+		RECORDER_INSTANCE.listen_to_voice_recorded_event(change_user_spoke_state);
+	}
+
+	function change_user_spoke_state()
+	{
+		user_spoke = true;
 	}
 
 	function load_timer()
 	{
-		timer = new Timer();
-		timer.listen_to_timer_stopped_event('level1', function (e) { time_to_speak_finished(); });
+		detect_voice_timer.listen_to_timer_stopped_event('lvl1_detect_voice', time_to_speak_finished);
 	}
 
 	function restart_timer()
 	{
-		timer.start(4);
+		detect_voice_timer.start(TIME_UNTIL_REPEAT_SCREEN);
 	}
 
 	function time_to_speak_finished()
@@ -88,12 +124,14 @@ function Level1(loop_times = 0)
 		}
 		else
 		{
-			show_repeat_screen(	function (e) 
-								{
-									play_sentence();
-									restart_timer();
-								});
+			show_repeat_screen(restart_animation);
 		}
+	}
+
+	function restart_animation()
+	{
+		play_sentence();
+		restart_timer();
 	}
 
 	function run_repeat_animation()
@@ -102,7 +140,7 @@ function Level1(loop_times = 0)
 
 		user_spoke = false;
 		
-		show_repeat_screen(function (e) { console.log('pasa1'); continue_animation(); });
+		show_repeat_screen(continue_animation);
 	}
 
 	function continue_animation()
@@ -120,7 +158,6 @@ function Level1(loop_times = 0)
 		restart_timer();
 	}
 
-	var repeat_screen_timer = new Timer();
 	function show_repeat_screen(action)
 	{
 		if(repeat_screen == null) repeat_screen = game.add.sprite(0, 0, 'not_match'); 
@@ -143,8 +180,21 @@ function Level1(loop_times = 0)
 										NOKIA_WHITE_NAME, 
 										SENTENCESJSON.get().spritemap[S2_CURRENT_SENTENCE].text,
 										HUGE_FONT_SIZE);
+
+		detect_voice_timer.destroy();
+		repeat_screen_timer.destroy();
+		show_statement_timer.destroy();
 		
-		evt_mng.dispatch(done_evt);
-		evt_mng.remove(done_evt);
+		done_evt.dispatch();
+		done_evt.remove();
+	}
+
+	this.force_end = function()
+	{
+		detect_voice_timer.destroy();
+		repeat_screen_timer.destroy();
+		show_statement_timer.destroy();
+
+		done_evt.remove();
 	}
 }

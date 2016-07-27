@@ -28,14 +28,9 @@ function Last_Stage()
 		dialog_bubble.content = game.add.bitmapText(SMALL_DIALOG_CONTENT_X, SMALL_DIALOG_CONTENT_Y, DEFAULT_DIALOG_FONT, LS_TEXT, DEFAULT_FONT_SIZE);
 		fade_pulse(dialog_bubble.content);
 
-		make_button(SMALL_DIALOG_CONTENT_X + 400, SMALL_DIALOG_CONTENT_Y - 30, 'Enviar', activity_finished);
-		make_button(SMALL_DIALOG_CONTENT_X + 400, SMALL_DIALOG_CONTENT_Y + 25, 'Relanzar', activity_finished);
-
 		teacher = game.add.sprite(0, S1_TEACHER_INITIAL_POSITION_Y, TEACHER_NAME, TEACHER_WELL_DONE);
-	}
 
-	function activity_finished()
-	{
-		stage_clear();
+		make_button(SMALL_DIALOG_CONTENT_X + 400, SMALL_DIALOG_CONTENT_Y - 30, 'Relanzar', restart_activity);
+		make_button(SMALL_DIALOG_CONTENT_X + 400, SMALL_DIALOG_CONTENT_Y + 25, 'Terminar', restart_all);
 	}
 }

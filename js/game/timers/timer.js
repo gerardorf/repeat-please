@@ -1,6 +1,5 @@
 function Timer()
 {
-	var evt_mng = new Event_Manager();
 	var timer_started_evt = null;
 	var timer_stopped_evt = null;
 	var repeat_event = null;
@@ -11,20 +10,20 @@ function Timer()
 
 	this.listen_to_timer_started_event = function(listener, action)
 	{
-		timer_started_evt = evt_mng.create('timer_started_event_' + listener);
-		evt_mng.listen(timer_started_evt, action);
+		timer_started_evt = new Event('timer_started_event_' + listener);
+		timer_started_evt.add_listener(action);
 	}
 
 	this.listen_to_timer_stopped_event = function(listener, action)
 	{
-		timer_stopped_evt = evt_mng.create('timer_stopped_event_' + listener);
-		evt_mng.listen(timer_stopped_evt, action);
+		timer_stopped_evt = new Event('timer_stopped_event_' + listener);
+		timer_stopped_evt.add_listener(action);
 	}
 
 	this.listen_to_tick_event = function(listener, action)
 	{
-		tick_evt = evt_mng.create('tick_evt_' + listener);
-		evt_mng.listen(tick_evt, action);
+		tick_evt = new Event('tick_evt_' + listener);
+		tick_evt.add_listener(action);
 	}
 
 	this.start = function(time)
@@ -33,7 +32,7 @@ function Timer()
 
 		time_remaining = total_time - 1;
 
-		if(timer_started_evt != null) evt_mng.dispatch(timer_started_evt);
+		if(timer_started_evt != null) timer_started_evt.dispatch();
 		
 	    repeat_event = game.time.events.repeat(Phaser.Timer.SECOND, total_time, updateTimer, this);
 	}
@@ -41,6 +40,15 @@ function Timer()
 	this.stop = function()
 	{
 		time_remaining = 0;
+	}
+
+	this.destroy = function()
+	{
+		game.time.events.remove(repeat_event);
+
+		if(timer_started_evt != null) timer_started_evt.remove();
+		if(timer_stopped_evt != null) timer_stopped_evt.remove();
+		if(tick_evt != null) tick_evt.remove();	
 	}
 
 	this.get_total_time = function()
@@ -55,7 +63,7 @@ function Timer()
 
 	function updateTimer()
 	{
-		if(tick_evt != null) evt_mng.dispatch(tick_evt);
+		if(tick_evt != null) tick_evt.dispatch();
 		
 		if(time_remaining > 0)
 		{
@@ -73,8 +81,7 @@ function Timer()
 		
 		if(timer_stopped_evt != null) 
 		{
-			evt_mng.dispatch(timer_stopped_evt);
-			evt_mng.remove(timer_stopped_evt);
+			timer_stopped_evt.dispatch();
 		}
 	}
 }

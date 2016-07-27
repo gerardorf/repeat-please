@@ -1,7 +1,6 @@
-
 function Stage2()
 {
-	var timer = null;
+	var timer_bar = new RemainingTimeBar(BLACK_PLAIN_DIALOG_POSITION_X + 4, BLACK_PLAIN_DIALOG_POSITION_Y + 4);
 
 	var current_level = null;
 	var last_level = 3;
@@ -9,10 +8,7 @@ function Stage2()
 	var dialog_bubble = null;
 	var teacher = null;
 	var button_listen = null;
-
-	var sound_effects = 'sound_effects';
-	var sentences = 'sentences';
-	var keywords = 'keywords';
+	
 	var sentences_fx = null;
 
 	//PRELOAD
@@ -47,9 +43,9 @@ function Stage2()
 
 	function preload_audio()
 	{
-		game.load.audiosprite(sound_effects, SOUND_EFFECTS_ATLAS, null, SOUNDEFFECTSJSON.get());
-		game.load.audiosprite(sentences, SENTENCES_ATLAS, null, SENTENCESJSON.get());
-		game.load.audiosprite(keywords, KEYWORDS_ATLAS, null, KEYWORDSJSON.get());
+		game.load.audiosprite(S2_SOUND_EFFECTS, SOUND_EFFECTS_ATLAS, null, SOUNDEFFECTSJSON.get());
+		game.load.audiosprite(S2_SENTENCES, SENTENCES_ATLAS, null, SENTENCESJSON.get());
+		game.load.audiosprite(S2_KEYWORDS, KEYWORDS_ATLAS, null, KEYWORDSJSON.get());
 	}
 
 	//CREATE
@@ -58,6 +54,8 @@ function Stage2()
 		load_assets();
 		run_animtaion();
 		run_logic();
+
+		game.onResume.add(reset_game, this);
 	}
 
 	function load_assets()
@@ -88,7 +86,7 @@ function Stage2()
 
 	function load_sounds()
 	{
-		sentences_fx = game.add.audioSprite(sentences);
+		sentences_fx = game.add.audioSprite(S2_SENTENCES);
 	}
 
 	function play_sentence()
@@ -110,9 +108,8 @@ function Stage2()
 
 	function start_timer()
 	{
-		timer = new Remaining_Time_Bar(BLACK_PLAIN_DIALOG_POSITION_X + 4, BLACK_PLAIN_DIALOG_POSITION_Y + 4);
-		timer.listen_to_done_event('s2_main', function (e) { time_out(); });
-		timer.start(S2_TOTAL_TIME, true);
+		timer_bar.listen_to_done_event('s2_main', time_out);
+		timer_bar.start(S2_TOTAL_TIME, true);
 	}
 
 	function start_recorder()
@@ -161,10 +158,22 @@ function Stage2()
 		    case last_level:
 		    	current_level = new Last_Level();
 		    	break;
+		    default:
+		    	current_level = new Level1(2);
+		        break;
 		}
 
 		current_level.number = level_number;
-		current_level.listen_to_done_event(function (e) { run_next_level(); });
+		current_level.listen_to_done_event(run_next_level);
 		current_level.run();
+	}
+
+	//CANCEL
+	function reset_game(event)
+	{
+		timer_bar.destroy();
+		RECORDER_INSTANCE.force_end();
+		current_level.force_end();
+		restart_all();
 	}
 }

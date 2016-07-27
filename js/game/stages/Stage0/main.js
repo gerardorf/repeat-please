@@ -68,7 +68,7 @@ function Stage0()
 		dialog_bubble.content = game.add.bitmapText(BIG_SQUARE_DIALOG_CONTENT_X, BIG_SQUARE_DIALOG_CONTENT_Y, DEFAULT_DIALOG_FONT, S0_DIALOG_TEXT_CONTENT, DEFAULT_FONT_SIZE);
 
 		RECORDER_INSTANCE = new Recorder(S0_BUTTON_X, S0_BUTTON_Y);
-		RECORDER_INSTANCE.listen_to_micro_acquired_event(function (e) { micro_acquired(); });
+		RECORDER_INSTANCE.listen_to_micro_acquired_event(micro_acquired);
 		RECORDER_INSTANCE.get_user_media();
 	}
 
